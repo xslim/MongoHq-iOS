@@ -1,0 +1,49 @@
+PODS:
+  - AFNetworking (1.2.1)
+  - CocoaLumberjack (1.6.2)
+  - FontasticIcons (0.2.3)
+  - ISRefreshControl (1.2.2)
+  - RestKit (0.20.1dev):
+    - RestKit/Core
+  - RestKit/Core (0.20.1dev):
+    - RestKit/CoreData
+    - RestKit/Network
+    - RestKit/ObjectMapping
+  - RestKit/CoreData (0.20.1dev)
+  - RestKit/Network (0.20.1dev):
+    - AFNetworking (~> 1.2.0)
+    - RestKit/ObjectMapping
+    - RestKit/Support
+    - SOCKit
+  - RestKit/ObjectMapping (0.20.1dev)
+  - RestKit/Support (0.20.1dev):
+    - TransitionKit (= 1.1.0)
+  - SOCKit (1.1)
+  - SVProgressHUD (0.9)
+  - TransitionKit (1.1.0)
+  - ViewDeck (2.2.11)
+
+DEPENDENCIES:
+  - CocoaLumberjack
+  - FontasticIcons
+  - ISRefreshControl
+  - RestKit (from `https://github.com/RestKit/RestKit.git`)
+  - SVProgressHUD
+  - ViewDeck
+
+EXTERNAL SOURCES:
+  RestKit:
+    :git: https://github.com/RestKit/RestKit.git
+
+SPEC CHECKSUMS:
+  AFNetworking: 616da0028916ce296f5c3cef74e5552eb4e10e13
+  CocoaLumberjack: d73e1e317ced14ab930797dda6c17156ff17aaa1
+  FontasticIcons: fca140125d87fcd5e75ac38e988437f771bdde4c
+  ISRefreshControl: b520e068de6383bedc2fda7f6b79a764edd4ed3a
+  RestKit: 1ecd173c7cc8ea2b37c22b9909d5dde225331378
+  SOCKit: ed67aeeca4a697b63a933229e53f4670d5b9300f
+  SVProgressHUD: 03d4845ec8e64591726428a08236c6a5489d45f8
+  TransitionKit: 1624e84f252d5cd26900be28ccb73c69fbe63f8a
+  ViewDeck: b5eddc8559b0e47259ab7addbf2de6768061f139
+
+COCOAPODS: 0.19.1
