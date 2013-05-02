@@ -29,7 +29,7 @@
 - (UIImage *)statusImage
 {
     UIImage *img = nil;
-    CGSize size = (CGSize){30,30};
+    CGSize size = (CGSize){20,20};
     
     if ([self.statusName isEqualToString:@"Up"]) {
         img = [UIImage imageIcon:@"FontAwesome/ok" size:size color:[UIColor greenColor]];
