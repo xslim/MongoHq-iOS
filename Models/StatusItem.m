@@ -23,28 +23,17 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"%@\n\t%@", self.titleText, self.subtitleText];
+    return [NSString stringWithFormat:@"%@ - %@", self.name, self.eventMessage];
 }
 
-- (UIImage *)statusImage
+- (NSURL *)statusImageURL
 {
-    UIImage *img = nil;
-    CGSize size = (CGSize){20,20};
-    
-    if ([self.statusName isEqualToString:@"Up"]) {
-        img = [UIImage imageIcon:@"FontAwesome/ok" size:size color:[UIColor greenColor]];
-    } else if ([self.statusName isEqualToString:@"Warning"]) {
-        img = [UIImage imageIcon:@"FontAwesome/attention-circle" size:size color:[UIColor yellowColor]];
-    } else if ([self.statusName isEqualToString:@"Maintenance"]) {
-        img = [UIImage imageIcon:@"Iconic/clock" size:size color:[UIColor blueColor]];
-    } else if ([self.statusName isEqualToString:@"Down"]) {
-        img = [UIImage imageIcon:@"FontAwesome/cancel-circle" size:size color:[UIColor redColor]];
-    } else {
-        img = [UIImage imageIcon:@"FontAwesome/picture" size:size color:[UIColor lightGrayColor]];
-    }
-    
-    
-    return img;
+    return [NSURL URLWithString:self.statusImageUrlString];
+}
+
++ (UIImage *)statusPlaceholderImage
+{
+    return [UIImage imageIcon:@"FontAwesome/picture" size:(CGSize){16,16} color:[UIColor lightGrayColor]];
 }
 
 @end

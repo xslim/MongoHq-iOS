@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		557150991732A21B007A752B /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 557150981732A21B007A752B /* AppController.m */; };
 		557A00BA17316827009460FA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 557A00B917316827009460FA /* UIKit.framework */; };
 		557A00BC17316827009460FA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 557A00BB17316827009460FA /* Foundation.framework */; };
 		557A00BE17316827009460FA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 557A00BD17316827009460FA /* CoreGraphics.framework */; };
@@ -23,6 +24,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		557150971732A21B007A752B /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
+		557150981732A21B007A752B /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
 		557A00B617316827009460FA /* MongoHq.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MongoHq.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		557A00B917316827009460FA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		557A00BB17316827009460FA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -99,6 +102,8 @@
 				557A00C817316827009460FA /* AppDelegate.h */,
 				557A00C917316827009460FA /* AppDelegate.m */,
 				557A00C017316827009460FA /* Supporting Files */,
+				557150971732A21B007A752B /* AppController.h */,
+				557150981732A21B007A752B /* AppController.m */,
 			);
 			path = MongoHq;
 			sourceTree = "<group>";
@@ -247,6 +252,7 @@
 				557A00D91731730E009460FA /* StatusViewController.m in Sources */,
 				557A00DD173174E5009460FA /* StatusItem.m in Sources */,
 				557A00E117318FD8009460FA /* UIImage+FontIcon.m in Sources */,
+				557150991732A21B007A752B /* AppController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -54,6 +54,11 @@
 
 - (void)refresh
 {
+    [self refreshOld];
+}
+
+- (void)refreshOld
+{
     [SVProgressHUD showWithStatus:@"Loading"];
     
     RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[StatusItem class]];
@@ -61,6 +66,7 @@
      @"name" : @"name",
      @"description" : @"itemDescription",
      @"current-event.status.name" : @"statusName",
+     @"current-event.status.image" : @"statusImageUrlString",
      @"current-event.timestamp" : @"timestamp",
      @"current-event.message" : @"eventMessage",
      }];
@@ -109,7 +115,12 @@
     StatusItem *item = [self.items objectAtIndex:indexPath.row];
     cell.textLabel.text = item.titleText;
     cell.detailTextLabel.text = item.subtitleText;
-    cell.imageView.image = item.statusImage;
+
+    if (item.statusImageURL) {
+        [cell.imageView setImageWithURL:item.statusImageURL placeholderImage:[StatusItem statusPlaceholderImage]];
+    } else {
+        cell.imageView.image = [StatusItem statusPlaceholderImage];
+    }
     
     return cell;
 }
