@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Kalapun. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "GenericTableViewController.h"
 
-@interface StatusViewController : UITableViewController
+@interface StatusViewController : GenericTableViewController
 
 @end

@@ -7,10 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RestKit.h"
 
 @interface AppController : NSObject
 
 @property (nonatomic, strong) RKObjectManager *statusObjectManager;
+@property (nonatomic, strong) RKObjectManager *objectManager;
 
 + (AppController *)shared;
 

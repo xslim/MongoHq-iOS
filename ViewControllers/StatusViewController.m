@@ -7,13 +7,11 @@
 //
 
 #import "StatusViewController.h"
-#import "ISRefreshControl.h"
-#import "SVProgressHUD.h"
 #import "StatusItem.h"
 #import "DetailStatusViewController.h"
 
 @interface StatusViewController ()
-@property (nonatomic, strong) NSArray *items;
+
 @end
 
 @implementation StatusViewController
@@ -31,15 +29,7 @@
 {
     [super viewDidLoad];
     
-    self.refreshControl = (id)[[ISRefreshControl alloc] init];
-    [self.refreshControl addTarget:self
-                            action:@selector(refresh)
-                  forControlEvents:UIControlEventValueChanged];
     
-    if (!self.items) [self refresh];
-
-    // Uncomment the following line to preserve selection between presentations.
-    self.clearsSelectionOnViewWillAppear = YES;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
@@ -69,7 +59,7 @@
      @"name" : @"name",
      @"description" : @"itemDescription",
      @"current-event.status.name" : @"statusName",
-     @"current-event.status.image" : @"statusImageUrlString",
+     @"current-event.status.image" : @"imageUrl",
      @"current-event.timestamp" : @"timestamp",
      @"current-event.message" : @"eventMessage",
      }];
@@ -83,9 +73,8 @@
     RKObjectRequestOperation *operation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:@[responseDescriptor]];
     [operation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *result) {
         self.items = [result array];
-        NSLog(@"Loaded items: %@", self.items);
+        //NSLog(@"Loaded items: %@", self.items);
         [self.tableView reloadData];
-        
         [self.refreshControl endRefreshing];
         [SVProgressHUD showSuccessWithStatus:nil];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
@@ -124,10 +113,10 @@
     cell.textLabel.text = item.titleText;
     cell.detailTextLabel.text = item.subtitleText;
 
-    if (item.statusImageURL) {
-        [cell.imageView setImageWithURL:item.statusImageURL placeholderImage:[StatusItem statusPlaceholderImage]];
+    if (item.imageUrl) {
+        [cell.imageView setImageWithURL:[NSURL URLWithString:item.imageUrl] placeholderImage:[StatusItem placeholderImage]];
     } else {
-        cell.imageView.image = [StatusItem statusPlaceholderImage];
+        cell.imageView.image = [StatusItem placeholderImage];
     }
     
     return cell;

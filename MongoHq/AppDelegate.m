@@ -8,8 +8,6 @@
 
 #import "AppDelegate.h"
 #import "AppController.h"
-#import "StatusViewController.h"
-#import "DetailStatusViewController.h"
 
 @implementation AppDelegate
 
@@ -18,12 +16,14 @@
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
     [AppController shared];
     
+    [[NSUserDefaults standardUserDefaults] setObject:@"picpjs6mxl2sx1dmc6so" forKey:@"apiKey"];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    StatusViewController *vc = [StatusViewController new];
+    UIViewController *vc = [[NSClassFromString(@"DatabasesViewController") alloc] init];
     UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:vc];
     
     self.window.rootViewController = nc;

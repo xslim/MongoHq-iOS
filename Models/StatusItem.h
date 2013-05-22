@@ -15,13 +15,12 @@
 @property (nonatomic, strong) NSDate *timestamp;
 @property (nonatomic, strong) NSString *eventMessage;
 @property (nonatomic, strong) NSString *statusName;
-@property (nonatomic, strong) NSString *statusImageUrlString;
+@property (nonatomic, strong) NSString *imageUrl;
 
 
 @property (nonatomic, readonly) NSString *titleText;
 @property (nonatomic, readonly) NSString *subtitleText;
-@property (nonatomic, readonly) NSURL *statusImageURL;
 
-+ (UIImage *)statusPlaceholderImage;
++ (UIImage *)placeholderImage;
 
 @end

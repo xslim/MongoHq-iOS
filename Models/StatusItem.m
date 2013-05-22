@@ -26,12 +26,7 @@
     return [NSString stringWithFormat:@"%@ - %@", self.name, self.eventMessage];
 }
 
-- (NSURL *)statusImageURL
-{
-    return [NSURL URLWithString:self.statusImageUrlString];
-}
-
-+ (UIImage *)statusPlaceholderImage
++ (UIImage *)placeholderImage
 {
     return [UIImage imageIcon:@"FontAwesome/picture" size:(CGSize){16,16} color:[UIColor lightGrayColor]];
 }
