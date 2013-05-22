@@ -10,6 +10,7 @@
 #import "ISRefreshControl.h"
 #import "SVProgressHUD.h"
 #import "StatusItem.h"
+#import "DetailStatusViewController.h"
 
 @interface StatusViewController ()
 @property (nonatomic, strong) NSArray *items;
@@ -38,7 +39,7 @@
     if (!self.items) [self refresh];
 
     // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    self.clearsSelectionOnViewWillAppear = YES;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
@@ -59,6 +60,8 @@
 
 - (void)refreshOld
 {
+    // Simple sample of code to get started
+    
     [SVProgressHUD showWithStatus:@"Loading"];
     
     RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[StatusItem class]];
@@ -70,8 +73,12 @@
      @"current-event.timestamp" : @"timestamp",
      @"current-event.message" : @"eventMessage",
      }];
+    
+    // Define the response mapping
     NSIndexSet *statusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful); // Anything in 2xx
     RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping pathPattern:@"/api/v1/services" keyPath:@"services" statusCodes:statusCodes];
+    
+    // Prepare the request operation
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://status.mongohq.com/api/v1/services"]];
     RKObjectRequestOperation *operation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:@[responseDescriptor]];
     [operation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *result) {
@@ -87,7 +94,7 @@
         [self.refreshControl endRefreshing];
         [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
     }];
-    [operation start];
+    [operation start]; //Fire the request
 
 }
 
@@ -109,6 +116,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
     // Configure the cell...
@@ -129,13 +137,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    DetailStatusViewController *detailViewController = [[DetailStatusViewController alloc] init];
+    detailViewController.item = [self.items objectAtIndex:indexPath.row];
+    [self.navigationController pushViewController:detailViewController animated:YES];
 }
 
 @end

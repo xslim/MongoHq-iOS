@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		55375758174BF7E2002791BE /* DetailStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55375757174BF7E2002791BE /* DetailStatusViewController.m */; };
+		5539AE03174C122500184973 /* fixtures in Resources */ = {isa = PBXBuildFile; fileRef = 5539AE02174C122500184973 /* fixtures */; };
 		557150991732A21B007A752B /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 557150981732A21B007A752B /* AppController.m */; };
 		557A00BA17316827009460FA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 557A00B917316827009460FA /* UIKit.framework */; };
 		557A00BC17316827009460FA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 557A00BB17316827009460FA /* Foundation.framework */; };
@@ -24,6 +26,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		55375756174BF7E2002791BE /* DetailStatusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DetailStatusViewController.h; path = ViewControllers/DetailStatusViewController.h; sourceTree = "<group>"; };
+		55375757174BF7E2002791BE /* DetailStatusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DetailStatusViewController.m; path = ViewControllers/DetailStatusViewController.m; sourceTree = "<group>"; };
+		5539AE02174C122500184973 /* fixtures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fixtures; sourceTree = "<group>"; };
 		557150971732A21B007A752B /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		557150981732A21B007A752B /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
 		557A00B617316827009460FA /* MongoHq.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MongoHq.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -70,6 +75,7 @@
 				557A00DA173174BB009460FA /* Models */,
 				557A00D6173172D8009460FA /* ViewControllers */,
 				557A00BF17316827009460FA /* MongoHq */,
+				5539AE02174C122500184973 /* fixtures */,
 				557A00DE17318FD8009460FA /* Support */,
 				557A00B817316827009460FA /* Frameworks */,
 				557A00B717316827009460FA /* Products */,
@@ -127,6 +133,8 @@
 			children = (
 				557A00D71731730E009460FA /* StatusViewController.h */,
 				557A00D81731730E009460FA /* StatusViewController.m */,
+				55375756174BF7E2002791BE /* DetailStatusViewController.h */,
+				55375757174BF7E2002791BE /* DetailStatusViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -206,6 +214,7 @@
 				557A00CC17316827009460FA /* Default.png in Resources */,
 				557A00CE17316827009460FA /* Default@2x.png in Resources */,
 				557A00D017316827009460FA /* Default-568h@2x.png in Resources */,
+				5539AE03174C122500184973 /* fixtures in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,6 +262,7 @@
 				557A00DD173174E5009460FA /* StatusItem.m in Sources */,
 				557A00E117318FD8009460FA /* UIImage+FontIcon.m in Sources */,
 				557150991732A21B007A752B /* AppController.m in Sources */,
+				55375758174BF7E2002791BE /* DetailStatusViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

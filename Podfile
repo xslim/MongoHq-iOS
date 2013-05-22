@@ -11,3 +11,7 @@ pod 'ViewDeck'
 pod 'ISRefreshControl'
 pod 'SVProgressHUD'
 pod 'FontasticIcons'
+pod 'MGBox2'
+
+# Testing
+pod 'Nocilla', :git => 'https://github.com/xslim/Nocilla.git'

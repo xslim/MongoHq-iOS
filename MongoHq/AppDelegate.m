@@ -7,20 +7,26 @@
 //
 
 #import "AppDelegate.h"
+#import "AppController.h"
 #import "StatusViewController.h"
+#import "DetailStatusViewController.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    [AppController shared];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    self.window.rootViewController = [StatusViewController new];
+    StatusViewController *vc = [StatusViewController new];
+    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:vc];
+    
+    self.window.rootViewController = nc;
     
     return YES;
 }
