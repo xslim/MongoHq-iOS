@@ -11,6 +11,8 @@
 
 #import "StatusItem.h"
 #import "MDatabase.h"
+#import "MPlan.h"
+#import "MCollection.h"
 
 #import "Nocilla.h"
 
@@ -34,7 +36,7 @@
         [self setupStatusObjectManager];
         [self setupObjectManager];
         [self addErrorMappings];
-        [self setupMappers];
+        [self setupResponseDescriptors];
     }
     return self;
 }
@@ -101,16 +103,47 @@
     self.objectManager = manager;
 }
 
-- (void)setupMappers
+- (void)setupResponseDescriptors
+{
+    [self.objectManager addResponseDescriptor:[self databasesResponseDescriptor]];
+    [self.objectManager addResponseDescriptor:[self plansResponseDescriptor]];
+    [self.objectManager addResponseDescriptor:[self collectionsResponseDescriptor]];
+}
+
+#pragma mark - Response Descriptors
+
+- (RKResponseDescriptor *)databasesResponseDescriptor
 {
     RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[MDatabase class]];
     [mapping addAttributeMappingsFromArray:@[@"name", @"plan", @"hostname", @"port"]];
     NSIndexSet *statusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful); // Anything in 2xx
     RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping pathPattern:@"/databases" keyPath:nil statusCodes:statusCodes];
-    
-    [self.objectManager addResponseDescriptor:responseDescriptor];
-
+    return responseDescriptor;
 }
+
+- (RKResponseDescriptor *)plansResponseDescriptor
+{
+    RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[MPlan class]];
+    [mapping addAttributeMappingsFromArray:@[@"name", @"slug", @"price", @"type"]];
+    
+    //[mapping addAttributeMappingsFromDictionary:@{@"@metadata.mapping.collectionIndex": @"index"}];
+    //[mapping addAttributeMappingsFromDictionary:@{@"@metadata.HTTP.response.headers": @"headers"}];
+    
+    NSIndexSet *statusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful); // Anything in 2xx
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping pathPattern:@"/plans" keyPath:nil statusCodes:statusCodes];
+    return responseDescriptor;
+}
+
+- (RKResponseDescriptor *)collectionsResponseDescriptor
+{
+    RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[MCollection class]];
+    [mapping addAttributeMappingsFromArray:@[@"name", @"count", @"indexCount", @"storageSize"]];
+    NSIndexSet *statusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful); // Anything in 2xx
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping pathPattern:@"/databases/:databaseID/collections" keyPath:nil statusCodes:statusCodes];
+    return responseDescriptor;
+}
+
+#pragma mark - Stub stuff
 
 + (void)stubRequestType:(NSString *)type uri:(NSString *)uri returnCode:(NSUInteger)code fixture:(NSString *)fixture {
 //#ifdef COCOAPODS_POD_AVAILABLE_Nocilla

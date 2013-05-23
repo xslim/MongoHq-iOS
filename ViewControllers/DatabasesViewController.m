@@ -7,8 +7,9 @@
 //
 
 #import "DatabasesViewController.h"
-#import "ISRefreshControl.h"
-#import "SVProgressHUD.h"
+#import "PlansViewController.h"
+#import "CollectionsViewController.h"
+#import "MDatabase.h"
 
 @interface DatabasesViewController ()
 
@@ -29,16 +30,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
-    
+    self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
+- (IBAction)createNewItem:(id)sender
+{
+    PlansViewController *vc = [[PlansViewController alloc] init];
+    vc.title = @"Select plan for new Database";
+    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:vc];
+    [self.navigationController presentViewController:nc animated:YES completion:nil];
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -93,13 +94,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    MDatabase *db = [self.items objectAtIndex:indexPath.row];
+    CollectionsViewController *vc = [[CollectionsViewController alloc] init];
+    vc.title = db.name;
+    vc.database = db;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end

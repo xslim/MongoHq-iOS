@@ -38,7 +38,7 @@
     self.clearsSelectionOnViewWillAppear = YES;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    //self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning
@@ -52,7 +52,7 @@
 - (void)refresh {
     [self startLoading];
     RKObjectManager *manager = [AppController shared].objectManager;
-    [manager getObjectsAtPath:self.path parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+    [manager getObjectsAtPath:self.path parameters:self.parameters success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         [self loadedItems:[mappingResult array]];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         [self loadedWithError:error];
@@ -70,7 +70,8 @@
     //NSLog(@"Loaded items: %@", self.items);
     [self.tableView reloadData];
     [self.refreshControl endRefreshing];
-    [SVProgressHUD showSuccessWithStatus:nil];
+    [SVProgressHUD dismiss];
+    //[SVProgressHUD showSuccessWithStatus:nil];
 }
 
 - (void)loadedWithError:(NSError *)error
@@ -78,6 +79,23 @@
     NSLog(@"Error on loading: %@", error);
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     [alert show];
+}
+
+- (IBAction)createNewItem:(id)sender
+{
+    NSLog(@"createNewItem:");
+}
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated
+{    
+    [super setEditing:editing animated:animated];
+    
+    if (editing) {
+        UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(createNewItem:)];
+        self.navigationItem.leftBarButtonItem = btn;
+    } else {
+        self.navigationItem.leftBarButtonItem = nil;
+    }
 }
 
 #pragma mark - Table view data source

@@ -19,4 +19,9 @@
     return self.plan;
 }
 
+- (NSString *)databaseID
+{
+    return self.name;
+}
+
 @end

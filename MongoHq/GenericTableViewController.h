@@ -16,9 +16,13 @@
 @property (nonatomic, strong) NSString *path;
 @property (nonatomic, strong) NSArray *items;
 
+@property (nonatomic, strong) NSDictionary *parameters;
+
 - (void)refresh;
 - (void)startLoading;
 - (void)loadedItems:(NSArray *)newItems;
 - (void)loadedWithError:(NSError *)error;
+
+- (IBAction)createNewItem:(id)sender;
 
 @end
