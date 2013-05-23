@@ -15,6 +15,8 @@
 @property (nonatomic, strong) NSNumber *price;
 @property (nonatomic, strong) NSString *type;
 
+@property (nonatomic, readonly) NSString *selectName;
+
 //@metadata.mapping.collectionIndex
 @property (nonatomic, strong) NSNumber *index;
 @property (nonatomic, strong) NSDictionary *headers;

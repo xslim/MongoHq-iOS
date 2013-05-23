@@ -11,6 +11,7 @@
 #import "ISRefreshControl.h"
 #import "SVProgressHUD.h"
 
+
 @interface GenericTableViewController : UITableViewController
 
 @property (nonatomic, strong) NSString *path;

@@ -13,6 +13,7 @@
 		5524F29B174E884700E1AA11 /* PlansViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5524F29A174E884700E1AA11 /* PlansViewController.m */; };
 		5524F29E174E8B5E00E1AA11 /* MCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 5524F29D174E8B5E00E1AA11 /* MCollection.m */; };
 		5524F2A1174E8BA200E1AA11 /* CollectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5524F2A0174E8BA200E1AA11 /* CollectionsViewController.m */; };
+		5524F2A7174EC03C00E1AA11 /* NewDatabaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5524F2A6174EC03C00E1AA11 /* NewDatabaseViewController.m */; };
 		55375758174BF7E2002791BE /* DetailStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55375757174BF7E2002791BE /* DetailStatusViewController.m */; };
 		5539AE03174C122500184973 /* fixtures in Resources */ = {isa = PBXBuildFile; fileRef = 5539AE02174C122500184973 /* fixtures */; };
 		557150991732A21B007A752B /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 557150981732A21B007A752B /* AppController.m */; };
@@ -46,6 +47,8 @@
 		5524F29D174E8B5E00E1AA11 /* MCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCollection.m; path = Models/MCollection.m; sourceTree = "<group>"; };
 		5524F29F174E8BA200E1AA11 /* CollectionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectionsViewController.h; path = ViewControllers/CollectionsViewController.h; sourceTree = "<group>"; };
 		5524F2A0174E8BA200E1AA11 /* CollectionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectionsViewController.m; path = ViewControllers/CollectionsViewController.m; sourceTree = "<group>"; };
+		5524F2A5174EC03C00E1AA11 /* NewDatabaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewDatabaseViewController.h; path = ViewControllers/NewDatabaseViewController.h; sourceTree = "<group>"; };
+		5524F2A6174EC03C00E1AA11 /* NewDatabaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewDatabaseViewController.m; path = ViewControllers/NewDatabaseViewController.m; sourceTree = "<group>"; };
 		55375756174BF7E2002791BE /* DetailStatusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DetailStatusViewController.h; path = ViewControllers/DetailStatusViewController.h; sourceTree = "<group>"; };
 		55375757174BF7E2002791BE /* DetailStatusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DetailStatusViewController.m; path = ViewControllers/DetailStatusViewController.m; sourceTree = "<group>"; };
 		5539AE02174C122500184973 /* fixtures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fixtures; sourceTree = "<group>"; };
@@ -165,6 +168,8 @@
 				55375757174BF7E2002791BE /* DetailStatusViewController.m */,
 				559C5ACF174D68BA000ED2F2 /* DatabasesViewController.h */,
 				559C5AD0174D68BA000ED2F2 /* DatabasesViewController.m */,
+				5524F2A5174EC03C00E1AA11 /* NewDatabaseViewController.h */,
+				5524F2A6174EC03C00E1AA11 /* NewDatabaseViewController.m */,
 				5524F29F174E8BA200E1AA11 /* CollectionsViewController.h */,
 				5524F2A0174E8BA200E1AA11 /* CollectionsViewController.m */,
 				5524F299174E884700E1AA11 /* PlansViewController.h */,
@@ -311,6 +316,7 @@
 				5524F29B174E884700E1AA11 /* PlansViewController.m in Sources */,
 				5524F29E174E8B5E00E1AA11 /* MCollection.m in Sources */,
 				5524F2A1174E8BA200E1AA11 /* CollectionsViewController.m in Sources */,
+				5524F2A7174EC03C00E1AA11 /* NewDatabaseViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

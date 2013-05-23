@@ -19,6 +19,11 @@
     return [NSString stringWithFormat:@"%@ - %@", self.type, self.price];;
 }
 
+- (NSString *)selectName
+{
+    return [NSString stringWithFormat:@"%@ - $%@", self.name, self.price];;
+}
+
 - (void)setIndex:(NSNumber *)index {
     _index = index;
     NSLog(@"setting index %@ for %@", index, self.name);

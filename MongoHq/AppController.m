@@ -72,8 +72,13 @@
     [errorMapping addPropertyMapping:[RKAttributeMapping attributeMappingFromKeyPath:nil toKeyPath:@"errorMessage"]];
     
     NSIndexSet *clientErrorStatusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassClientError);
+    NSIndexSet *goodStatusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful); // Anything in 2xx
+    
+    NSMutableIndexSet *statusCodes = [[NSMutableIndexSet alloc] initWithIndexSet:clientErrorStatusCodes];
+    [statusCodes addIndexes:goodStatusCodes];
+    
     // Any response in the 4xx status code range with an "error" key path uses this mapping
-    RKResponseDescriptor *errorDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:errorMapping pathPattern:nil keyPath:@"error" statusCodes:clientErrorStatusCodes];
+    RKResponseDescriptor *errorDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:errorMapping pathPattern:nil keyPath:@"error" statusCodes:statusCodes];
     
     // Add it to default response mappers
     [self.objectManager addResponseDescriptor:errorDescriptor];
@@ -97,7 +102,7 @@
     [manager.HTTPClient registerHTTPOperationClass:[AFJSONRequestOperation class]];
     
     [manager setAcceptHeaderWithMIMEType:RKMIMETypeJSON];
-    manager.requestSerializationMIMEType = RKMIMETypeFormURLEncoded;
+    manager.requestSerializationMIMEType = RKMIMETypeJSON;
 
     
     self.objectManager = manager;
@@ -105,14 +110,16 @@
 
 - (void)setupResponseDescriptors
 {
-    [self.objectManager addResponseDescriptor:[self databasesResponseDescriptor]];
-    [self.objectManager addResponseDescriptor:[self plansResponseDescriptor]];
-    [self.objectManager addResponseDescriptor:[self collectionsResponseDescriptor]];
+    [self.objectManager addResponseDescriptor:[self databaseResponseDescriptor]];
+    [self.objectManager addResponseDescriptor:[self planResponseDescriptor]];
+    [self.objectManager addResponseDescriptor:[self collectionResponseDescriptor]];
+    
+    [self.objectManager addRequestDescriptor:[self databaseRequestDescriptor]];
 }
 
 #pragma mark - Response Descriptors
 
-- (RKResponseDescriptor *)databasesResponseDescriptor
+- (RKResponseDescriptor *)databaseResponseDescriptor
 {
     RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[MDatabase class]];
     [mapping addAttributeMappingsFromArray:@[@"name", @"plan", @"hostname", @"port"]];
@@ -121,7 +128,21 @@
     return responseDescriptor;
 }
 
-- (RKResponseDescriptor *)plansResponseDescriptor
+- (RKRequestDescriptor *)databaseRequestDescriptor
+{
+    RKObjectMapping *requestMapping = [RKObjectMapping requestMapping]; // objectClass == NSMutableDictionary
+    [requestMapping addAttributeMappingsFromArray:@[@"name"]];
+    [requestMapping addAttributeMappingsFromDictionary:@{@"plan": @"slug"}];
+    
+    
+    // For any object of class MDatabase, serialize into an NSMutableDictionary using the given mapping
+    // If we will provide the rootKeyPath, serialization will nest under the 'provided' key path
+    RKRequestDescriptor *requestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:requestMapping objectClass:[MDatabase class] rootKeyPath:nil];
+
+    return requestDescriptor;
+}
+
+- (RKResponseDescriptor *)planResponseDescriptor
 {
     RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[MPlan class]];
     [mapping addAttributeMappingsFromArray:@[@"name", @"slug", @"price", @"type"]];
@@ -134,7 +155,7 @@
     return responseDescriptor;
 }
 
-- (RKResponseDescriptor *)collectionsResponseDescriptor
+- (RKResponseDescriptor *)collectionResponseDescriptor
 {
     RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[MCollection class]];
     [mapping addAttributeMappingsFromArray:@[@"name", @"count", @"indexCount", @"storageSize"]];

@@ -13,6 +13,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    RKLogConfigureByName("RestKit/Network", RKLogLevelTrace);
+    
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
     [AppController shared];
     

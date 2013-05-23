@@ -17,9 +17,10 @@
     NSString *apiKey = [[NSUserDefaults standardUserDefaults] stringForKey:@"apiKey"];
     
     if (apiKey) {
-        NSMutableDictionary *dict = (parameters) ? [parameters mutableCopy] : [@{} mutableCopy];
-        [dict setObject:apiKey forKey:@"_apikey"];
-        parameters = dict;
+//        NSMutableDictionary *dict = (parameters) ? [parameters mutableCopy] : [@{} mutableCopy];
+//        [dict setObject:apiKey forKey:@"_apikey"];
+//        parameters = dict;
+        path = [path stringByAppendingFormat:@"?_apikey=%@", apiKey];
     }
     
     return [super requestWithMethod:method path:path parameters:parameters];

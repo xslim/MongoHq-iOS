@@ -5,6 +5,7 @@ PODS:
   - ISRefreshControl (1.2.2)
   - MGBox2 (2.0.0)
   - Nocilla (0.5)
+  - QuickDialog (0.8)
   - RestKit (0.20.2-dev):
     - RestKit/Core
   - RestKit/Core (0.20.2-dev):
@@ -31,6 +32,7 @@ DEPENDENCIES:
   - ISRefreshControl
   - MGBox2
   - Nocilla (from `https://github.com/xslim/Nocilla.git`)
+  - QuickDialog
   - RestKit (from `https://github.com/RestKit/RestKit.git`)
   - SVProgressHUD
   - ViewDeck
@@ -48,6 +50,7 @@ SPEC CHECKSUMS:
   ISRefreshControl: b520e068de6383bedc2fda7f6b79a764edd4ed3a
   MGBox2: 7c09e36c2271f9af16fdb5141a0ca554ecee4d8d
   Nocilla: 1df04a76d7b25bde2bb3aaafbb3e339308be1bdf
+  QuickDialog: 465692c7c599ad41a0c46022c55779dd61a4d4fe
   RestKit: b3571dd492f4524041a24b28c14bc5c7c833f246
   SOCKit: ed67aeeca4a697b63a933229e53f4670d5b9300f
   SVProgressHUD: 03d4845ec8e64591726428a08236c6a5489d45f8
