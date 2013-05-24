@@ -114,12 +114,16 @@
 - (void)saveNew {
     [SVProgressHUD showWithStatus:@"Creating..."];
     RKObjectManager *manager = [AppController shared].objectManager;
+    
+    // Use Route?
+    if (!self.path) {
+        NSLog(@"Will use Object route");
+    }
+    
     [manager postObject:self.item path:self.path parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        [SVProgressHUD dismiss];
         [self done];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-        [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
-        [SVProgressHUD dismiss];
+        [self errorOnLoad:error];
     }];
 }
 
@@ -127,11 +131,9 @@
     [SVProgressHUD showWithStatus:@"Saving..."];
     RKObjectManager *manager = [AppController shared].objectManager;
     [manager putObject:self.item path:self.itemPath parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        [SVProgressHUD dismiss];
         [self done];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-        [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
-        [SVProgressHUD dismiss];
+        [self errorOnLoad:error];
     }];
 }
 
@@ -139,15 +141,19 @@
     [SVProgressHUD showWithStatus:@"Deleting..."];
     RKObjectManager *manager = [AppController shared].objectManager;
     [manager deleteObject:self.item path:self.itemPath parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        [SVProgressHUD dismiss];
         [self done];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-        [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
-        [SVProgressHUD dismiss];
+        [self errorOnLoad:error];
     }];
 }
 
+- (void)errorOnLoad:(NSError *)error {
+    [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
+    [SVProgressHUD dismiss];
+}
+
 - (void)done {
+    [SVProgressHUD dismiss];
     [self.delegate presentedViewControllerDidDone:self];
 }
 

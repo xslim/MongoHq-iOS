@@ -20,22 +20,11 @@
     [super viewDidLoad];
 
     
-    NSDictionary *postParams = @{@"databaseID": self.database.databaseID,
-                                 @"collectionID": self.collection.collectionID};
-    
-    self.path = RKPathFromPatternWithObject(@"/databases/:databaseID/collections/:collectionID/documents", postParams);
-    
-    if (self.document) {
-        NSDictionary *putParams = @{@"databaseID": self.database.databaseID,
-                                    @"collectionID": self.collection.collectionID,
-                                    @"documentID": self.document.documentID
-                                    };
-        
-        self.itemPath = RKPathFromPatternWithObject(@"/databases/:databaseID/collections/:collectionID/documents/:documentID", putParams);
-    }
-    
-    
     if (self.itemIsNew) self.document = [MDocument new];
+    
+    // Presetting relation info for Class Routes
+    self.document.databaseID = self.database.databaseID;
+    self.document.collectionID = self.collection.collectionID;
     
     QSection *section = [[QSection alloc] initWithTitle:self.title];
     

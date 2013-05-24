@@ -18,10 +18,11 @@
 
 - (void)viewDidLoad
 {
-    NSDictionary *pathParams = @{@"databaseID": self.database.databaseID,
-                                 @"collectionID": self.collection.collectionID};
+    self.routeName = @"documents";
+    self.routeObject = @{@"databaseID": self.database.databaseID,
+                         @"collectionID": self.collection.collectionID};
     
-    self.path = RKPathFromPatternWithObject(@"/databases/:databaseID/collections/:collectionID/documents", pathParams);
+    //self.path = RKPathFromPatternWithObject(@"/databases/:databaseID/collections/:collectionID/documents", pathParams);
     
     [super viewDidLoad];
 	self.navigationItem.rightBarButtonItem = self.editButtonItem;

@@ -73,6 +73,24 @@
     
     [self startLoading];
     RKObjectManager *manager = [AppController shared].objectManager;
+    
+    if (self.routeName) {
+        
+        [manager getObjectsAtPathForRouteNamed:self.routeName object:self.routeObject parameters:self.parameters success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+            [self loadedItems:[mappingResult array]];
+        } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+            // hack
+            int code = [[[operation HTTPRequestOperation] response] statusCode];
+            if (code == 401) {
+                [self presentApiKeyEntry];
+            }
+            
+            [self loadedWithError:error];
+        }];
+        
+        return;
+    }
+    
     [manager getObjectsAtPath:self.path parameters:self.parameters success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         [self loadedItems:[mappingResult array]];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {

@@ -14,10 +14,13 @@
 
 @interface GenericTableViewController : UITableViewController <PresentingViewControllerDelegate>
 
-@property (nonatomic, strong) NSString *path;
 @property (nonatomic, strong) NSArray *items;
 
+@property (nonatomic, strong) NSString *path;
 @property (nonatomic, strong) NSDictionary *parameters;
+
+@property (nonatomic, strong) NSString *routeName;
+@property (nonatomic, strong) id routeObject;
 
 - (void)refresh;
 - (void)startLoading;

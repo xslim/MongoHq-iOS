@@ -74,6 +74,13 @@
     
     [SVProgressHUD showWithStatus:@"Loading plans"];
     RKObjectManager *manager = [AppController shared].objectManager;
+    
+//    [manager getObjectsAtPathForRouteNamed:@"plans" object:nil parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+//        <#code#>
+//    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+//        <#code#>
+//    }]
+    
     [manager getObjectsAtPath:@"/plans" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         [SVProgressHUD dismiss];
         [self displayNewDatabaseFormWithPlans:[mappingResult array]];

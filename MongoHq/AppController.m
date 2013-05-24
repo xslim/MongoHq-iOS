@@ -132,6 +132,9 @@
     NSIndexSet *statusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful); // Anything in 2xx
     RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping pathPattern:@"/plans" keyPath:nil statusCodes:statusCodes];
     [self.objectManager addResponseDescriptor:responseDescriptor];
+
+    RKRoute *route = [RKRoute routeWithName:@"plans" pathPattern:@"/plans" method:RKRequestMethodGET];
+    [self.objectManager.router.routeSet addRoute:route];
 }
 
 - (void)setupDatabaseMappings
@@ -174,23 +177,35 @@
 
 - (void)setupDocumentMappings
 {
+    Class itemClass = [MDocument class];
+    NSString *itemsPath = @"/databases/:databaseID/collections/:collectionID/documents";
+    NSString *itemPath  = @"/databases/:databaseID/collections/:collectionID/documents/:documentID";
+    
     RKObjectMapping *requestMapping = [RKObjectMapping requestMapping]; // objectClass == NSMutableDictionary
     [requestMapping addAttributeMappingsFromArray:@[@"document"]];
     
-    RKRequestDescriptor *requestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:requestMapping objectClass:[MDocument class] rootKeyPath:nil];
+    RKRequestDescriptor *requestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:requestMapping objectClass:itemClass rootKeyPath:nil];
     [self.objectManager addRequestDescriptor:requestDescriptor];
     
-    RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[MDocument class]];
+    RKObjectMapping *mapping = [RKObjectMapping mappingForClass:itemClass];
     [mapping addPropertyMapping:[RKAttributeMapping attributeMappingFromKeyPath:nil toKeyPath:@"rootDocument"]];
     
-    NSString *path = @"/databases/:databaseID/collections/:collectionID/documents";
     
     NSIndexSet *statusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful); // Anything in 2xx
-    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping pathPattern:path keyPath:nil statusCodes:statusCodes];
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping pathPattern:itemsPath keyPath:nil statusCodes:statusCodes];
     [self.objectManager addResponseDescriptor:responseDescriptor];
     
-    RKResponseDescriptor *emptyResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:[RKObjectMapping new] pathPattern:@"/databases/:databaseID/collections/:collectionID/documents/:documentID" keyPath:nil statusCodes:statusCodes];
+    RKResponseDescriptor *emptyResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:[RKObjectMapping new] pathPattern:itemPath keyPath:nil statusCodes:statusCodes];
     [self.objectManager addResponseDescriptor:emptyResponseDescriptor];
+    
+    RKRoute *itemsRoute = [RKRoute routeWithName:@"documents" pathPattern:itemsPath method:RKRequestMethodGET];
+    itemsRoute.shouldEscapePath = YES;
+    RKRoute *newItemRoute  = [RKRoute routeWithClass:itemClass pathPattern:itemsPath method:RKRequestMethodPOST];
+    newItemRoute.shouldEscapePath = YES;
+    RKRoute *itemRoute  = [RKRoute routeWithClass:itemClass pathPattern:itemPath method:RKRequestMethodAny];
+    itemsRoute.shouldEscapePath = YES;
+    
+    [self.objectManager.router.routeSet addRoutes:@[itemsRoute, newItemRoute, itemRoute]];
 }
 
 #pragma mark - Helpers

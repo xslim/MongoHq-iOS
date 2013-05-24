@@ -19,4 +19,8 @@
 @property (nonatomic, readonly) NSString *titleText;
 @property (nonatomic, assign) NSString *documentString;
 
+// relation
+@property (nonatomic, strong) NSString *databaseID;
+@property (nonatomic, strong) NSString *collectionID;
+
 @end
