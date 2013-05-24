@@ -7,7 +7,7 @@
 //
 
 #import "CollectionsViewController.h"
-
+#import "CollectionFormViewController.h"
 
 @interface CollectionsViewController ()
 
@@ -15,6 +15,12 @@
 
 @implementation CollectionsViewController
 
++ (QRootElement *)createRootElement
+{
+    QRootElement *root = [[super class] createRootElement];
+    
+    return root;
+}
 
 - (void)viewDidLoad
 {
@@ -32,7 +38,21 @@
 
 - (IBAction)createNewItem:(id)sender
 {
-    
+    CollectionFormViewController *vc = [[CollectionFormViewController alloc] init];
+    vc.delegate = self;
+    vc.database = self.database;
+    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:vc];
+    [self.navigationController presentModalViewController:nc animated:YES];
+}
+
+- (void)editItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    CollectionFormViewController *vc = [[CollectionFormViewController alloc] init];
+    vc.delegate = self;
+    vc.database = self.database;
+    vc.collection = [self.items objectAtIndex:indexPath.row];
+    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:vc];
+    [self.navigationController presentModalViewController:nc animated:YES];
 }
 
 @end

@@ -11,7 +11,7 @@
 #import "CollectionsViewController.h"
 #import "MDatabase.h"
 #import "MPlan.h"
-#import "NewDatabaseViewController.h"
+#import "DatabaseFormViewController.h"
 
 @interface DatabasesViewController ()
 
@@ -68,7 +68,8 @@
 - (IBAction)createNewItem:(id)sender
 {
 
-    NewDatabaseViewController *vc = [[NewDatabaseViewController alloc] init];
+    DatabaseFormViewController *vc = [[DatabaseFormViewController alloc] init];
+    vc.delegate = self;
     UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:vc];
     [self.navigationController presentViewController:nc animated:YES completion:nil];
 }

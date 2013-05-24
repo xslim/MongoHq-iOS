@@ -87,6 +87,11 @@
     NSLog(@"createNewItem:");
 }
 
+- (void)editItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
+
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated
 {    
     [super setEditing:editing animated:animated];
@@ -97,6 +102,18 @@
     } else {
         self.navigationItem.leftBarButtonItem = nil;
     }
+}
+
+#pragma mark - PresentingViewControllerDelegate
+
+- (void)presentedViewControllerDidDone:(UIViewController *)viewController {
+    [self setEditing:NO animated:NO];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self refresh];
+}
+
+- (void)presentedViewControllerDidCancel:(UIViewController *)viewController {
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Table view data source
@@ -144,6 +161,7 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.editingAccessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     }
     
     // Configure the cell...
@@ -202,6 +220,13 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+}
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+{
+    if (!self.tableView.editing) return;
+    
+    [self editItemAtIndexPath:indexPath];
 }
 
 @end

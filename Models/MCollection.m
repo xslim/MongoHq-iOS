@@ -17,7 +17,7 @@
             self.count, self.indexCount, self.storageSize];
 }
 
-- (NSString *)databaseID
+- (NSString *)collectionID
 {
     return self.name;
 }

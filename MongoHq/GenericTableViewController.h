@@ -10,9 +10,9 @@
 
 #import "ISRefreshControl.h"
 #import "SVProgressHUD.h"
+#import "PresentingViewControllerDelegate.h"
 
-
-@interface GenericTableViewController : UITableViewController
+@interface GenericTableViewController : UITableViewController <PresentingViewControllerDelegate>
 
 @property (nonatomic, strong) NSString *path;
 @property (nonatomic, strong) NSArray *items;

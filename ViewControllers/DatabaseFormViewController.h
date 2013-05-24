@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "QuickDialog.h"
+#import "GenericFormViewController.h"
+#import "MDatabase.h"
 
-@interface NewDatabaseViewController : QuickDialogController
+@interface DatabaseFormViewController : GenericFormViewController
+
+@property (nonatomic, strong) MDatabase *database;
 
 @end

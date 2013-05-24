@@ -1,8 +1,11 @@
 PODS:
   - AFNetworking (1.2.1)
+  - BlocksKit (1.8.2):
+    - libffi
   - CocoaLumberjack (1.6.2)
   - FontasticIcons (0.3.1)
   - ISRefreshControl (1.2.2)
+  - libffi (3.0.11)
   - MGBox2 (2.0.0)
   - Nocilla (0.5)
   - QuickDialog (0.8)
@@ -27,6 +30,7 @@ PODS:
   - ViewDeck (2.2.11)
 
 DEPENDENCIES:
+  - BlocksKit
   - CocoaLumberjack
   - FontasticIcons
   - ISRefreshControl
@@ -45,9 +49,11 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AFNetworking: a44069e3c9c89867544f6639482f155c7e5f9b41
+  BlocksKit: 7396526b0816734103f6133fbb1a520c8b04e80c
   CocoaLumberjack: d73e1e317ced14ab930797dda6c17156ff17aaa1
   FontasticIcons: c755e18f1437f0df7db9cbe87d2d43e0e6e975db
   ISRefreshControl: b520e068de6383bedc2fda7f6b79a764edd4ed3a
+  libffi: 8a1d9ba43c0c84b546b42c6f742714e73aa07ae1
   MGBox2: 7c09e36c2271f9af16fdb5141a0ca554ecee4d8d
   Nocilla: 1df04a76d7b25bde2bb3aaafbb3e339308be1bdf
   QuickDialog: 465692c7c599ad41a0c46022c55779dd61a4d4fe
@@ -57,4 +63,4 @@ SPEC CHECKSUMS:
   TransitionKit: 1624e84f252d5cd26900be28ccb73c69fbe63f8a
   ViewDeck: b5eddc8559b0e47259ab7addbf2de6768061f139
 
-COCOAPODS: 0.19.1
+COCOAPODS: 0.20.1

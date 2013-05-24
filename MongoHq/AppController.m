@@ -13,6 +13,7 @@
 #import "MDatabase.h"
 #import "MPlan.h"
 #import "MCollection.h"
+#import "OKResponseObject.h"
 
 #import "Nocilla.h"
 
@@ -36,7 +37,8 @@
         [self setupStatusObjectManager];
         [self setupObjectManager];
         [self addErrorMappings];
-        [self setupResponseDescriptors];
+        //[self addOKResponseMappings];
+        [self setupMappings];
     }
     return self;
 }
@@ -73,15 +75,32 @@
     
     NSIndexSet *clientErrorStatusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassClientError);
     NSIndexSet *goodStatusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful); // Anything in 2xx
+    NSIndexSet *serverStatusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassServerError); // Anything in 5xx
     
     NSMutableIndexSet *statusCodes = [[NSMutableIndexSet alloc] initWithIndexSet:clientErrorStatusCodes];
-    [statusCodes addIndexes:goodStatusCodes];
+//    [statusCodes addIndexes:goodStatusCodes];
+    [statusCodes addIndexes:serverStatusCodes];
     
     // Any response in the 4xx status code range with an "error" key path uses this mapping
     RKResponseDescriptor *errorDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:errorMapping pathPattern:nil keyPath:@"error" statusCodes:statusCodes];
     
     // Add it to default response mappers
     [self.objectManager addResponseDescriptor:errorDescriptor];
+}
+
+- (void)addOKResponseMappings
+{
+    RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[OKResponseObject class]];
+    // The entire value at the source key path containing the errors maps to the message
+    [mapping addPropertyMapping:[RKAttributeMapping attributeMappingFromKeyPath:nil toKeyPath:@"ok"]];
+    
+    NSIndexSet *goodStatusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful); // Anything in 2xx
+    
+    // Any response in the 4xx status code range with an "error" key path uses this mapping
+    RKResponseDescriptor *okDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping pathPattern:nil keyPath:@"ok" statusCodes:goodStatusCodes];
+    
+    // Add it to default response mappers
+    [self.objectManager addResponseDescriptor:okDescriptor];
 }
 
 - (void)setupObjectManager
@@ -108,13 +127,17 @@
     self.objectManager = manager;
 }
 
-- (void)setupResponseDescriptors
+- (void)setupMappings
 {
+    [self setupCollectionMappings];
+    
     [self.objectManager addResponseDescriptor:[self databaseResponseDescriptor]];
     [self.objectManager addResponseDescriptor:[self planResponseDescriptor]];
-    [self.objectManager addResponseDescriptor:[self collectionResponseDescriptor]];
+    
     
     [self.objectManager addRequestDescriptor:[self databaseRequestDescriptor]];
+    
+    
 }
 
 #pragma mark - Response Descriptors
@@ -142,6 +165,7 @@
     return requestDescriptor;
 }
 
+
 - (RKResponseDescriptor *)planResponseDescriptor
 {
     RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[MPlan class]];
@@ -155,13 +179,23 @@
     return responseDescriptor;
 }
 
-- (RKResponseDescriptor *)collectionResponseDescriptor
+- (void)setupCollectionMappings
 {
+    RKObjectMapping *requestMapping = [RKObjectMapping requestMapping]; // objectClass == NSMutableDictionary
+    [requestMapping addAttributeMappingsFromArray:@[@"name"]];
+    
+    RKRequestDescriptor *requestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:requestMapping objectClass:[MCollection class] rootKeyPath:nil];
+    [self.objectManager addRequestDescriptor:requestDescriptor];
+    
     RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[MCollection class]];
     [mapping addAttributeMappingsFromArray:@[@"name", @"count", @"indexCount", @"storageSize"]];
+
     NSIndexSet *statusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful); // Anything in 2xx
     RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping pathPattern:@"/databases/:databaseID/collections" keyPath:nil statusCodes:statusCodes];
-    return responseDescriptor;
+    [self.objectManager addResponseDescriptor:responseDescriptor];
+    
+    RKResponseDescriptor *emptyResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:[RKObjectMapping new] pathPattern:@"/databases/:databaseID/collections/:collectionID" keyPath:nil statusCodes:statusCodes];
+    [self.objectManager addResponseDescriptor:emptyResponseDescriptor];
 }
 
 #pragma mark - Stub stuff
