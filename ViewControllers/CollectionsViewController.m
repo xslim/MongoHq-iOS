@@ -8,19 +8,13 @@
 
 #import "CollectionsViewController.h"
 #import "CollectionFormViewController.h"
+#import "DocumentsViewController.h"
 
 @interface CollectionsViewController ()
 
 @end
 
 @implementation CollectionsViewController
-
-+ (QRootElement *)createRootElement
-{
-    QRootElement *root = [[super class] createRootElement];
-    
-    return root;
-}
 
 - (void)viewDidLoad
 {
@@ -53,6 +47,16 @@
     vc.collection = [self.items objectAtIndex:indexPath.row];
     UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:vc];
     [self.navigationController presentModalViewController:nc animated:YES];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    MCollection *collection = [self.items objectAtIndex:indexPath.row];
+    DocumentsViewController *vc = [[DocumentsViewController alloc] init];
+    vc.title = collection.name;
+    vc.database = self.database;
+    vc.collection = collection;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end
