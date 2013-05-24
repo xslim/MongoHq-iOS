@@ -13,7 +13,11 @@
 
 @property (nonatomic, strong) RKObjectManager *statusObjectManager;
 @property (nonatomic, strong) RKObjectManager *objectManager;
+@property (nonatomic, strong) NSString *apiKey;
 
 + (AppController *)shared;
+
+- (void)saveApiKey;
+- (void)loadApiKey;
 
 @end

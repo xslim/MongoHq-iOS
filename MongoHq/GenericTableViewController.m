@@ -7,7 +7,7 @@
 //
 
 #import "GenericTableViewController.h"
-
+#import "ApiKeyViewController.h"
 
 @interface GenericTableViewController ()
 
@@ -50,12 +50,39 @@
 
 #pragma mark - Actions
 
+- (void)presentApiKeyEntry {
+    ApiKeyViewController *vc = [[ApiKeyViewController alloc] init];
+    vc.delegate = self;
+    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:vc];
+    [self.navigationController presentViewController:nc animated:YES completion:nil];
+}
+
+- (BOOL)apiKeyExists {
+    if ([AppController shared].apiKey) return YES;
+    
+    [self presentApiKeyEntry];
+    
+    return NO;
+}
+
 - (void)refresh {
+    
+    if (![self apiKeyExists]) {
+        return;
+    }
+    
     [self startLoading];
     RKObjectManager *manager = [AppController shared].objectManager;
     [manager getObjectsAtPath:self.path parameters:self.parameters success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         [self loadedItems:[mappingResult array]];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        
+        // hack
+        int code = [[[operation HTTPRequestOperation] response] statusCode];
+        if (code == 401) {
+            [self presentApiKeyEntry];
+        }
+        
         [self loadedWithError:error];
     }];
 }
@@ -77,6 +104,7 @@
 
 - (void)loadedWithError:(NSError *)error
 {
+    [SVProgressHUD dismiss];
     NSLog(@"Error on loading: %@", error);
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     [alert show];

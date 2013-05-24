@@ -17,9 +17,11 @@
     RKLogConfigureByName("RestKit/Network", RKLogLevelTrace);
     
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
-    [AppController shared];
     
-    [[NSUserDefaults standardUserDefaults] setObject:@"picpjs6mxl2sx1dmc6so" forKey:@"apiKey"];
+    AppController *appController = [AppController shared];
+    appController.apiKey = @"picpjs6mxl2sx1dmc6so";
+    [appController saveApiKey];
+    
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.

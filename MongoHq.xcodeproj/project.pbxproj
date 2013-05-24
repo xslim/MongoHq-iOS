@@ -20,6 +20,7 @@
 		5524F2BA174FE65F00E1AA11 /* DocumentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5524F2B9174FE65F00E1AA11 /* DocumentsViewController.m */; };
 		5524F2BE174FE7F800E1AA11 /* DocumentFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5524F2BD174FE7F800E1AA11 /* DocumentFormViewController.m */; };
 		5524F2C1174FF31100E1AA11 /* DocumentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5524F2C0174FF31100E1AA11 /* DocumentViewController.m */; };
+		5524F2C4175002CE00E1AA11 /* ApiKeyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5524F2C3175002CC00E1AA11 /* ApiKeyViewController.m */; };
 		55375758174BF7E2002791BE /* DetailStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55375757174BF7E2002791BE /* DetailStatusViewController.m */; };
 		5539AE03174C122500184973 /* fixtures in Resources */ = {isa = PBXBuildFile; fileRef = 5539AE02174C122500184973 /* fixtures */; };
 		557150991732A21B007A752B /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 557150981732A21B007A752B /* AppController.m */; };
@@ -68,6 +69,8 @@
 		5524F2BD174FE7F800E1AA11 /* DocumentFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DocumentFormViewController.m; path = ViewControllers/DocumentFormViewController.m; sourceTree = "<group>"; };
 		5524F2BF174FF31100E1AA11 /* DocumentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DocumentViewController.h; path = ViewControllers/DocumentViewController.h; sourceTree = "<group>"; };
 		5524F2C0174FF31100E1AA11 /* DocumentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DocumentViewController.m; path = ViewControllers/DocumentViewController.m; sourceTree = "<group>"; };
+		5524F2C2175002CB00E1AA11 /* ApiKeyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ApiKeyViewController.h; path = ViewControllers/ApiKeyViewController.h; sourceTree = "<group>"; };
+		5524F2C3175002CC00E1AA11 /* ApiKeyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ApiKeyViewController.m; path = ViewControllers/ApiKeyViewController.m; sourceTree = "<group>"; };
 		55375756174BF7E2002791BE /* DetailStatusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DetailStatusViewController.h; path = ViewControllers/DetailStatusViewController.h; sourceTree = "<group>"; };
 		55375757174BF7E2002791BE /* DetailStatusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DetailStatusViewController.m; path = ViewControllers/DetailStatusViewController.m; sourceTree = "<group>"; };
 		5539AE02174C122500184973 /* fixtures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fixtures; sourceTree = "<group>"; };
@@ -229,6 +232,8 @@
 				5524F28E174D83B300E1AA11 /* GenericTableViewController.m */,
 				5524F2AC174F9B4200E1AA11 /* GenericFormViewController.h */,
 				5524F2AD174F9B4300E1AA11 /* GenericFormViewController.m */,
+				5524F2C2175002CB00E1AA11 /* ApiKeyViewController.h */,
+				5524F2C3175002CC00E1AA11 /* ApiKeyViewController.m */,
 				5524F2AB174F991800E1AA11 /* PresentingViewControllerDelegate.h */,
 				5524F2B5174FE61500E1AA11 /* Status */,
 				5524F2B6174FE62300E1AA11 /* Database */,
@@ -387,6 +392,7 @@
 				5524F2BA174FE65F00E1AA11 /* DocumentsViewController.m in Sources */,
 				5524F2BE174FE7F800E1AA11 /* DocumentFormViewController.m in Sources */,
 				5524F2C1174FF31100E1AA11 /* DocumentViewController.m in Sources */,
+				5524F2C4175002CE00E1AA11 /* ApiKeyViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

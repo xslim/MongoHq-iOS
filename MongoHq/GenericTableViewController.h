@@ -26,4 +26,6 @@
 
 - (IBAction)createNewItem:(id)sender;
 
+- (BOOL)apiKeyExists;
+
 @end

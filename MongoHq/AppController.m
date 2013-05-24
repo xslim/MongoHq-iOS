@@ -34,6 +34,7 @@
     self = [super init];
     if (self) {
         //[self mockHTTP];
+        [self loadApiKey];
         [self setupStatusObjectManager];
         [self setupObjectManager];
         [self setupMappings];
@@ -190,6 +191,16 @@
     
     RKResponseDescriptor *emptyResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:[RKObjectMapping new] pathPattern:@"/databases/:databaseID/collections/:collectionID/documents/:documentID" keyPath:nil statusCodes:statusCodes];
     [self.objectManager addResponseDescriptor:emptyResponseDescriptor];
+}
+
+#pragma mark - Helpers
+
+- (void)saveApiKey {
+    [[NSUserDefaults standardUserDefaults] setObject:self.apiKey forKey:@"apiKey"];
+}
+
+- (void)loadApiKey {
+    self.apiKey = [[NSUserDefaults standardUserDefaults] objectForKey:@"apiKey"];
 }
 
 #pragma mark - Stub stuff
