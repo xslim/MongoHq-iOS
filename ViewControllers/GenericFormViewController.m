@@ -8,7 +8,7 @@
 
 #import "GenericFormViewController.h"
 
-@interface GenericFormViewController ()
+@interface GenericFormViewController ()<UIAlertViewDelegate>
 
 @end
 
@@ -30,6 +30,17 @@
     return root;
 }
 
+- (QSection *)deleteButtonSection
+{
+    QButtonElement *btn = [[QButtonElement alloc] initWithTitle:@"Delete"];
+    btn.onSelected = ^{
+        [self deleteItem];
+    };
+    
+    QSection *section = [[QSection alloc] initWithTitle:@""];
+    [section addElement:btn];
+    return section;
+}
 
 - (void)viewDidLoad
 {
@@ -87,10 +98,23 @@
     }
 }
 
+- (void)deleteItem {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Delete?" message:@"Are you sure?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
+    [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        return;
+    }
+    
+    [self saveDelete];
+}
+
 - (void)saveNew {
     [SVProgressHUD showWithStatus:@"Creating..."];
     RKObjectManager *manager = [AppController shared].objectManager;
-    [manager postObject:self.item path:self.postPath parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+    [manager postObject:self.item path:self.path parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         [SVProgressHUD dismiss];
         [self done];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
@@ -102,7 +126,19 @@
 - (void)saveEdit {
     [SVProgressHUD showWithStatus:@"Saving..."];
     RKObjectManager *manager = [AppController shared].objectManager;
-    [manager putObject:self.item path:self.putPath parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+    [manager putObject:self.item path:self.itemPath parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        [SVProgressHUD dismiss];
+        [self done];
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        [SVProgressHUD showErrorWithStatus:[error localizedDescription]];
+        [SVProgressHUD dismiss];
+    }];
+}
+
+- (void)saveDelete {
+    [SVProgressHUD showWithStatus:@"Deleting..."];
+    RKObjectManager *manager = [AppController shared].objectManager;
+    [manager deleteObject:self.item path:self.itemPath parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         [SVProgressHUD dismiss];
         [self done];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {

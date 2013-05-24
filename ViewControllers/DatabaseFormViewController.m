@@ -22,7 +22,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    self.postPath = @"/databases";
+    self.path = @"/databases";
     if (self.itemIsNew) self.database = [MDatabase new];
     
     [self loadPlans];
@@ -47,6 +47,7 @@
     [section addElement:planEntry];
     
     [self.root addSection:section];
+    if (!self.itemIsNew) [self.root addSection:[self deleteButtonSection]];
         
     [self updateQuickDialogView];
 }

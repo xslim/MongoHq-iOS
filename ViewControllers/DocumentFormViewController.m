@@ -23,7 +23,7 @@
     NSDictionary *postParams = @{@"databaseID": self.database.databaseID,
                                  @"collectionID": self.collection.collectionID};
     
-    self.postPath = RKPathFromPatternWithObject(@"/databases/:databaseID/collections/:collectionID/documents", postParams);
+    self.path = RKPathFromPatternWithObject(@"/databases/:databaseID/collections/:collectionID/documents", postParams);
     
     if (self.document) {
         NSDictionary *putParams = @{@"databaseID": self.database.databaseID,
@@ -31,7 +31,7 @@
                                     @"documentID": self.document.documentID
                                     };
         
-        self.putPath = RKPathFromPatternWithObject(@"/databases/:databaseID/collections/:collectionID/documents/:documentID", putParams);
+        self.itemPath = RKPathFromPatternWithObject(@"/databases/:databaseID/collections/:collectionID/documents/:documentID", putParams);
     }
     
     
@@ -48,6 +48,7 @@
     
     
     [self.root addSection:section];
+    if (!self.itemIsNew) [self.root addSection:[self deleteButtonSection]];
     
     [self updateQuickDialogView];
 }

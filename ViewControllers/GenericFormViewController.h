@@ -14,8 +14,8 @@
 
 @interface GenericFormViewController : QuickDialogController
 
-@property (nonatomic, strong) NSString *postPath;
-@property (nonatomic, strong) NSString *putPath;
+@property (nonatomic, strong) NSString *path;
+@property (nonatomic, strong) NSString *itemPath;
 
 @property (nonatomic, assign) id <PresentingViewControllerDelegate> delegate;
 
@@ -25,13 +25,21 @@
 
 
 + (QRootElement *)createRootElement;
+- (QSection *)deleteButtonSection;
+
 - (void)updateQuickDialogView;
 
 - (BOOL)validateItem;
+
 - (void)save;
+- (void)deleteItem;
 - (void)saveNew;
 - (void)saveEdit;
+- (void)saveDelete;
+
 - (void)done;
 - (void)cancel;
+
+
 
 @end

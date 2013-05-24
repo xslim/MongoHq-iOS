@@ -25,13 +25,14 @@
 	// Do any additional setup after loading the view.
     
 
-    self.postPath = RKPathFromPatternWithObject(@"/databases/:databaseID/collections", self.database);
+    self.path = RKPathFromPatternWithObject(@"/databases/:databaseID/collections", self.database);
 
     if (self.collection) {
-        NSDictionary *pathParams = @{@"databaseID": self.database.databaseID,
-                                     @"collectionID": self.collection.collectionID};
+        NSDictionary *pathParams = @{
+         @"databaseID": self.database.databaseID,
+         @"collectionID": RKPercentEscapedQueryStringFromStringWithEncoding(self.collection.collectionID, NSUTF8StringEncoding)};
 
-        self.putPath = RKPathFromPatternWithObject(@"/databases/:databaseID/collections/:collectionID", pathParams);
+        self.itemPath = RKPathFromPatternWithObject(@"/databases/:databaseID/collections/:collectionID", pathParams);
     }
     
     
@@ -44,6 +45,7 @@
     
     
     [self.root addSection:section];
+    if (!self.itemIsNew) [self.root addSection:[self deleteButtonSection]];
     
     [self updateQuickDialogView];
 }
