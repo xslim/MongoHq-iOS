@@ -23,7 +23,7 @@
 		5524F2C4175002CE00E1AA11 /* ApiKeyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5524F2C3175002CC00E1AA11 /* ApiKeyViewController.m */; };
 		55375758174BF7E2002791BE /* DetailStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55375757174BF7E2002791BE /* DetailStatusViewController.m */; };
 		5539AE03174C122500184973 /* fixtures in Resources */ = {isa = PBXBuildFile; fileRef = 5539AE02174C122500184973 /* fixtures */; };
-		557150991732A21B007A752B /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 557150981732A21B007A752B /* AppController.m */; };
+		557150991732A21B007A752B /* ApiController.m in Sources */ = {isa = PBXBuildFile; fileRef = 557150981732A21B007A752B /* ApiController.m */; };
 		557A00BA17316827009460FA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 557A00B917316827009460FA /* UIKit.framework */; };
 		557A00BC17316827009460FA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 557A00BB17316827009460FA /* Foundation.framework */; };
 		557A00BE17316827009460FA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 557A00BD17316827009460FA /* CoreGraphics.framework */; };
@@ -74,8 +74,8 @@
 		55375756174BF7E2002791BE /* DetailStatusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DetailStatusViewController.h; path = ViewControllers/DetailStatusViewController.h; sourceTree = "<group>"; };
 		55375757174BF7E2002791BE /* DetailStatusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DetailStatusViewController.m; path = ViewControllers/DetailStatusViewController.m; sourceTree = "<group>"; };
 		5539AE02174C122500184973 /* fixtures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fixtures; sourceTree = "<group>"; };
-		557150971732A21B007A752B /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
-		557150981732A21B007A752B /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
+		557150971732A21B007A752B /* ApiController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiController.h; sourceTree = "<group>"; };
+		557150981732A21B007A752B /* ApiController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApiController.m; sourceTree = "<group>"; };
 		557A00B617316827009460FA /* MongoHq.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MongoHq.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		557A00B917316827009460FA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		557A00BB17316827009460FA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -203,8 +203,8 @@
 				557A00C817316827009460FA /* AppDelegate.h */,
 				557A00C917316827009460FA /* AppDelegate.m */,
 				557A00C017316827009460FA /* Supporting Files */,
-				557150971732A21B007A752B /* AppController.h */,
-				557150981732A21B007A752B /* AppController.m */,
+				557150971732A21B007A752B /* ApiController.h */,
+				557150981732A21B007A752B /* ApiController.m */,
 				559C5ACC174D64EA000ED2F2 /* MongoHqHTTPClient.h */,
 				559C5ACD174D64EA000ED2F2 /* MongoHqHTTPClient.m */,
 			);
@@ -375,7 +375,7 @@
 				557A00D91731730E009460FA /* StatusViewController.m in Sources */,
 				557A00DD173174E5009460FA /* StatusItem.m in Sources */,
 				557A00E117318FD8009460FA /* UIImage+FontIcon.m in Sources */,
-				557150991732A21B007A752B /* AppController.m in Sources */,
+				557150991732A21B007A752B /* ApiController.m in Sources */,
 				55375758174BF7E2002791BE /* DetailStatusViewController.m in Sources */,
 				559C5ACE174D64EA000ED2F2 /* MongoHqHTTPClient.m in Sources */,
 				559C5AD1174D68BA000ED2F2 /* DatabasesViewController.m in Sources */,

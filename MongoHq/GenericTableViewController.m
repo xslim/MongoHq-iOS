@@ -58,7 +58,7 @@
 }
 
 - (BOOL)apiKeyExists {
-    if ([AppController shared].apiKey) return YES;
+    if ([ApiController shared].apiKey) return YES;
     
     [self presentApiKeyEntry];
     
@@ -72,7 +72,7 @@
     }
     
     [self startLoading];
-    RKObjectManager *manager = [AppController shared].objectManager;
+    RKObjectManager *manager = [RKObjectManager sharedManager];
     
     if (self.routeName) {
         
@@ -107,6 +107,7 @@
 
 - (void)startLoading
 {
+    [self.refreshControl beginRefreshing];
     [SVProgressHUD showWithStatus:@"Loading"];
 }
 

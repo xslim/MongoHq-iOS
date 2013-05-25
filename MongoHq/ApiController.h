@@ -9,13 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "RestKit.h"
 
-@interface AppController : NSObject
+@interface ApiController : NSObject
 
 @property (nonatomic, strong) RKObjectManager *statusObjectManager;
-@property (nonatomic, strong) RKObjectManager *objectManager;
 @property (nonatomic, strong) NSString *apiKey;
 
-+ (AppController *)shared;
++ (ApiController *)shared;
 
 - (void)saveApiKey;
 - (void)loadApiKey;

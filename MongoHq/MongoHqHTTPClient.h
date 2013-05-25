@@ -9,5 +9,4 @@
 #import "AFHTTPClient.h"
 
 @interface MongoHqHTTPClient : AFHTTPClient
-
 @end

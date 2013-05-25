@@ -73,7 +73,7 @@
 {
     
     [SVProgressHUD showWithStatus:@"Loading plans"];
-    RKObjectManager *manager = [AppController shared].objectManager;
+    RKObjectManager *manager = [RKObjectManager sharedManager];
     
 //    [manager getObjectsAtPathForRouteNamed:@"plans" object:nil parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
 //        <#code#>

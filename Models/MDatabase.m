@@ -10,8 +10,10 @@
 
 @implementation MDatabase
 
+// This helps in debugging
 - (NSString *)description {
-    return [NSString stringWithFormat:@"%@ on %@ @ %@:%@", self.name, self.plan, self.hostname, self.port];
+    return [NSString stringWithFormat:@"%@ on %@ @ %@:%@",
+            self.name, self.plan, self.hostname, self.port];
 }
 
 - (NSString *)subtitleText

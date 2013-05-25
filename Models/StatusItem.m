@@ -23,7 +23,8 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"%@ - %@", self.name, self.eventMessage];
+    return [NSString stringWithFormat:@"%@ - %@ on %@",
+            self.name, self.eventMessage, self.timestamp];
 }
 
 + (UIImage *)placeholderImage

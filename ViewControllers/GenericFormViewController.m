@@ -113,7 +113,7 @@
 
 - (void)saveNew {
     [SVProgressHUD showWithStatus:@"Creating..."];
-    RKObjectManager *manager = [AppController shared].objectManager;
+    RKObjectManager *manager = [RKObjectManager sharedManager];
     
     // Use Route?
     if (!self.path) {
@@ -129,7 +129,7 @@
 
 - (void)saveEdit {
     [SVProgressHUD showWithStatus:@"Saving..."];
-    RKObjectManager *manager = [AppController shared].objectManager;
+    RKObjectManager *manager = [RKObjectManager sharedManager];
     [manager putObject:self.item path:self.itemPath parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         [self done];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
@@ -139,7 +139,7 @@
 
 - (void)saveDelete {
     [SVProgressHUD showWithStatus:@"Deleting..."];
-    RKObjectManager *manager = [AppController shared].objectManager;
+    RKObjectManager *manager = [RKObjectManager sharedManager];
     [manager deleteObject:self.item path:self.itemPath parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         [self done];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {

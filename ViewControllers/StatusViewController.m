@@ -73,7 +73,7 @@
     RKObjectRequestOperation *operation = [[RKObjectRequestOperation alloc] initWithRequest:request responseDescriptors:@[responseDescriptor]];
     [operation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *result) {
         self.items = [result array];
-        //NSLog(@"Loaded items: %@", self.items);
+        NSLog(@"Loaded items: %@", self.items);
         [self.tableView reloadData];
         [self.refreshControl endRefreshing];
         [SVProgressHUD showSuccessWithStatus:nil];

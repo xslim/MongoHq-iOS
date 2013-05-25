@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "AppController.h"
+#import "ApiController.h"
 
 @implementation AppDelegate
 
@@ -18,7 +18,7 @@
     
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
     
-    AppController *appController = [AppController shared];
+    ApiController *appController = [ApiController shared];
     appController.apiKey = @"picpjs6mxl2sx1dmc6so";
     [appController saveApiKey];
     

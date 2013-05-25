@@ -46,7 +46,7 @@
     
     self.root.title = self.title = @"Enter API Key";
     
-    self.currentKey = [AppController shared].apiKey;
+    self.currentKey = [ApiController shared].apiKey;
     
     QEntryElement *keyEntry = [[QEntryElement alloc] initWithTitle:@"key" Value:self.currentKey Placeholder:@"api key"];
     keyEntry.controllerAction = @"changedKey:";
@@ -83,8 +83,8 @@
     
     if (self.currentKey.length == 0) return;
     
-    [AppController shared].apiKey = self.currentKey;
-    [[AppController shared] saveApiKey];
+    [ApiController shared].apiKey = self.currentKey;
+    [[ApiController shared] saveApiKey];
     
     [self done];
 }
