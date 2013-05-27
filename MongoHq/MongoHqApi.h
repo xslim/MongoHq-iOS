@@ -9,12 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "RestKit.h"
 
-@interface ApiController : NSObject
+@interface MongoHqApi : NSObject
 
 @property (nonatomic, strong) RKObjectManager *statusObjectManager;
 @property (nonatomic, strong) NSString *apiKey;
 
-+ (ApiController *)shared;
++ (MongoHqApi *)shared;
 
 - (void)saveApiKey;
 - (void)loadApiKey;

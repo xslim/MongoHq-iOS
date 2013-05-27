@@ -16,13 +16,15 @@
             self.name, self.plan, self.hostname, self.port];
 }
 
-- (NSString *)subtitleText
-{
+- (NSString *)titleText {
+    return self.name;
+}
+
+- (NSString *)subtitleText {
     return self.plan;
 }
 
-- (NSString *)databaseID
-{
+- (NSString *)databaseID {
     return self.name;
 }
 

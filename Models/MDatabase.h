@@ -15,6 +15,7 @@
 @property (nonatomic, strong) NSString *hostname;
 @property (nonatomic, strong) NSNumber *port;
 
+@property (nonatomic, readonly) NSString *titleText;
 @property (nonatomic, readonly) NSString *subtitleText;
 @property (nonatomic, readonly) NSString *databaseID;
 

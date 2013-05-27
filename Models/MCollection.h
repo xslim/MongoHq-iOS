@@ -15,7 +15,10 @@
 @property (nonatomic, strong) NSNumber *indexCount;
 @property (nonatomic, strong) NSNumber *storageSize;
 
+@property (nonatomic, readonly) NSString *titleText;
 @property (nonatomic, readonly) NSString *subtitleText;
 @property (nonatomic, readonly) NSString *collectionID;
+
+@property (nonatomic, strong) NSString *databaseID;
 
 @end

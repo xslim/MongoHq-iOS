@@ -28,11 +28,11 @@
     self.path = RKPathFromPatternWithObject(@"/databases/:databaseID/collections", self.database);
 
     if (self.collection) {
-        NSDictionary *pathParams = @{
-         @"databaseID": self.database.databaseID,
-         @"collectionID": RKPercentEscapedQueryStringFromStringWithEncoding(self.collection.collectionID, NSUTF8StringEncoding)};
+    NSDictionary *pathParams = @{
+     @"databaseID": self.database.databaseID,
+     @"collectionID": RKPercentEscapedQueryStringFromStringWithEncoding(self.collection.collectionID, NSUTF8StringEncoding)};
 
-        self.itemPath = RKPathFromPatternWithObject(@"/databases/:databaseID/collections/:collectionID", pathParams);
+    self.itemPath = RKPathFromPatternWithObject(@"/databases/:databaseID/collections/:collectionID", pathParams);
     }
     
     

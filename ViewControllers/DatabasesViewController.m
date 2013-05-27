@@ -24,22 +24,16 @@
 {
     self = [super init];
     if (self) {
+        // Configure the controller
         self.path = @"/databases";
+        self.title = @"Databases";
     }
     return self;
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
-    self.title = @"Databases";
-}
 
 - (IBAction)createNewItem:(id)sender
 {
-
     DatabaseFormViewController *vc = [[DatabaseFormViewController alloc] init];
     vc.delegate = self;
     UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:vc];

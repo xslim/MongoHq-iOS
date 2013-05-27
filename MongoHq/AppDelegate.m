@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "ApiController.h"
+#import "MongoHqApi.h"
 
 @implementation AppDelegate
 
@@ -18,7 +18,7 @@
     
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
     
-    ApiController *appController = [ApiController shared];
+    MongoHqApi *appController = [MongoHqApi shared];
     appController.apiKey = @"picpjs6mxl2sx1dmc6so";
     [appController saveApiKey];
     

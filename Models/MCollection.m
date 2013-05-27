@@ -10,6 +10,13 @@
 
 @implementation MCollection
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"%@ - %@", self.name, self.subtitleText];
+}
+
+- (NSString *)titleText {
+    return self.name;
+}
 
 - (NSString *)subtitleText
 {

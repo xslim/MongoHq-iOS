@@ -14,18 +14,25 @@
 
 @interface GenericTableViewController : UITableViewController <PresentingViewControllerDelegate>
 
+// Property to hold our loaded objects
 @property (nonatomic, strong) NSArray *items;
 
+// Path to use for loading the remote objects
 @property (nonatomic, strong) NSString *path;
+
+// Possible parameters for a request
 @property (nonatomic, strong) NSDictionary *parameters;
 
 @property (nonatomic, strong) NSString *routeName;
 @property (nonatomic, strong) id routeObject;
 
+// Methods to re-use / override
 - (void)refresh;
-- (void)startLoading;
-- (void)loadedItems:(NSArray *)newItems;
-- (void)loadedWithError:(NSError *)error;
+- (void)willStartLoading;
+- (void)finishedLoadingWithItems:(NSArray *)newItems;
+- (void)finishedLoadingWithError:(NSError *)error;
+
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 
 - (IBAction)createNewItem:(id)sender;
 

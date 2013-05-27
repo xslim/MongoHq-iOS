@@ -7,7 +7,7 @@
 //
 
 #import "MongoHqHTTPClient.h"
-#import "ApiController.h"
+#import "MongoHqApi.h"
 
 @implementation MongoHqHTTPClient
 
@@ -15,7 +15,7 @@
                                       path:(NSString *)path
                                 parameters:(NSDictionary *)parameters
 {
-    NSString *apiKey = [ApiController shared].apiKey;
+    NSString *apiKey = [MongoHqApi shared].apiKey;
     if (apiKey) {
         path = [path stringByAppendingFormat:@"?_apikey=%@", apiKey];
     }

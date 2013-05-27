@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Kalapun. All rights reserved.
 //
 
-#import "ApiController.h"
+#import "MongoHqApi.h"
 #import "MongoHqHTTPClient.h"
 
 #import "StatusItem.h"
@@ -17,14 +17,14 @@
 
 #import "Nocilla.h"
 
-@implementation ApiController
+@implementation MongoHqApi
 
-+ (ApiController *)shared
++ (MongoHqApi *)shared
 {
-    static ApiController *sharedInstance = nil;
+    static MongoHqApi *sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedInstance = [[ApiController alloc] init];
+        sharedInstance = [[MongoHqApi alloc] init];
     });
     return sharedInstance;
 }
@@ -94,6 +94,7 @@
 - (void)setupMappings
 {
     [self setupErrorMappings];
+    [self setupPlanMappings];
     [self setupDatabaseMappings];
     [self setupCollectionMappings];
     [self setupDocumentMappings];
@@ -148,23 +149,36 @@
     // Get the object manager we use
     RKObjectManager *manager = [RKObjectManager sharedManager];
     
+    // The class we map to
+    Class itemClass = [MDatabase class];
+    
+    // The endpoint we plan to request for getting a list of objects
+    NSString *itemsPath = @"/databases";
+    
+    // The endpoint for manipulating with existing object
+    NSString *itemPath  = @"/databases/:databaseID";
+    
+    // REQUEST
+    
     // Create the request mapping
     RKObjectMapping *requestMapping = [RKObjectMapping requestMapping];
     
     // "name" will be same in JSON and in a class
     [requestMapping addAttributeMappingsFromArray:@[@"name"]];
     
-    // Map "plan" from class to "slug" in serialized JSON
+    // Map "plan" property from class to "slug" in serialized JSON
     [requestMapping addAttributeMappingsFromDictionary:@{@"plan": @"slug"}];
     
     
     // For any object of class MDatabase, serialize into an NSMutableDictionary using the given mapping
     // If we will provide the rootKeyPath, serialization will nest under the 'provided' key path
-    RKRequestDescriptor *requestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:requestMapping objectClass:[MDatabase class] rootKeyPath:nil];
+    RKRequestDescriptor *requestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:requestMapping objectClass:itemClass rootKeyPath:nil];
     [manager addRequestDescriptor:requestDescriptor];
     
+    // RESPONSE
+    
     // Define that a mapping will be for MDatabase class
-    RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[MDatabase class]];
+    RKObjectMapping *mapping = [RKObjectMapping mappingForClass:itemClass];
     
     // The names of JSON fields and class properties are same here
     [mapping addAttributeMappingsFromArray:@[@"name", @"plan", @"hostname", @"port"]];
@@ -175,34 +189,76 @@
     // The mapping will be triggered if a response status code is anything in 2xx
     NSIndexSet *statusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful);
     
-    NSString *path = @"/databases"; // The endpoint we plan to request
-    
     // Put it all together in response descriptor
-    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping pathPattern:path keyPath:keyPath statusCodes:statusCodes];
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping pathPattern:itemsPath keyPath:keyPath statusCodes:statusCodes];
     
-    // Add response descriptor to pur manager
+    // Add response descriptor to our manager
     [manager addResponseDescriptor:responseDescriptor];
+    
+    // ROUTING
+    
+    // Route for list of objects
+    RKRoute *itemsRoute = [RKRoute routeWithName:@"databases" pathPattern:itemsPath method:RKRequestMethodGET];
+    itemsRoute.shouldEscapePath = YES;
+    
+    // Route for creating a new object
+    RKRoute *newItemRoute  = [RKRoute routeWithClass:itemClass pathPattern:itemsPath method:RKRequestMethodPOST];
+    newItemRoute.shouldEscapePath = YES;
+    
+    // Route for manipulating with existing object
+    RKRoute *itemRoute  = [RKRoute routeWithClass:itemClass pathPattern:itemPath method:RKRequestMethodAny];
+    itemsRoute.shouldEscapePath = YES;
+    
+    // Add defined routes to the Object Manager router
+    [manager.router.routeSet addRoutes:@[itemsRoute, newItemRoute, itemRoute]];
 }
 
 - (void)setupCollectionMappings
 {
     RKObjectManager *manager = [RKObjectManager sharedManager];
+
+    Class itemClass = [MCollection class];
+    NSString *itemsPath = @"/databases/:databaseID/collections";
     
-    RKObjectMapping *requestMapping = [RKObjectMapping requestMapping]; // objectClass == NSMutableDictionary
+    // The endpoint for manipulating with existing object
+    NSString *itemPath  = @"/databases/:databaseID/collections/:collectionID";
+
+    // Create the request mapping
+    RKObjectMapping *requestMapping = [RKObjectMapping requestMapping];
+
+    // "name" will be same in JSON and in a class
     [requestMapping addAttributeMappingsFromArray:@[@"name"]];
-    
-    RKRequestDescriptor *requestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:requestMapping objectClass:[MCollection class] rootKeyPath:nil];
+
+    // For any object of class MCollection, serialize into an NSMutableDictionary using the given mapping
+    // If we will provide the rootKeyPath, serialization will nest under the 'provided' key path
+    RKRequestDescriptor *requestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:requestMapping objectClass:itemClass rootKeyPath:nil];
     [manager addRequestDescriptor:requestDescriptor];
     
-    RKObjectMapping *mapping = [RKObjectMapping mappingForClass:[MCollection class]];
+    
+    RKObjectMapping *mapping = [RKObjectMapping mappingForClass:itemClass];
     [mapping addAttributeMappingsFromArray:@[@"name", @"count", @"indexCount", @"storageSize"]];
 
-    NSIndexSet *statusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful); // Anything in 2xx
-    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping pathPattern:@"/databases/:databaseID/collections" keyPath:nil statusCodes:statusCodes];
+    NSIndexSet *statusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful);
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping pathPattern:itemsPath keyPath:nil statusCodes:statusCodes];
     [manager addResponseDescriptor:responseDescriptor];
     
-    RKResponseDescriptor *emptyResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:[RKObjectMapping new] pathPattern:@"/databases/:databaseID/collections/:collectionID" keyPath:nil statusCodes:statusCodes];
+    RKResponseDescriptor *emptyResponseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:[RKObjectMapping new] pathPattern:itemPath keyPath:nil statusCodes:statusCodes];
     [manager addResponseDescriptor:emptyResponseDescriptor];
+    
+    // Route for list of objects
+    RKRoute *itemsRoute = [RKRoute routeWithName:@"collections" pathPattern:itemsPath method:RKRequestMethodGET];
+    itemsRoute.shouldEscapePath = YES;
+
+    // Route for creating a new object
+    RKRoute *newItemRoute  = [RKRoute routeWithClass:itemClass pathPattern:itemsPath method:RKRequestMethodPOST];
+    newItemRoute.shouldEscapePath = YES;
+
+    // Route for manipulating with existing object
+    RKRoute *itemRoute  = [RKRoute routeWithClass:itemClass pathPattern:itemPath method:RKRequestMethodAny];
+    itemsRoute.shouldEscapePath = YES;
+
+    // Add defined routes to the Object Manager router
+    [manager.router.routeSet addRoutes:@[itemsRoute, newItemRoute, itemRoute]];
 }
 
 - (void)setupDocumentMappings
@@ -278,11 +334,11 @@
     [[LSNocilla sharedInstance] start];
     
     // Status
-    [ApiController stubGetRequest:@"http://status.mongohq.com/api/v1/services" withFixture:@"status_services"];
-    [ApiController stubGetRequest:@"^http://(.*?)tick-circle\.png".regex withFixtureFile:@"tick-circle.png"];
+    [MongoHqApi stubGetRequest:@"http://status.mongohq.com/api/v1/services" withFixture:@"status_services"];
+    [MongoHqApi stubGetRequest:@"^http://(.*?)tick-circle\.png".regex withFixtureFile:@"tick-circle.png"];
     
     // API
-    [ApiController stubGetRequest:@"^https://api.mongohq.com/databases?_apikey=(.*?)".regex withFixture:@"databases"];
+    [MongoHqApi stubGetRequest:@"^https://api.mongohq.com/databases?_apikey=(.*?)".regex withFixture:@"databases"];
 //#endif
 }
 

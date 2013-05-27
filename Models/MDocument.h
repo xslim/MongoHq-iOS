@@ -16,8 +16,11 @@
 @property (nonatomic, strong) NSDictionary *document;
 
 
-@property (nonatomic, readonly) NSString *titleText;
 @property (nonatomic, assign) NSString *documentString;
+
+
+@property (nonatomic, readonly) NSString *titleText;
+@property (nonatomic, readonly) NSString *subtitleText;
 
 // relation
 @property (nonatomic, strong) NSString *databaseID;

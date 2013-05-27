@@ -26,20 +26,20 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-
+    // Pull to refresh control
     self.refreshControl = (id)[[ISRefreshControl alloc] init];
     [self.refreshControl addTarget:self
                             action:@selector(refresh)
                   forControlEvents:UIControlEventValueChanged];
     
+    // Load items on initial start
     if (!self.items) [self refresh];
     
-    // Uncomment the following line to preserve selection between presentations.
+    // Preserve selection between presentations.
     self.clearsSelectionOnViewWillAppear = YES;
  
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    //self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    // Display an Edit button in the navigation bar for this view controller.
+    self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning
@@ -58,26 +58,31 @@
 }
 
 - (BOOL)apiKeyExists {
-    if ([ApiController shared].apiKey) return YES;
+    if ([MongoHqApi shared].apiKey) return YES;
     
     [self presentApiKeyEntry];
     
     return NO;
 }
 
-- (void)refresh {
-    
+- (void)refresh
+{    
     if (![self apiKeyExists]) {
         return;
     }
     
-    [self startLoading];
+    // If refreshed from editing mode, switch to normal
+    [self setEditing:NO animated:NO];
+    
+    [self willStartLoading];
+    
+    // Get the object manager
     RKObjectManager *manager = [RKObjectManager sharedManager];
     
     if (self.routeName) {
         
         [manager getObjectsAtPathForRouteNamed:self.routeName object:self.routeObject parameters:self.parameters success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-            [self loadedItems:[mappingResult array]];
+            [self finishedLoadingWithItems:[mappingResult array]];
         } failure:^(RKObjectRequestOperation *operation, NSError *error) {
             // hack
             int code = [[[operation HTTPRequestOperation] response] statusCode];
@@ -85,14 +90,14 @@
                 [self presentApiKeyEntry];
             }
             
-            [self loadedWithError:error];
+            [self finishedLoadingWithError:error];
         }];
         
         return;
     }
     
     [manager getObjectsAtPath:self.path parameters:self.parameters success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        [self loadedItems:[mappingResult array]];
+        [self finishedLoadingWithItems:[mappingResult array]];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         
         // hack
@@ -101,30 +106,39 @@
             [self presentApiKeyEntry];
         }
         
-        [self loadedWithError:error];
+        [self finishedLoadingWithError:error];
     }];
 }
 
-- (void)startLoading
+- (void)willStartLoading
 {
+    // Toggle "Pull to refresh" to show Activity indicator
     [self.refreshControl beginRefreshing];
+    
+    // Show a "Loading" HUD to the user
     [SVProgressHUD showWithStatus:@"Loading"];
 }
 
-- (void)loadedItems:(NSArray *)newItems
+- (void)finishedLoadingWithItems:(NSArray *)newItems
 {
+    // Update the current items with new one
     self.items = newItems;
-    //NSLog(@"Loaded items: %@", self.items);
+    NSLog(@"Loaded items: %@", self.items);
+    
+    // Reload table view
     [self.tableView reloadData];
+    
+    // Hide loading indicators
     [self.refreshControl endRefreshing];
     [SVProgressHUD dismiss];
-    //[SVProgressHUD showSuccessWithStatus:nil];
 }
 
-- (void)loadedWithError:(NSError *)error
+- (void)finishedLoadingWithError:(NSError *)error
 {
     [SVProgressHUD dismiss];
     NSLog(@"Error on loading: %@", error);
+    
+    // Show some Alert with error description
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     [alert show];
 }
@@ -154,7 +168,6 @@
 #pragma mark - PresentingViewControllerDelegate
 
 - (void)presentedViewControllerDidDone:(UIViewController *)viewController {
-    [self setEditing:NO animated:NO];
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     [self refresh];
 }
@@ -175,21 +188,15 @@
     return self.items.count;
 }
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+{
     NSObject *item = [self.items objectAtIndex:indexPath.row];
     
-    if ([item respondsToSelector:@selector(titleText)]) {
-        cell.textLabel.text = [item performSelector:@selector(titleText)];
-    } else if ([item respondsToSelector:@selector(name)]) {
-        cell.textLabel.text = [item performSelector:@selector(name)];
-    }
+    // Assume, that every item has a 'titleText' and 'subtitleText' getters
+    cell.textLabel.text = [item performSelector:@selector(titleText)];
+    cell.detailTextLabel.text = [item performSelector:@selector(subtitleText)];
     
-    if ([item respondsToSelector:@selector(subtitleText)]) {
-        cell.detailTextLabel.text = [item performSelector:@selector(subtitleText)];
-    } else if ([item respondsToSelector:@selector(descriptionText)]) {
-        cell.detailTextLabel.text = [item performSelector:@selector(descriptionText)];
-    }
-    
+    // If the's an imageUrl...
     if ([item respondsToSelector:@selector(imageUrl)]) {
         NSString *imageUrl = [item performSelector:@selector(imageUrl)];
         UIImage *placeholderImage = ([item respondsToSelector:@selector(placeholderImage)]) ? [item performSelector:@selector(placeholderImage)] : nil;
@@ -226,19 +233,32 @@
 }
 */
 
-/*
+
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    /*
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }   
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    } 
+     */
+    
+    NSObject *item = [self.items objectAtIndex:indexPath.row];
+    
+    [SVProgressHUD showWithStatus:@"Deleting..."];
+    RKObjectManager *manager = [RKObjectManager sharedManager];
+    [manager deleteObject:item path:nil parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        [self refresh];
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        [self finishedLoadingWithError:error];
+    }];
+    
 }
-*/
+
 
 /*
 // Override to support rearranging the table view.
