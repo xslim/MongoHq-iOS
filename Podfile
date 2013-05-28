@@ -1,8 +1,6 @@
 platform :ios, '5.1'
 
 # Util
-pod 'CocoaLumberjack'
-pod 'BlocksKit'
 
 # Net
 pod 'RestKit', :git => 'https://github.com/RestKit/RestKit.git'
