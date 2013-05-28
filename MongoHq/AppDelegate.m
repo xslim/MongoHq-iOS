@@ -14,9 +14,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
-    RKLogConfigureByName("RestKit/Network", RKLogLevelTrace);
     
-    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    //[DDLog addLogger:[DDTTYLogger sharedInstance]];
     
     MongoHqApi *appController = [MongoHqApi shared];
     appController.apiKey = @"picpjs6mxl2sx1dmc6so";
@@ -28,10 +27,16 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    UIViewController *vc = [[NSClassFromString(@"DatabasesViewController") alloc] init];
-    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:vc];
+    UIViewController *vc1 = [[NSClassFromString(@"DatabasesViewController") alloc] init];
+    UINavigationController *nc1 = [[UINavigationController alloc] initWithRootViewController:vc1];
     
-    self.window.rootViewController = nc;
+    UIViewController *vc2 = [[NSClassFromString(@"StatusViewController") alloc] init];
+    UINavigationController *nc2 = [[UINavigationController alloc] initWithRootViewController:vc2];
+    
+    UITabBarController *tabBar = [[UITabBarController alloc] init];
+    tabBar.viewControllers = @[nc2, nc1];
+    
+    self.window.rootViewController = tabBar;
     
     return YES;
 }

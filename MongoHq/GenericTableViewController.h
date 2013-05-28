@@ -10,6 +10,7 @@
 
 #import "ISRefreshControl.h"
 #import "SVProgressHUD.h"
+#import "UIImage+FontIcon.h"
 #import "PresentingViewControllerDelegate.h"
 
 @interface GenericTableViewController : UITableViewController <PresentingViewControllerDelegate>

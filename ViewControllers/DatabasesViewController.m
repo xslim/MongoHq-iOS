@@ -27,6 +27,7 @@
         // Configure the controller
         self.path = @"/databases";
         self.title = @"Databases";
+        self.tabBarItem.image = [UIImage fi_imageIcon:@"Entypo/database" size:(CGSize){30,30} color:[UIColor blackColor]];
     }
     return self;
 }

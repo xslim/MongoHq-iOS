@@ -208,7 +208,7 @@
     // If the's an imageUrl...
     if ([item respondsToSelector:@selector(imageUrl)]) {
         NSString *imageUrl = [item performSelector:@selector(imageUrl)];
-        UIImage *placeholderImage = ([item respondsToSelector:@selector(placeholderImage)]) ? [item performSelector:@selector(placeholderImage)] : nil;
+        UIImage *placeholderImage = ([[item class] respondsToSelector:@selector(placeholderImage)]) ? [[item class] performSelector:@selector(placeholderImage)] : nil;
         if (imageUrl) {
             [cell.imageView setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:placeholderImage];
         } else {

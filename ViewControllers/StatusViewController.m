@@ -21,6 +21,8 @@
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
+        self.title = @"Status";
+        self.tabBarItem.image = [UIImage fi_imageIcon:@"FontAwesome/bullhorn" size:(CGSize){30,30} color:[UIColor blackColor]];
     }
     return self;
 }
@@ -32,7 +34,7 @@
     
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.navigationItem.rightBarButtonItem = nil;
 }
 
 - (void)didReceiveMemoryWarning
@@ -87,47 +89,15 @@
 
 }
 
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return self.items.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    }
-    
-    // Configure the cell...
-    StatusItem *item = [self.items objectAtIndex:indexPath.row];
-    cell.textLabel.text = item.titleText;
-    cell.detailTextLabel.text = item.subtitleText;
-
-    if (item.imageUrl) {
-        [cell.imageView setImageWithURL:[NSURL URLWithString:item.imageUrl] placeholderImage:[StatusItem placeholderImage]];
-    } else {
-        cell.imageView.image = [StatusItem placeholderImage];
-    }
-    
-    return cell;
-}
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    StatusItem *item = [self.items objectAtIndex:indexPath.row];
     DetailStatusViewController *detailViewController = [[DetailStatusViewController alloc] init];
-    detailViewController.item = [self.items objectAtIndex:indexPath.row];
+    detailViewController.item = item;
+    detailViewController.title = item.name;
     [self.navigationController pushViewController:detailViewController animated:YES];
 }
 

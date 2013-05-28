@@ -17,7 +17,7 @@ alpha:alphaValue])
 
 @implementation UIImage (FontIcon)
 
-+ (UIImage *)imageIcon:(NSString *)name size:(CGSize)size color:(UIColor *)color {
++ (UIImage *)fi_imageIcon:(NSString *)name size:(CGSize)size color:(UIColor *)color {
     NSArray *components = [name componentsSeparatedByString:@"/"];
     
     NSString *clsName = components[0];
@@ -34,7 +34,7 @@ alpha:alphaValue])
     return [icon imageWithBounds:CGRectMake(0, 0, size.width, size.height) color:color];
 }
 
-+ (UIImage *)imageIcon:(NSString *)name size:(CGSize)size hexColor:(NSString *)hexString {
++ (UIImage *)fi_imageIcon:(NSString *)name size:(CGSize)size hexColor:(NSString *)hexString {
     NSScanner *scanner = [NSScanner scannerWithString:hexString];
     unsigned hex;
     BOOL success = [scanner scanHexInt:&hex];
@@ -42,14 +42,14 @@ alpha:alphaValue])
     UIColor *color = nil;
     
     if (!success) return nil;
-    if ([hexString length] <= 6)
+    if ([hexString length] <= 6) {
         color = UIColorFromRGB(hex);
-    else {
-        unsigned color = (hex & 0xFFFFFF00) >> 8;
+    } else {
+        unsigned hexedColor = (hex & 0xFFFFFF00) >> 8;
         CGFloat alpha = 1.0 * (hex & 0xFF) / 255.0;
-        color = UIColorFromRGBA(color, alpha);
+        color = UIColorFromRGBA(hexedColor, alpha);
     }
-    return [UIImage imageIcon:name size:size color:color];
+    return [UIImage fi_imageIcon:name size:size color:color];
 }
 
 @end

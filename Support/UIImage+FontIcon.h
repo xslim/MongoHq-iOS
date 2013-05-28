@@ -10,8 +10,7 @@
 
 @interface UIImage (FontIcon)
 
-
-+ (UIImage *)imageIcon:(NSString *)name size:(CGSize)size color:(UIColor *)color;
-+ (UIImage *)imageIcon:(NSString *)name size:(CGSize)size hexColor:(NSString *)hexString;
++ (UIImage *)fi_imageIcon:(NSString *)name size:(CGSize)size color:(UIColor *)color;
++ (UIImage *)fi_imageIcon:(NSString *)name size:(CGSize)size hexColor:(NSString *)hexString;
 
 @end

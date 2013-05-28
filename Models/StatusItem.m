@@ -29,7 +29,11 @@
 
 + (UIImage *)placeholderImage
 {
-    return [UIImage imageIcon:@"FontAwesome/picture" size:(CGSize){16,16} color:[UIColor lightGrayColor]];
+    static UIImage *placeholder = nil;
+    if (!placeholder) {
+        placeholder = [UIImage fi_imageIcon:@"FontAwesome/picture" size:(CGSize){16,16} color:[UIColor lightGrayColor]];
+    }
+    return placeholder;
 }
 
 @end
