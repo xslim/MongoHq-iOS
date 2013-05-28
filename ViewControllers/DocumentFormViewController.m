@@ -20,7 +20,7 @@
     [super viewDidLoad];
 
     
-    if (self.itemIsNew) self.document = [MDocument new];
+    if (self.shouldCreateNewItem) self.document = [MDocument new];
     
     // Presetting relation info for Class Routes
     self.document.databaseID = self.database.databaseID;
@@ -37,7 +37,7 @@
     
     
     [self.root addSection:section];
-    if (!self.itemIsNew) [self.root addSection:[self deleteButtonSection]];
+    if (!self.shouldCreateNewItem) [self.root addSection:[self deleteButtonSection]];
     
     [self updateQuickDialogView];
 }

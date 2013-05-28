@@ -23,7 +23,7 @@
 	// Do any additional setup after loading the view.
     
     self.path = @"/databases";
-    if (self.itemIsNew) self.database = [MDatabase new];
+    if (self.shouldCreateNewItem) self.database = [MDatabase new];
     
     [self loadPlans];
 }
@@ -47,7 +47,7 @@
     [section addElement:planEntry];
     
     [self.root addSection:section];
-    if (!self.itemIsNew) [self.root addSection:[self deleteButtonSection]];
+    if (!self.shouldCreateNewItem) [self.root addSection:[self deleteButtonSection]];
         
     [self updateQuickDialogView];
 }
@@ -60,7 +60,7 @@
     self.database = item;
 }
 
-- (BOOL)validateItem {
+- (BOOL)validateItemPassed {
     if (self.database.name.length == 0 || self.database.plan.length == 0) {
         [[[UIAlertView alloc] initWithTitle:@"Missing data" message:@"Plase fill the data" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
         return NO;

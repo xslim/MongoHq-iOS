@@ -34,6 +34,7 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 
+- (void)presentCreateOrEditFormForObject:(id)item;
 - (IBAction)createNewItem:(id)sender;
 
 - (BOOL)apiKeyExists;

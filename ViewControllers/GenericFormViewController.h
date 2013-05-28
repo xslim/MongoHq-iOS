@@ -14,14 +14,19 @@
 
 @interface GenericFormViewController : QuickDialogController
 
+// Path for creating the item. If not set, use routes.
 @property (nonatomic, strong) NSString *path;
+
+// Path for manipulating with one item. If not set, use routes.
 @property (nonatomic, strong) NSString *itemPath;
 
 @property (nonatomic, assign) id <PresentingViewControllerDelegate> delegate;
 
+// The alias to getter/setter of object we'r manipulating
 @property (nonatomic, assign) id item;
-@property (nonatomic, strong) NSString *itemTypeName;
-@property (nonatomic, assign) BOOL itemIsNew;
+
+// Create or Update
+@property (nonatomic, assign) BOOL shouldCreateNewItem;
 
 
 + (QRootElement *)createRootElement;
@@ -29,17 +34,17 @@
 
 - (void)updateQuickDialogView;
 
-- (BOOL)validateItem;
+// Interface actions
+- (void)saveAction;
+- (void)deleteAction;
 
-- (void)save;
-- (void)deleteItem;
-- (void)saveNew;
-- (void)saveEdit;
-- (void)saveDelete;
+- (BOOL)validateItemPassed;
+
+- (void)createItemRequest;
+- (void)updateItemRequest;
+- (void)deleteItemRequest;
 
 - (void)done;
 - (void)cancel;
-
-
 
 @end

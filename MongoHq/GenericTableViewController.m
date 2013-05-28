@@ -81,17 +81,17 @@
     
     if (self.routeName) {
         
-        [manager getObjectsAtPathForRouteNamed:self.routeName object:self.routeObject parameters:self.parameters success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-            [self finishedLoadingWithItems:[mappingResult array]];
-        } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-            // hack
-            int code = [[[operation HTTPRequestOperation] response] statusCode];
-            if (code == 401) {
-                [self presentApiKeyEntry];
-            }
-            
-            [self finishedLoadingWithError:error];
-        }];
+    [manager getObjectsAtPathForRouteNamed:self.routeName object:self.routeObject parameters:self.parameters success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        [self finishedLoadingWithItems:[mappingResult array]];
+    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+        // hack
+        int code = [[[operation HTTPRequestOperation] response] statusCode];
+        if (code == 401) {
+            [self presentApiKeyEntry];
+        }
+        
+        [self finishedLoadingWithError:error];
+    }];
         
         return;
     }
@@ -143,18 +143,10 @@
     [alert show];
 }
 
-- (IBAction)createNewItem:(id)sender
-{
-    NSLog(@"createNewItem:");
-}
-
-- (void)editItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-}
+#pragma mark - Create or Update
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated
-{    
+{
     [super setEditing:editing animated:animated];
     
     if (editing) {
@@ -163,6 +155,23 @@
     } else {
         self.navigationItem.leftBarButtonItem = nil;
     }
+}
+
+- (void)presentCreateOrEditFormForObject:(id)item
+{
+    
+}
+
+- (IBAction)createNewItem:(id)sender
+{
+    // Specify nil for showing the Create form
+    [self presentCreateOrEditFormForObject:nil];
+}
+
+- (void)editItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    id item = [self.items objectAtIndex:indexPath.row];
+    [self presentCreateOrEditFormForObject:item];
 }
 
 #pragma mark - PresentingViewControllerDelegate

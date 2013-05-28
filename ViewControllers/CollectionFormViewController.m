@@ -25,28 +25,36 @@
 	// Do any additional setup after loading the view.
     
 
+    // The Old way
+    /*
     self.path = RKPathFromPatternWithObject(@"/databases/:databaseID/collections", self.database);
-
     if (self.collection) {
-    NSDictionary *pathParams = @{
-     @"databaseID": self.database.databaseID,
-     @"collectionID": RKPercentEscapedQueryStringFromStringWithEncoding(self.collection.collectionID, NSUTF8StringEncoding)};
+        NSDictionary *pathParams = @{
+            @"databaseID": self.database.databaseID,
+            @"collectionID": RKPercentEscapedQueryStringFromStringWithEncoding(self.collection.collectionID, NSUTF8StringEncoding)};
 
-    self.itemPath = RKPathFromPatternWithObject(@"/databases/:databaseID/collections/:collectionID", pathParams);
+        self.itemPath = RKPathFromPatternWithObject(@"/databases/:databaseID/collections/:collectionID", pathParams);
     }
+     */
     
+    // Create new collection, if it's a Create request
+    if (self.shouldCreateNewItem) self.collection = [MCollection new];
+
+    // Pre-set relation info for using it in Class Routes
+    self.collection.databaseID = self.database.databaseID;
     
-    if (self.itemIsNew) self.collection = [MCollection new];
     
     QSection *section = [[QSection alloc] initWithTitle:self.title];
     QEntryElement *nameEntry = [[QEntryElement alloc] initWithTitle:@"Name" Value:self.collection.name Placeholder:@"collection name"];
+    // QuickDialog way of binding...
     nameEntry.bind = @"textValue:name";
     [section addElement:nameEntry];
-    
-    
     [self.root addSection:section];
-    if (!self.itemIsNew) [self.root addSection:[self deleteButtonSection]];
-    
+
+    // Add Delete button if it's existing object
+    if (!self.shouldCreateNewItem) [self.root addSection:[self deleteButtonSection]];
+
+    // Update the QuickDialog
     [self updateQuickDialogView];
 }
 
@@ -58,7 +66,7 @@
     self.collection = item;
 }
 
-- (BOOL)validateItem {
+- (BOOL)validateItemPassed {
     if (self.collection.name.length == 0) {
         [[[UIAlertView alloc] initWithTitle:@"Missing data" message:@"Plase fill the data" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
         return NO;

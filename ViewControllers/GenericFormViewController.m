@@ -14,11 +14,11 @@
 
 @implementation GenericFormViewController
 
+
 - (id)init
 {
     self = [super initWithRoot:[[self class] createRootElement]];
     if (self) {
-        // Custom initialization
     }
     return self;
 }
@@ -34,9 +34,10 @@
 {
     QButtonElement *btn = [[QButtonElement alloc] initWithTitle:@"Delete"];
     btn.onSelected = ^{
-        [self deleteItem];
+        [self deleteAction];
     };
     
+    // Put in in a new section
     QSection *section = [[QSection alloc] initWithTitle:@""];
     [section addElement:btn];
     return section;
@@ -52,18 +53,15 @@
     UIBarButtonItem *btn2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel)];
     self.navigationItem.leftBarButtonItem = btn2;
     
-    self.itemIsNew = (self.item) ? NO : YES;
+    self.shouldCreateNewItem = (self.item) ? NO : YES;
 
     
-    if (!self.itemTypeName) {
-        // Cut 'M' from class name
-        NSString *className = NSStringFromClass([self class]);
-        self.itemTypeName = [className stringByReplacingOccurrencesOfString:@"FormViewController" withString:@""];
-    }
-    
     if (!self.title) {
-        NSString *newOrEdit = (self.itemIsNew) ? @"New" : @"Edit";
-        self.title = [NSString stringWithFormat:@"%@ %@", newOrEdit, self.itemTypeName];
+        // Preset the title
+        NSString *className = NSStringFromClass([self class]);
+        NSString *itemType = [className stringByReplacingOccurrencesOfString:@"FormViewController" withString:@""];
+        NSString *newOrEdit = (self.shouldCreateNewItem) ? @"New" : @"Edit";
+        self.title = [NSString stringWithFormat:@"%@ %@", newOrEdit, itemType];
     }
     
     self.root.title = self.title;
@@ -75,30 +73,33 @@
     // Dispose of any resources that can be recreated.
 }
 
+// Hack to Update tableView of QuickDialog
 - (void)updateQuickDialogView {
-    // Hack to Update table
+    // self.root is a property from QuickDialogController
     self.quickDialogTableView.root = self.root;
 }
 
-- (BOOL)validateItem {
+- (BOOL)validateItemPassed {
     return YES;
 }
 
-- (void)save
+- (void)saveAction
 {
+    // Fetch the Entry element data to our object
     [self.root fetchValueUsingBindingsIntoObject:self.item];
     
-    // Validate
-    [self validateItem];
+    // Validate that entered data is correct
+    if (![self validateItemPassed]) return;
     
-    if (self.itemIsNew) {
-        [self saveNew];
+    [SVProgressHUD show]; // Show loading HUD
+    if (self.shouldCreateNewItem) {
+        [self createItemRequest];
     } else {
-        [self saveEdit];
+        [self updateItemRequest];
     }
 }
 
-- (void)deleteItem {
+- (void)deleteAction {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Delete?" message:@"Are you sure?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
     [alert show];
 }
@@ -108,39 +109,32 @@
         return;
     }
     
-    [self saveDelete];
+    [SVProgressHUD showWithStatus:@"Deleating"];
+    [self deleteItemRequest];
 }
 
-- (void)saveNew {
-    [SVProgressHUD showWithStatus:@"Creating..."];
-    RKObjectManager *manager = [RKObjectManager sharedManager];
-    
-    // Use Route?
-    if (!self.path) {
-        NSLog(@"Will use Object route");
-    }
-    
-    [manager postObject:self.item path:self.path parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+- (RKObjectManager *)manager {
+    return [RKObjectManager sharedManager];
+}
+
+- (void)createItemRequest {
+    [self.manager postObject:self.item path:self.path parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         [self done];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         [self errorOnLoad:error];
     }];
 }
 
-- (void)saveEdit {
-    [SVProgressHUD showWithStatus:@"Saving..."];
-    RKObjectManager *manager = [RKObjectManager sharedManager];
-    [manager putObject:self.item path:self.itemPath parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+- (void)updateItemRequest {
+    [self.manager putObject:self.item path:self.itemPath parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         [self done];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         [self errorOnLoad:error];
     }];
 }
 
-- (void)saveDelete {
-    [SVProgressHUD showWithStatus:@"Deleting..."];
-    RKObjectManager *manager = [RKObjectManager sharedManager];
-    [manager deleteObject:self.item path:self.itemPath parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+- (void)deleteItemRequest {
+    [self.manager deleteObject:self.item path:self.itemPath parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
         [self done];
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
         [self errorOnLoad:error];

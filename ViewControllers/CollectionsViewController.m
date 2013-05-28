@@ -30,21 +30,12 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)createNewItem:(id)sender
+- (void)presentCreateOrEditFormForObject:(id)item
 {
     CollectionFormViewController *vc = [[CollectionFormViewController alloc] init];
     vc.delegate = self;
     vc.database = self.database;
-    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:vc];
-    [self.navigationController presentModalViewController:nc animated:YES];
-}
-
-- (void)editItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    CollectionFormViewController *vc = [[CollectionFormViewController alloc] init];
-    vc.delegate = self;
-    vc.database = self.database;
-    vc.collection = [self.items objectAtIndex:indexPath.row];
+    vc.collection = item;
     UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:vc];
     [self.navigationController presentModalViewController:nc animated:YES];
 }
