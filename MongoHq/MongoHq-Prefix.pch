@@ -12,18 +12,21 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
     #import <RestKit/RestKit.h>
-//    #import "DDLog.h"
-//    #import "DDTTYLogger.h"
     #import "MongoHqApi.h"
 #endif
 
 
-//#ifdef COCOAPODS_POD_AVAILABLE_CocoaLumberjack
-//#ifdef DEBUG
-//static const int ddLogLevel = LOG_LEVEL_VERBOSE;
-//#else
-//static const int ddLogLevel = LOG_LEVEL_ERROR;
-//#endif
-//#define NSLog(...)  DDLogVerbose(__VA_ARGS__)
-//#endif
+#import "Keys.h"
+
+#ifdef COCOAPODS_POD_AVAILABLE_CocoaLumberjack
+#import "DDLog.h"
+#import "DDTTYLogger.h"
+
+#ifdef DEBUG
+static const int ddLogLevel = LOG_LEVEL_VERBOSE;
+#else
+static const int ddLogLevel = LOG_LEVEL_ERROR;
+#endif
+#define NSLog(...)  DDLogVerbose(__VA_ARGS__)
+#endif
 

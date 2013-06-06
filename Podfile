@@ -1,6 +1,7 @@
 platform :ios, '5.1'
 
 # Util
+pod 'SSKeychain'
 
 # Net
 pod 'RestKit', :git => 'https://github.com/RestKit/RestKit.git'
@@ -12,6 +13,10 @@ pod 'SVProgressHUD'
 pod 'FontasticIcons'
 pod 'MGBox2'
 pod 'QuickDialog'
+#pod 'FlatUIKit'
 
 # Testing
 pod 'Nocilla', :git => 'https://github.com/xslim/Nocilla.git'
+
+#pod 'TestFlightSDK'
+#pod 'TestFlightLogger'

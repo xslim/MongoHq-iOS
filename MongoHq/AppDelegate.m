@@ -15,10 +15,19 @@
 {
     
     
-    //[DDLog addLogger:[DDTTYLogger sharedInstance]];
+#ifdef COCOAPODS_POD_AVAILABLE_TestFlightSDK
+    [TestFlight takeOff:kTestFlightTeamToken];
+#endif
+#ifdef COCOAPODS_POD_AVAILABLE_TestFlightLogger
+    [DDLog addLogger:[TestFlightLogger sharedInstance]];
+#elif COCOAPODS_POD_AVAILABLE_CocoaLumberjack
+    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+#endif
     
     MongoHqApi *appController = [MongoHqApi shared];
-    appController.apiKey = @"picpjs6mxl2sx1dmc6so";
+    
+    // Hardcoded
+    appController.apiKey = kMongoHqApiKey;
     [appController saveApiKey];
     
     
@@ -26,6 +35,8 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    [self styleUI];
     
     UIViewController *vc1 = [[NSClassFromString(@"DatabasesViewController") alloc] init];
     UINavigationController *nc1 = [[UINavigationController alloc] initWithRootViewController:vc1];
@@ -66,6 +77,15 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)styleUI
+{
+//    [UIBarButtonItem configureFlatButtonsWithColor:[UIColor peterRiverColor]
+//                                  highlightedColor:[UIColor belizeHoleColor]
+//                                      cornerRadius:3];
+//    
+    
 }
 
 @end

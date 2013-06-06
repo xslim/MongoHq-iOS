@@ -7,16 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5524F289174D755800E1AA11 /* MDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5524F288174D755800E1AA11 /* MDatabase.m */; };
 		5524F28F174D83B300E1AA11 /* GenericTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5524F28E174D83B300E1AA11 /* GenericTableViewController.m */; };
-		5524F298174E863700E1AA11 /* MPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 5524F297174E863700E1AA11 /* MPlan.m */; };
 		5524F29B174E884700E1AA11 /* PlansViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5524F29A174E884700E1AA11 /* PlansViewController.m */; };
-		5524F29E174E8B5E00E1AA11 /* MCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 5524F29D174E8B5E00E1AA11 /* MCollection.m */; };
 		5524F2A1174E8BA200E1AA11 /* CollectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5524F2A0174E8BA200E1AA11 /* CollectionsViewController.m */; };
 		5524F2A7174EC03C00E1AA11 /* DatabaseFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5524F2A6174EC03C00E1AA11 /* DatabaseFormViewController.m */; };
 		5524F2AA174F974900E1AA11 /* CollectionFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5524F2A9174F974900E1AA11 /* CollectionFormViewController.m */; };
 		5524F2AE174F9B4300E1AA11 /* GenericFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5524F2AD174F9B4300E1AA11 /* GenericFormViewController.m */; };
-		5524F2B4174FDF0F00E1AA11 /* MDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 5524F2B3174FDF0F00E1AA11 /* MDocument.m */; };
 		5524F2BA174FE65F00E1AA11 /* DocumentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5524F2B9174FE65F00E1AA11 /* DocumentsViewController.m */; };
 		5524F2BE174FE7F800E1AA11 /* DocumentFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5524F2BD174FE7F800E1AA11 /* DocumentFormViewController.m */; };
 		5524F2C1174FF31100E1AA11 /* DocumentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5524F2C0174FF31100E1AA11 /* DocumentViewController.m */; };
@@ -42,24 +38,22 @@
 		557A00C617316827009460FA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 557A00C517316827009460FA /* main.m */; };
 		557A00CA17316827009460FA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 557A00C917316827009460FA /* AppDelegate.m */; };
 		557A00D91731730E009460FA /* StatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 557A00D81731730E009460FA /* StatusViewController.m */; };
-		557A00DD173174E5009460FA /* StatusItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 557A00DC173174E5009460FA /* StatusItem.m */; };
 		557A00E117318FD8009460FA /* UIImage+FontIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 557A00E017318FD8009460FA /* UIImage+FontIcon.m */; };
 		559C5ACE174D64EA000ED2F2 /* MongoHqHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 559C5ACD174D64EA000ED2F2 /* MongoHqHTTPClient.m */; };
 		559C5AD1174D68BA000ED2F2 /* DatabasesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 559C5AD0174D68BA000ED2F2 /* DatabasesViewController.m */; };
+		55A941451761232600A5A773 /* MCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A941361761232600A5A773 /* MCollection.m */; };
+		55A941461761232600A5A773 /* MDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A941381761232600A5A773 /* MDatabase.m */; };
+		55A941471761232600A5A773 /* MDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A9413A1761232600A5A773 /* MDocument.m */; };
+		55A941491761232600A5A773 /* MPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A9413E1761232600A5A773 /* MPlan.m */; };
+		55A9414A1761232600A5A773 /* StatusItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A941401761232600A5A773 /* StatusItem.m */; };
 		D3DAFDC63DE84536BD339711 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B620F6ABEDC24F6F8CB923A5 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5524F287174D755800E1AA11 /* MDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDatabase.h; path = Models/MDatabase.h; sourceTree = "<group>"; };
-		5524F288174D755800E1AA11 /* MDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDatabase.m; path = Models/MDatabase.m; sourceTree = "<group>"; };
 		5524F28D174D83B300E1AA11 /* GenericTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GenericTableViewController.h; path = MongoHq/GenericTableViewController.h; sourceTree = "<group>"; };
 		5524F28E174D83B300E1AA11 /* GenericTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GenericTableViewController.m; path = MongoHq/GenericTableViewController.m; sourceTree = "<group>"; };
-		5524F296174E863700E1AA11 /* MPlan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPlan.h; path = Models/MPlan.h; sourceTree = "<group>"; };
-		5524F297174E863700E1AA11 /* MPlan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPlan.m; path = Models/MPlan.m; sourceTree = "<group>"; };
 		5524F299174E884700E1AA11 /* PlansViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlansViewController.h; path = ViewControllers/PlansViewController.h; sourceTree = "<group>"; };
 		5524F29A174E884700E1AA11 /* PlansViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlansViewController.m; path = ViewControllers/PlansViewController.m; sourceTree = "<group>"; };
-		5524F29C174E8B5D00E1AA11 /* MCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCollection.h; path = Models/MCollection.h; sourceTree = "<group>"; };
-		5524F29D174E8B5E00E1AA11 /* MCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCollection.m; path = Models/MCollection.m; sourceTree = "<group>"; };
 		5524F29F174E8BA200E1AA11 /* CollectionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectionsViewController.h; path = ViewControllers/CollectionsViewController.h; sourceTree = "<group>"; };
 		5524F2A0174E8BA200E1AA11 /* CollectionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectionsViewController.m; path = ViewControllers/CollectionsViewController.m; sourceTree = "<group>"; };
 		5524F2A5174EC03C00E1AA11 /* DatabaseFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DatabaseFormViewController.h; path = ViewControllers/DatabaseFormViewController.h; sourceTree = "<group>"; };
@@ -69,8 +63,6 @@
 		5524F2AB174F991800E1AA11 /* PresentingViewControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PresentingViewControllerDelegate.h; path = Support/PresentingViewControllerDelegate.h; sourceTree = "<group>"; };
 		5524F2AC174F9B4200E1AA11 /* GenericFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GenericFormViewController.h; path = ViewControllers/GenericFormViewController.h; sourceTree = "<group>"; };
 		5524F2AD174F9B4300E1AA11 /* GenericFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GenericFormViewController.m; path = ViewControllers/GenericFormViewController.m; sourceTree = "<group>"; };
-		5524F2B2174FDF0F00E1AA11 /* MDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDocument.h; path = Models/MDocument.h; sourceTree = "<group>"; };
-		5524F2B3174FDF0F00E1AA11 /* MDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDocument.m; path = Models/MDocument.m; sourceTree = "<group>"; };
 		5524F2B8174FE65F00E1AA11 /* DocumentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DocumentsViewController.h; path = ViewControllers/DocumentsViewController.h; sourceTree = "<group>"; };
 		5524F2B9174FE65F00E1AA11 /* DocumentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DocumentsViewController.m; path = ViewControllers/DocumentsViewController.m; sourceTree = "<group>"; };
 		5524F2BC174FE7F800E1AA11 /* DocumentFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DocumentFormViewController.h; path = ViewControllers/DocumentFormViewController.h; sourceTree = "<group>"; };
@@ -107,14 +99,23 @@
 		557A00C917316827009460FA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		557A00D71731730E009460FA /* StatusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StatusViewController.h; path = ViewControllers/StatusViewController.h; sourceTree = "<group>"; };
 		557A00D81731730E009460FA /* StatusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StatusViewController.m; path = ViewControllers/StatusViewController.m; sourceTree = "<group>"; };
-		557A00DB173174E5009460FA /* StatusItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StatusItem.h; path = Models/StatusItem.h; sourceTree = "<group>"; };
-		557A00DC173174E5009460FA /* StatusItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StatusItem.m; path = Models/StatusItem.m; sourceTree = "<group>"; };
 		557A00DF17318FD8009460FA /* UIImage+FontIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+FontIcon.h"; sourceTree = "<group>"; };
 		557A00E017318FD8009460FA /* UIImage+FontIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+FontIcon.m"; sourceTree = "<group>"; };
 		559C5ACC174D64EA000ED2F2 /* MongoHqHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MongoHqHTTPClient.h; sourceTree = "<group>"; };
 		559C5ACD174D64EA000ED2F2 /* MongoHqHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MongoHqHTTPClient.m; sourceTree = "<group>"; };
 		559C5ACF174D68BA000ED2F2 /* DatabasesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DatabasesViewController.h; path = ViewControllers/DatabasesViewController.h; sourceTree = "<group>"; };
 		559C5AD0174D68BA000ED2F2 /* DatabasesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DatabasesViewController.m; path = ViewControllers/DatabasesViewController.m; sourceTree = "<group>"; };
+		55A9412917611DC600A5A773 /* Keys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Keys.h; sourceTree = "<group>"; };
+		55A941351761232600A5A773 /* MCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCollection.h; sourceTree = "<group>"; };
+		55A941361761232600A5A773 /* MCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCollection.m; sourceTree = "<group>"; };
+		55A941371761232600A5A773 /* MDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDatabase.h; sourceTree = "<group>"; };
+		55A941381761232600A5A773 /* MDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDatabase.m; sourceTree = "<group>"; };
+		55A941391761232600A5A773 /* MDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDocument.h; sourceTree = "<group>"; };
+		55A9413A1761232600A5A773 /* MDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDocument.m; sourceTree = "<group>"; };
+		55A9413D1761232600A5A773 /* MPlan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPlan.h; sourceTree = "<group>"; };
+		55A9413E1761232600A5A773 /* MPlan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPlan.m; sourceTree = "<group>"; };
+		55A9413F1761232600A5A773 /* StatusItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusItem.h; sourceTree = "<group>"; };
+		55A941401761232600A5A773 /* StatusItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusItem.m; sourceTree = "<group>"; };
 		B620F6ABEDC24F6F8CB923A5 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C20140148062447B90425F7C /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -201,7 +202,7 @@
 		557A00AD17316827009460FA = {
 			isa = PBXGroup;
 			children = (
-				557A00DA173174BB009460FA /* Models */,
+				55A9412A1761232600A5A773 /* Models */,
 				557A00D6173172D8009460FA /* ViewControllers */,
 				557A00BF17316827009460FA /* MongoHq */,
 				5539AE02174C122500184973 /* fixtures */,
@@ -253,6 +254,7 @@
 				557A00C217316827009460FA /* InfoPlist.strings */,
 				557A00C517316827009460FA /* main.m */,
 				557A00C717316827009460FA /* MongoHq-Prefix.pch */,
+				55A9412917611DC600A5A773 /* Keys.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -277,23 +279,6 @@
 			name = ViewControllers;
 			sourceTree = "<group>";
 		};
-		557A00DA173174BB009460FA /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				557A00DB173174E5009460FA /* StatusItem.h */,
-				557A00DC173174E5009460FA /* StatusItem.m */,
-				5524F287174D755800E1AA11 /* MDatabase.h */,
-				5524F288174D755800E1AA11 /* MDatabase.m */,
-				5524F29C174E8B5D00E1AA11 /* MCollection.h */,
-				5524F29D174E8B5E00E1AA11 /* MCollection.m */,
-				5524F2B2174FDF0F00E1AA11 /* MDocument.h */,
-				5524F2B3174FDF0F00E1AA11 /* MDocument.m */,
-				5524F296174E863700E1AA11 /* MPlan.h */,
-				5524F297174E863700E1AA11 /* MPlan.m */,
-			);
-			name = Models;
-			sourceTree = "<group>";
-		};
 		557A00DE17318FD8009460FA /* Support */ = {
 			isa = PBXGroup;
 			children = (
@@ -301,6 +286,23 @@
 				557A00E017318FD8009460FA /* UIImage+FontIcon.m */,
 			);
 			path = Support;
+			sourceTree = "<group>";
+		};
+		55A9412A1761232600A5A773 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				55A941351761232600A5A773 /* MCollection.h */,
+				55A941361761232600A5A773 /* MCollection.m */,
+				55A941371761232600A5A773 /* MDatabase.h */,
+				55A941381761232600A5A773 /* MDatabase.m */,
+				55A941391761232600A5A773 /* MDocument.h */,
+				55A9413A1761232600A5A773 /* MDocument.m */,
+				55A9413D1761232600A5A773 /* MPlan.h */,
+				55A9413E1761232600A5A773 /* MPlan.m */,
+				55A9413F1761232600A5A773 /* StatusItem.h */,
+				55A941401761232600A5A773 /* StatusItem.m */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -413,26 +415,26 @@
 				557A00C617316827009460FA /* main.m in Sources */,
 				557A00CA17316827009460FA /* AppDelegate.m in Sources */,
 				557A00D91731730E009460FA /* StatusViewController.m in Sources */,
-				557A00DD173174E5009460FA /* StatusItem.m in Sources */,
 				557A00E117318FD8009460FA /* UIImage+FontIcon.m in Sources */,
 				557150991732A21B007A752B /* MongoHqApi.m in Sources */,
 				55375758174BF7E2002791BE /* DetailStatusViewController.m in Sources */,
 				559C5ACE174D64EA000ED2F2 /* MongoHqHTTPClient.m in Sources */,
 				559C5AD1174D68BA000ED2F2 /* DatabasesViewController.m in Sources */,
-				5524F289174D755800E1AA11 /* MDatabase.m in Sources */,
 				5524F28F174D83B300E1AA11 /* GenericTableViewController.m in Sources */,
-				5524F298174E863700E1AA11 /* MPlan.m in Sources */,
 				5524F29B174E884700E1AA11 /* PlansViewController.m in Sources */,
-				5524F29E174E8B5E00E1AA11 /* MCollection.m in Sources */,
 				5524F2A1174E8BA200E1AA11 /* CollectionsViewController.m in Sources */,
 				5524F2A7174EC03C00E1AA11 /* DatabaseFormViewController.m in Sources */,
 				5524F2AA174F974900E1AA11 /* CollectionFormViewController.m in Sources */,
 				5524F2AE174F9B4300E1AA11 /* GenericFormViewController.m in Sources */,
-				5524F2B4174FDF0F00E1AA11 /* MDocument.m in Sources */,
 				5524F2BA174FE65F00E1AA11 /* DocumentsViewController.m in Sources */,
 				5524F2BE174FE7F800E1AA11 /* DocumentFormViewController.m in Sources */,
 				5524F2C1174FF31100E1AA11 /* DocumentViewController.m in Sources */,
 				5524F2C4175002CE00E1AA11 /* ApiKeyViewController.m in Sources */,
+				55A941451761232600A5A773 /* MCollection.m in Sources */,
+				55A941461761232600A5A773 /* MDatabase.m in Sources */,
+				55A941471761232600A5A773 /* MDocument.m in Sources */,
+				55A941491761232600A5A773 /* MPlan.m in Sources */,
+				55A9414A1761232600A5A773 /* StatusItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -15,7 +15,9 @@
 #import "MCollection.h"
 #import "MDocument.h"
 
+#ifdef COCOAPODS_POD_AVAILABLE_Nocilla
 #import "Nocilla.h"
+#endif
 
 @implementation MongoHqApi
 
@@ -308,13 +310,13 @@
 #pragma mark - Stub stuff
 
 + (void)stubRequestType:(NSString *)type uri:(NSString *)uri returnCode:(NSUInteger)code fixture:(NSString *)fixture {
-//#ifdef COCOAPODS_POD_AVAILABLE_Nocilla
+#ifdef COCOAPODS_POD_AVAILABLE_Nocilla
     NSString *filePath = [[NSBundle mainBundle] pathForResource:fixture ofType:@"json" inDirectory:@"fixtures"];
     NSString *body = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:NULL];
     
     stubRequest(type, uri).andReturn(code).
     withHeaders(@{@"Content-Type": @"application/json"}).withBody(body);
-//#endif
+#endif
 }
 
 + (void)stubGetRequest:(id)uri withFixture:(NSString *)fixtureName {
@@ -322,15 +324,16 @@
 }
 
 + (void)stubGetRequest:(id)uri withFixtureFile:(NSString *)fixtureFile {
+#ifdef COCOAPODS_POD_AVAILABLE_Nocilla
     NSString *filePath = [[NSBundle mainBundle] pathForResource:fixtureFile ofType:nil inDirectory:@"fixtures"];
     NSData *data = [NSData dataWithContentsOfFile:filePath];
-    
     stubRequest(@"GET", uri).andReturn(200).withData(data);
+#endif
 }
 
 - (void)mockHTTP
 {
-//#ifdef COCOAPODS_POD_AVAILABLE_Nocilla
+#ifdef COCOAPODS_POD_AVAILABLE_Nocilla
     [[LSNocilla sharedInstance] start];
     
     // Status
@@ -339,7 +342,7 @@
     
     // API
     [MongoHqApi stubGetRequest:@"^https://api.mongohq.com/databases?_apikey=(.*?)".regex withFixture:@"databases"];
-//#endif
+#endif
 }
 
 @end
