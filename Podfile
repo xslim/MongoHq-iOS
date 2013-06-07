@@ -1,7 +1,9 @@
 platform :ios, '5.1'
 
 # Util
+pod 'MagicalRecord'
 pod 'SSKeychain'
+pod 'CHCSVParser'
 
 # Net
 pod 'RestKit', :git => 'https://github.com/RestKit/RestKit.git'

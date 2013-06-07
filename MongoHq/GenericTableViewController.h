@@ -27,12 +27,20 @@
 @property (nonatomic, strong) NSString *routeName;
 @property (nonatomic, strong) id routeObject;
 
+// For CoreData
+@property (nonatomic, assign) BOOL useCoreData;
+@property (nonatomic, assign) Class objectClass;
+@property (nonatomic, strong) NSString *sortBy;
+@property (nonatomic, strong) NSString *groupBy;
+@property (nonatomic, strong) NSPredicate *fetchPredicate;
+
 // Methods to re-use / override
 - (void)refresh;
 - (void)willStartLoading;
 - (void)finishedLoadingWithItems:(NSArray *)newItems;
 - (void)finishedLoadingWithError:(NSError *)error;
 
+- (id)itemAtIndexPath:(NSIndexPath *)indexPath;
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 
 - (void)presentCreateOrEditFormForObject:(id)item;

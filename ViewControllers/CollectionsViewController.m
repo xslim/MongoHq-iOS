@@ -16,9 +16,29 @@
 
 @implementation CollectionsViewController
 
+- (id)init
+{
+    self = [super init];
+    if (self) {
+#ifdef USE_COREDATA
+        self.useCoreData = YES;
+        self.objectClass = [MCollection class];
+#endif
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
-    self.path = RKPathFromPatternWithObject(@"/databases/:databaseID/collections", self.database);
+    //self.path = RKPathFromPatternWithObject(@"/databases/:databaseID/collections", self.database);
+    
+    self.routeName = @"collections";
+    self.routeObject = self.database;
+
+#ifdef USE_COREDATA
+    // Specify predicate to filter collections
+    self.fetchPredicate = [NSPredicate predicateWithFormat:@"databaseID = %@", self.database.databaseID];
+#endif
     
     [super viewDidLoad];
 	self.navigationItem.rightBarButtonItem = self.editButtonItem;

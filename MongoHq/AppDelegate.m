@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "MongoHqApi.h"
+#import "DocumentImporter.h"
 
 @implementation AppDelegate
 
@@ -30,6 +31,11 @@
     appController.apiKey = kMongoHqApiKey;
     [appController saveApiKey];
     
+    DocumentImporter *docImporter = [DocumentImporter new];
+    docImporter.fileName = @"imdb_top250.csv";
+    [docImporter run];
+    return YES;
+    
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
@@ -46,6 +52,8 @@
     
     UITabBarController *tabBar = [[UITabBarController alloc] init];
     tabBar.viewControllers = @[nc2, nc1];
+    
+    tabBar.selectedIndex = 1;
     
     self.window.rootViewController = tabBar;
     

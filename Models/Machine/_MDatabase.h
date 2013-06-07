@@ -6,6 +6,7 @@
 
 
 extern const struct MDatabaseAttributes {
+	__unsafe_unretained NSString *databaseID;
 	__unsafe_unretained NSString *hostname;
 	__unsafe_unretained NSString *name;
 	__unsafe_unretained NSString *plan;
@@ -34,6 +35,8 @@ extern const struct MDatabaseRelationships {
 
 
 
+
+
 @interface MDatabaseID : NSManagedObjectID {}
 @end
 
@@ -42,6 +45,16 @@ extern const struct MDatabaseRelationships {
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (MDatabaseID*)objectID;
+
+
+
+
+
+@property (nonatomic, strong) NSString* databaseID;
+
+
+
+//- (BOOL)validateDatabaseID:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -113,6 +126,12 @@ extern const struct MDatabaseRelationships {
 
 
 @interface _MDatabase (CoreDataGeneratedPrimitiveAccessors)
+
+
+- (NSString*)primitiveDatabaseID;
+- (void)setPrimitiveDatabaseID:(NSString*)value;
+
+
 
 
 - (NSString*)primitiveHostname;

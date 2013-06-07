@@ -5,16 +5,17 @@
 
 
 const struct MDatabaseAttributes MDatabaseAttributes = {
-    .hostname = @"hostname",
-    .name     = @"name",
-    .plan     = @"plan",
-    .port     = @"port",
+	.databaseID = @"databaseID",
+	.hostname = @"hostname",
+	.name = @"name",
+	.plan = @"plan",
+	.port = @"port",
 };
 
 
 
 const struct MDatabaseRelationships MDatabaseRelationships = {
-    .collections = @"collections",
+	.collections = @"collections",
 };
 
 
@@ -27,40 +28,45 @@ const struct MDatabaseRelationships MDatabaseRelationships = {
 
 @implementation _MDatabase
 
-+ (id)insertInManagedObjectContext:(NSManagedObjectContext *)moc_
-{
-    NSParameterAssert(moc_);
-    return [NSEntityDescription insertNewObjectForEntityForName:@"Database" inManagedObjectContext:moc_];
++ (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_ {
+	NSParameterAssert(moc_);
+	return [NSEntityDescription insertNewObjectForEntityForName:@"Database" inManagedObjectContext:moc_];
 }
 
-+ (NSString *)entityName
-{
-    return @"Database";
++ (NSString*)entityName {
+	return @"Database";
 }
 
-+ (NSEntityDescription *)entityInManagedObjectContext:(NSManagedObjectContext *)moc_
-{
-    NSParameterAssert(moc_);
-    return [NSEntityDescription entityForName:@"Database" inManagedObjectContext:moc_];
++ (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_ {
+	NSParameterAssert(moc_);
+	return [NSEntityDescription entityForName:@"Database" inManagedObjectContext:moc_];
 }
 
-- (MDatabaseID *)objectID
-{
-    return (MDatabaseID *)[super objectID];
+- (MDatabaseID*)objectID {
+	return (MDatabaseID*)[super objectID];
 }
 
-+ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key
-{
-    NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
++ (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
+	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
+	
+	if ([key isEqualToString:@"portValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"port"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
 
-    if ([key isEqualToString:@"portValue"]) {
-        NSSet *affectingKey = [NSSet setWithObject:@"port"];
-        keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-        return keyPaths;
-    }
-
-    return keyPaths;
+	return keyPaths;
 }
+
+
+
+
+@dynamic databaseID;
+
+
+
+
+
 
 @dynamic hostname;
 
@@ -87,39 +93,50 @@ const struct MDatabaseRelationships MDatabaseRelationships = {
 
 
 
-- (int16_t)portValue
-{
-    NSNumber *result = [self port];
-    return [result shortValue];
+- (int16_t)portValue {
+	NSNumber *result = [self port];
+	return [result shortValue];
 }
 
-- (void)setPortValue:(int16_t)value_
-{
-    [self setPort:@(value_)];
+
+- (void)setPortValue:(int16_t)value_ {
+	[self setPort:@(value_)];
 }
 
-- (int16_t)primitivePortValue
-{
-    NSNumber *result = [self primitivePort];
-    return [result shortValue];
+
+- (int16_t)primitivePortValue {
+	NSNumber *result = [self primitivePort];
+	return [result shortValue];
 }
 
-- (void)setPrimitivePortValue:(int16_t)value_
-{
-    [self setPrimitivePort:@(value_)];
+- (void)setPrimitivePortValue:(int16_t)value_ {
+	[self setPrimitivePort:@(value_)];
 }
+
+
+
+
 
 @dynamic collections;
 
-
-- (NSMutableSet *)collectionsSet
-{
-    [self willAccessValueForKey:@"collections"];
-
-    NSMutableSet *result = (NSMutableSet *)[self mutableSetValueForKey:@"collections"];
-
-    [self didAccessValueForKey:@"collections"];
-    return result;
+	
+- (NSMutableSet*)collectionsSet {
+	[self willAccessValueForKey:@"collections"];
+  
+	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"collections"];
+  
+	[self didAccessValueForKey:@"collections"];
+	return result;
 }
+	
+
+
+
+
+
 
 @end
+
+
+
+

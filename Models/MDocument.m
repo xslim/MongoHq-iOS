@@ -15,7 +15,7 @@
 }
 
 - (NSString *)description {
-    return self.titleText;
+    return (self.titleText) ? self.titleText : self.documentString;
 }
 
 - (NSString *)documentString

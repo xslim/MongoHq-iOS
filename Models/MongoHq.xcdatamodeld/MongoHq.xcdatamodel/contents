@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="12D78" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Collection" representedClassName="MCollection" syncable="YES">
+        <attribute name="collectionID" optional="YES" transient="YES" attributeType="String" syncable="YES"/>
         <attribute name="count" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="databaseID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="indexCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="storageSize" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <relationship name="database" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Database" inverseName="collections" inverseEntity="Database" syncable="YES"/>
     </entity>
     <entity name="Database" representedClassName="MDatabase" syncable="YES">
+        <attribute name="databaseID" optional="YES" transient="YES" attributeType="String" syncable="YES"/>
         <attribute name="hostname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="plan" optional="YES" attributeType="String" syncable="YES"/>
@@ -15,7 +18,7 @@
         <relationship name="collections" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Collection" inverseName="database" inverseEntity="Collection" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Database" positionX="-63" positionY="-18" width="128" height="118"/>
-        <element name="Collection" positionX="160" positionY="192" width="128" height="118"/>
+        <element name="Collection" positionX="160" positionY="192" width="128" height="150"/>
+        <element name="Database" positionX="-63" positionY="-18" width="128" height="135"/>
     </elements>
 </model>

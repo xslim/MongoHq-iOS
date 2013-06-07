@@ -1,7 +1,9 @@
 PODS:
   - AFNetworking (1.2.1)
+  - CHCSVParser (2.0.4)
   - FontasticIcons (0.3.1)
   - ISRefreshControl (1.2.2)
+  - MagicalRecord (2.1)
   - MGBox2 (2.0.0)
   - Nocilla (0.5)
   - QuickDialog (0.8)
@@ -20,20 +22,22 @@ PODS:
   - RestKit/ObjectMapping (0.20.2-dev)
   - RestKit/Support (0.20.2-dev):
     - TransitionKit (= 1.1.0)
-  - Reveal-iOS-SDK (0.8.1)
   - SOCKit (1.1)
+  - SSKeychain (1.0.4)
   - SVProgressHUD (0.9)
   - TransitionKit (1.1.0)
   - ViewDeck (2.2.11)
 
 DEPENDENCIES:
+  - CHCSVParser
   - FontasticIcons
   - ISRefreshControl
+  - MagicalRecord
   - MGBox2
   - Nocilla (from `https://github.com/xslim/Nocilla.git`)
   - QuickDialog
   - RestKit (from `https://github.com/RestKit/RestKit.git`)
-  - Reveal-iOS-SDK
+  - SSKeychain
   - SVProgressHUD
   - ViewDeck
 
@@ -45,14 +49,16 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AFNetworking: a44069e3c9c89867544f6639482f155c7e5f9b41
+  CHCSVParser: ef604eb7bd69fa0fdfa866e701ee94020689fbd4
   FontasticIcons: c755e18f1437f0df7db9cbe87d2d43e0e6e975db
   ISRefreshControl: b520e068de6383bedc2fda7f6b79a764edd4ed3a
+  MagicalRecord: 64e7184c240087a45e9588a722eaf05b0ad837f7
   MGBox2: 7c09e36c2271f9af16fdb5141a0ca554ecee4d8d
   Nocilla: 1df04a76d7b25bde2bb3aaafbb3e339308be1bdf
   QuickDialog: 465692c7c599ad41a0c46022c55779dd61a4d4fe
   RestKit: b3571dd492f4524041a24b28c14bc5c7c833f246
-  Reveal-iOS-SDK: 9211abec2542455058411814d58d0c2e1a8030e4
   SOCKit: ed67aeeca4a697b63a933229e53f4670d5b9300f
+  SSKeychain: 9b4a6249ae46b6d1f39a013621bd803f3baba1e3
   SVProgressHUD: 03d4845ec8e64591726428a08236c6a5489d45f8
   TransitionKit: 1624e84f252d5cd26900be28ccb73c69fbe63f8a
   ViewDeck: b5eddc8559b0e47259ab7addbf2de6768061f139

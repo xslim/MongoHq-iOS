@@ -5,7 +5,9 @@
 
 
 const struct MCollectionAttributes MCollectionAttributes = {
+	.collectionID = @"collectionID",
 	.count = @"count",
+	.databaseID = @"databaseID",
 	.indexCount = @"indexCount",
 	.name = @"name",
 	.storageSize = @"storageSize",
@@ -70,6 +72,13 @@ const struct MCollectionRelationships MCollectionRelationships = {
 
 
 
+@dynamic collectionID;
+
+
+
+
+
+
 @dynamic count;
 
 
@@ -93,6 +102,13 @@ const struct MCollectionRelationships MCollectionRelationships = {
 - (void)setPrimitiveCountValue:(int32_t)value_ {
 	[self setPrimitiveCount:@(value_)];
 }
+
+
+
+
+
+@dynamic databaseID;
+
 
 
 

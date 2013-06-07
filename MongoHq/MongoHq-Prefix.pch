@@ -8,15 +8,18 @@
 #warning "This project uses features only available in iOS SDK 3.0 and later."
 #endif
 
+#import "../Pods/Pods-environment.h"
+
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
     #import <RestKit/RestKit.h>
-    #import "MongoHqApi.h"
+    #import "Defines.h"
 #endif
 
-
-#import "Keys.h"
+#ifdef COCOAPODS_POD_AVAILABLE_MagicalRecord
+#import "CoreData+MagicalRecord.h"
+#endif
 
 #ifdef COCOAPODS_POD_AVAILABLE_CocoaLumberjack
 #import "DDLog.h"
@@ -30,3 +33,4 @@ static const int ddLogLevel = LOG_LEVEL_ERROR;
 #define NSLog(...)  DDLogVerbose(__VA_ARGS__)
 #endif
 
+#import "MongoHqApi.h"

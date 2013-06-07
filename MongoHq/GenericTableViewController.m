@@ -9,7 +9,9 @@
 #import "GenericTableViewController.h"
 #import "ApiKeyViewController.h"
 
-@interface GenericTableViewController ()
+@interface GenericTableViewController () <NSFetchedResultsControllerDelegate>
+
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
 @end
 
@@ -32,14 +34,23 @@
                             action:@selector(refresh)
                   forControlEvents:UIControlEventValueChanged];
     
-    // Load items on initial start
-    if (!self.items) [self refresh];
-    
     // Preserve selection between presentations.
     self.clearsSelectionOnViewWillAppear = YES;
  
     // Display an Edit button in the navigation bar for this view controller.
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    
+    if (self.useCoreData) {
+        if (!self.sortBy) self.sortBy = @"name";
+        
+        // self.objectClass will be of NSManagedObject type
+        self.fetchedResultsController = [self.objectClass MR_fetchAllSortedBy:self.sortBy ascending:YES withPredicate:self.fetchPredicate groupBy:self.groupBy delegate:self];
+    } else {
+        // Load items on initial start
+        if (!self.items) [self refresh];
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -81,17 +92,17 @@
     
     if (self.routeName) {
         
-    [manager getObjectsAtPathForRouteNamed:self.routeName object:self.routeObject parameters:self.parameters success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        [self finishedLoadingWithItems:[mappingResult array]];
-    } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-        // hack
-        int code = [[[operation HTTPRequestOperation] response] statusCode];
-        if (code == 401) {
-            [self presentApiKeyEntry];
-        }
-        
-        [self finishedLoadingWithError:error];
-    }];
+        [manager getObjectsAtPathForRouteNamed:self.routeName object:self.routeObject parameters:self.parameters success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+            [self finishedLoadingWithItems:[mappingResult array]];
+        } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+            // hack
+            int code = [[[operation HTTPRequestOperation] response] statusCode];
+            if (code == 401) {
+                [self presentApiKeyEntry];
+            }
+            
+            [self finishedLoadingWithError:error];
+        }];
         
         return;
     }
@@ -121,12 +132,14 @@
 
 - (void)finishedLoadingWithItems:(NSArray *)newItems
 {
-    // Update the current items with new one
-    self.items = newItems;
-    NSLog(@"Loaded items: %@", self.items);
-    
-    // Reload table view
-    [self.tableView reloadData];
+    if (!self.useCoreData) {
+        // Update the current items with new one
+        self.items = newItems;
+        NSLog(@"Loaded items: %@", self.items);
+        
+        // Reload table view
+        [self.tableView reloadData];
+    }
     
     // Hide loading indicators
     [self.refreshControl endRefreshing];
@@ -168,9 +181,18 @@
     [self presentCreateOrEditFormForObject:nil];
 }
 
+- (id)itemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.useCoreData) {
+        return [self.fetchedResultsController objectAtIndexPath:indexPath];
+    }
+    
+    return [self.items objectAtIndex:indexPath.row];
+}
+
 - (void)editItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    id item = [self.items objectAtIndex:indexPath.row];
+    id item = [self itemAtIndexPath:indexPath];
     [self presentCreateOrEditFormForObject:item];
 }
 
@@ -189,17 +211,26 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+    if (self.useCoreData) {
+        return [[self.fetchedResultsController sections] count];
+    }
+    
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (self.useCoreData) {
+        id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+        return [sectionInfo numberOfObjects];
+    }
+    
     return self.items.count;
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    NSObject *item = [self.items objectAtIndex:indexPath.row];
+    NSObject *item = [self itemAtIndexPath:indexPath];
     
     // Assume, that every item has a 'titleText' and 'subtitleText' getters
     cell.textLabel.text = [item performSelector:@selector(titleText)];
@@ -256,7 +287,7 @@
     } 
      */
     
-    NSObject *item = [self.items objectAtIndex:indexPath.row];
+    NSObject *item = [self itemAtIndexPath:indexPath];
     
     [SVProgressHUD showWithStatus:@"Deleting..."];
     RKObjectManager *manager = [RKObjectManager sharedManager];
@@ -304,5 +335,14 @@
     
     [self editItemAtIndexPath:indexPath];
 }
+
+#pragma mark - NSFetchedResultsControllerDelegate
+
+
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    [self.tableView reloadData];
+}
+
 
 @end

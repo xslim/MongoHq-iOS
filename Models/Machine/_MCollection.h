@@ -6,7 +6,9 @@
 
 
 extern const struct MCollectionAttributes {
+	__unsafe_unretained NSString *collectionID;
 	__unsafe_unretained NSString *count;
+	__unsafe_unretained NSString *databaseID;
 	__unsafe_unretained NSString *indexCount;
 	__unsafe_unretained NSString *name;
 	__unsafe_unretained NSString *storageSize;
@@ -34,6 +36,10 @@ extern const struct MCollectionRelationships {
 
 
 
+
+
+
+
 @interface MCollectionID : NSManagedObjectID {}
 @end
 
@@ -42,6 +48,16 @@ extern const struct MCollectionRelationships {
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (MCollectionID*)objectID;
+
+
+
+
+
+@property (nonatomic, strong) NSString* collectionID;
+
+
+
+//- (BOOL)validateCollectionID:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -58,6 +74,16 @@ extern const struct MCollectionRelationships {
 
 
 //- (BOOL)validateCount:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSString* databaseID;
+
+
+
+//- (BOOL)validateDatabaseID:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -120,11 +146,23 @@ extern const struct MCollectionRelationships {
 @interface _MCollection (CoreDataGeneratedPrimitiveAccessors)
 
 
+- (NSString*)primitiveCollectionID;
+- (void)setPrimitiveCollectionID:(NSString*)value;
+
+
+
+
 - (NSNumber*)primitiveCount;
 - (void)setPrimitiveCount:(NSNumber*)value;
 
 - (int32_t)primitiveCountValue;
 - (void)setPrimitiveCountValue:(int32_t)value_;
+
+
+
+
+- (NSString*)primitiveDatabaseID;
+- (void)setPrimitiveDatabaseID:(NSString*)value;
 
 
 

@@ -25,6 +25,10 @@
     self = [super init];
     if (self) {
         // Configure the controller
+#ifdef USE_COREDATA
+        self.useCoreData = YES;
+        self.objectClass = [MDatabase class];
+#endif
         self.path = @"/databases";
         self.title = @"Databases";
         self.tabBarItem.image = [UIImage fi_imageIcon:@"Entypo/database" size:(CGSize){30,30} color:[UIColor blackColor]];
@@ -45,7 +49,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MDatabase *db = [self.items objectAtIndex:indexPath.row];
+    MDatabase *db = [self itemAtIndexPath:indexPath];
     CollectionsViewController *vc = [[CollectionsViewController alloc] init];
     vc.title = db.name;
     vc.database = db;

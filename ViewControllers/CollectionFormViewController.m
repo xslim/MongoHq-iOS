@@ -41,7 +41,8 @@
     if (self.shouldCreateNewItem) self.collection = [MCollection new];
 
     // Pre-set relation info for using it in Class Routes
-    self.collection.databaseID = self.database.databaseID;
+#warning TODO: rethink
+//    self.collection.databaseID = self.database.databaseID;
     
     
     QSection *section = [[QSection alloc] initWithTitle:self.title];

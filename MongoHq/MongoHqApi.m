@@ -19,6 +19,17 @@
 #import "Nocilla.h"
 #endif
 
+#ifdef COCOAPODS_POD_AVAILABLE_MagicalRecord
+// Use a class extension to expose access to MagicalRecord's private setter methods
+@interface NSManagedObjectContext ()
++ (void)MR_setRootSavingContext:(NSManagedObjectContext *)context;
++ (void)MR_setDefaultContext:(NSManagedObjectContext *)moc;
+@end
+@interface NSPersistentStoreCoordinator ()
++ (void)MR_setDefaultStoreCoordinator:(NSPersistentStoreCoordinator *)coordinator;
+@end
+#endif
+
 @implementation MongoHqApi
 
 + (MongoHqApi *)shared
@@ -36,9 +47,17 @@
     self = [super init];
     if (self) {
         //[self mockHTTP];
+        
+        //RKLogConfigureByName("RestKit/ObjectMapping", RKLogLevelTrace);
+        //RKLogConfigureByName("RestKit/CoreData", RKLogLevelTrace);
+        
         [self loadApiKey];
         [self setupStatusObjectManager];
         [self setupObjectManager];
+        
+        // Setup CoreData stack after Object Manager
+        [self setupCoreData];
+        
         [self setupMappings];
     }
     return self;
@@ -91,6 +110,41 @@
     // Set the shared instance of the object manager
     // So we can easily re-use it later
     [RKObjectManager setSharedManager:manager];
+    
+    // Show activity indicator in status bar
+    [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
+}
+
+- (void)setupCoreData
+{
+#ifndef USE_COREDATA
+    return;
+#endif
+    
+    // Configure RestKit's Core Data stack
+    NSURL *modelURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"MongoHq" ofType:@"momd"]];
+    
+    // NOTE: Due to an iOS 5 bug, the managed object model returned is immutable.
+    NSManagedObjectModel *managedObjectModel = [[[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL] mutableCopy];
+    RKManagedObjectStore *managedObjectStore = [[RKManagedObjectStore alloc] initWithManagedObjectModel:managedObjectModel];
+    
+    NSString *storePath = [RKApplicationDataDirectory() stringByAppendingPathComponent:@"MongoHq.sqlite"];
+    NSError *error = nil;
+    [managedObjectStore addSQLitePersistentStoreAtPath:storePath fromSeedDatabaseAtPath:nil withConfiguration:nil options:nil error:&error];
+    [managedObjectStore createManagedObjectContexts];
+    
+#ifdef COCOAPODS_POD_AVAILABLE_MagicalRecord
+    // Configure MagicalRecord to use RestKit's Core Data stack
+    [NSPersistentStoreCoordinator MR_setDefaultStoreCoordinator:managedObjectStore.persistentStoreCoordinator];
+    [NSManagedObjectContext MR_setRootSavingContext:managedObjectStore.persistentStoreManagedObjectContext];
+    [NSManagedObjectContext MR_setDefaultContext:managedObjectStore.mainQueueManagedObjectContext];
+#endif
+    // Set the default store shared instance
+    [RKManagedObjectStore setDefaultStore:managedObjectStore];
+    
+    // Assign Managed object store to Object manager
+    RKObjectManager *manager = [RKObjectManager sharedManager];
+    manager.managedObjectStore = managedObjectStore;
 }
 
 - (void)setupMappings
@@ -180,8 +234,16 @@
     // RESPONSE
     
     // Define that a mapping will be for MDatabase class
-    RKObjectMapping *mapping = [RKObjectMapping mappingForClass:itemClass];
+#ifdef USE_COREDATA
+    RKManagedObjectStore *managedObjectStore = [RKManagedObjectStore defaultStore];
+    RKEntityMapping *mapping = [RKEntityMapping mappingForEntityForName:@"Database" inManagedObjectStore:managedObjectStore];
     
+    // How to identify if the object we got is in database
+    // Here, we identify by name.
+    mapping.identificationAttributes = @[@"name"];
+#else
+    RKObjectMapping *mapping = [RKObjectMapping mappingForClass:itemClass];
+#endif
     // The names of JSON fields and class properties are same here
     [mapping addAttributeMappingsFromArray:@[@"name", @"plan", @"hostname", @"port"]];
     
@@ -236,9 +298,20 @@
     RKRequestDescriptor *requestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:requestMapping objectClass:itemClass rootKeyPath:nil];
     [manager addRequestDescriptor:requestDescriptor];
     
+#ifdef USE_COREDATA
+    RKManagedObjectStore *managedObjectStore = [RKManagedObjectStore defaultStore];
+    RKEntityMapping *mapping = [RKEntityMapping mappingForEntityForName:@"Collection" inManagedObjectStore:managedObjectStore];
     
+    // How to identify if the object we got is in database
+    // Here, we identify by name. 
+    mapping.identificationAttributes = @[@"name"];
+    
+    [mapping addConnectionForRelationship:@"database" connectedBy:@{@"databaseID": @"name"}];
+#else
     RKObjectMapping *mapping = [RKObjectMapping mappingForClass:itemClass];
+#endif
     [mapping addAttributeMappingsFromArray:@[@"name", @"count", @"indexCount", @"storageSize"]];
+    [mapping addAttributeMappingsFromDictionary:@{@"@metadata.routing.parameters.databaseID": @"databaseID"}];
 
     NSIndexSet *statusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful);
     RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping pathPattern:itemsPath keyPath:nil statusCodes:statusCodes];
