@@ -62,7 +62,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MCollection *collection = [self.items objectAtIndex:indexPath.row];
+    MCollection *collection = [self itemAtIndexPath:indexPath];
     DocumentsViewController *vc = [[DocumentsViewController alloc] init];
     vc.title = collection.name;
     vc.database = self.database;

@@ -51,7 +51,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MDocument *doc = [self.items objectAtIndex:indexPath.row];
+    MDocument *doc = [self itemAtIndexPath:indexPath];
     DocumentViewController *vc = [[DocumentViewController alloc] init];
     vc.title = doc.documentID;
     vc.document = doc;

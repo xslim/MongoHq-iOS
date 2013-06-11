@@ -23,7 +23,13 @@
 	// Do any additional setup after loading the view.
     
     self.path = @"/databases";
-    if (self.shouldCreateNewItem) self.database = [MDatabase new];
+    if (self.shouldCreateNewItem) {
+        if ([MDatabase isSubclassOfClass:[NSManagedObject class]]) {
+            self.database = [MDatabase MR_createEntity];
+        } else {
+            self.database = [MDatabase new];
+        }
+    }
     
     [self loadPlans];
 }

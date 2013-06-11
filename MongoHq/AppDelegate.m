@@ -30,11 +30,11 @@
     // Hardcoded
     appController.apiKey = kMongoHqApiKey;
     [appController saveApiKey];
-    
+/*
     DocumentImporter *docImporter = [DocumentImporter new];
     docImporter.fileName = @"imdb_top250.csv";
     [docImporter run];
-    return YES;
+*/
     
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];

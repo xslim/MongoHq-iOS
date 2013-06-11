@@ -38,7 +38,15 @@
      */
     
     // Create new collection, if it's a Create request
-    if (self.shouldCreateNewItem) self.collection = [MCollection new];
+    if (self.shouldCreateNewItem) {
+        if ([MCollection isSubclassOfClass:[NSManagedObject class]]) {
+            self.collection = [MCollection MR_createEntity];
+            self.collection.database = self.database;
+        } else {
+            self.collection = [MCollection new];
+        }
+        self.collection.databaseID = self.database.databaseID;
+    }
 
     // Pre-set relation info for using it in Class Routes
 #warning TODO: rethink

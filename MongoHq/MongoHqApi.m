@@ -78,7 +78,7 @@
      @"current-event.message" : @"eventMessage",
      }];
     
-    NSIndexSet *statusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful); // Anything in 2xx
+    //NSIndexSet *statusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful); // Anything in 2xx
     
     
     self.statusObjectManager = objectManager;
@@ -334,6 +334,26 @@
 
     // Add defined routes to the Object Manager router
     [manager.router.routeSet addRoutes:@[itemsRoute, newItemRoute, itemRoute]];
+
+#ifdef USE_COREDATA
+    // Deleating orphaned objects
+    [manager addFetchRequestBlock:^NSFetchRequest *(NSURL *URL) {
+        RKPathMatcher *pathMatcher = [RKPathMatcher pathMatcherWithPattern:itemsPath];
+        
+        NSDictionary *argsDict = nil;
+        BOOL match = [pathMatcher matchesPath:[URL relativePath] tokenizeQueryStrings:NO parsedArguments:&argsDict];
+        NSString *databaseID = nil;
+        if (match) {
+            databaseID = [argsDict objectForKey:@"databaseID"];
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"databaseID = %@", databaseID];
+            NSFetchRequest *fetchRequest = [MCollection MR_requestAllSortedBy:@"name" ascending:YES withPredicate:predicate];
+            return fetchRequest;
+        }
+        
+        return nil;
+    }];
+#endif
+    
 }
 
 - (void)setupDocumentMappings

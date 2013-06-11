@@ -46,6 +46,9 @@
         
         // self.objectClass will be of NSManagedObject type
         self.fetchedResultsController = [self.objectClass MR_fetchAllSortedBy:self.sortBy ascending:YES withPredicate:self.fetchPredicate groupBy:self.groupBy delegate:self];
+        if (self.fetchedResultsController.fetchedObjects.count == 0) {
+            [self refresh];
+        }
     } else {
         // Load items on initial start
         if (!self.items) [self refresh];
