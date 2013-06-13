@@ -39,7 +39,7 @@
     
     NSMutableDictionary *plansDict = [NSMutableDictionary dictionaryWithCapacity:[plans count]];
     for (MPlan *plan in plans) {
-        [plansDict setObject:plan.slug forKey:plan.selectName];
+        plansDict[plan.selectName] = plan.slug;
     }
     
     QSection *section = [[QSection alloc] initWithTitle:self.title];

@@ -28,17 +28,32 @@
 @property (nonatomic, strong) id routeObject;
 
 // For CoreData
+
+// Assign YES to start using CoreData
 @property (nonatomic, assign) BOOL useCoreData;
+
+// Class of objects that are shown in table
 @property (nonatomic, assign) Class objectClass;
+
+// How to sort objects
 @property (nonatomic, strong) NSString *sortBy;
+
+// Grouping
 @property (nonatomic, strong) NSString *groupBy;
+
+// Predicate for fetch (filtering)
 @property (nonatomic, strong) NSPredicate *fetchPredicate;
+
+// Fetched results controller to interact with data
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
 // Methods to re-use / override
 - (void)refresh;
 - (void)willStartLoading;
 - (void)finishedLoadingWithItems:(NSArray *)newItems;
 - (void)finishedLoadingWithError:(NSError *)error;
+
+- (void)constructFetchedResultsController;
 
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath;
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;

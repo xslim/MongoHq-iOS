@@ -44,7 +44,7 @@
     vc.delegate = self;
     vc.database = self.database;
     vc.collection = self.collection;
-    vc.document = [self.items objectAtIndex:indexPath.row];
+    vc.document = (self.items)[indexPath.row];
     UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:vc];
     [self.navigationController presentModalViewController:nc animated:YES];
 }

@@ -25,7 +25,7 @@
     self = [super init];
     if (self) {
         // Configure the controller
-#ifdef USE_COREDATA
+#if USE_COREDATA
         self.useCoreData = YES;
         self.objectClass = [MDatabase class];
 #endif

@@ -94,7 +94,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    StatusItem *item = [self.items objectAtIndex:indexPath.row];
+    StatusItem *item = (self.items)[indexPath.row];
     DetailStatusViewController *detailViewController = [[DetailStatusViewController alloc] init];
     detailViewController.item = item;
     detailViewController.title = item.name;

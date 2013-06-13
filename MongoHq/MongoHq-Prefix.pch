@@ -18,6 +18,8 @@
 #endif
 
 #ifdef COCOAPODS_POD_AVAILABLE_MagicalRecord
+// Allows skipping MR_ prefix
+#define MR_SHORTHAND
 #import "CoreData+MagicalRecord.h"
 #endif
 

@@ -307,11 +307,11 @@
 		55A9414B1761238E00A5A773 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				55A9415C1761238E00A5A773 /* MongoHq.xcdatamodeld */,
 				55A9414C1761238E00A5A773 /* Human */,
 				55A941511761238E00A5A773 /* Machine */,
 				55A9415A1761238E00A5A773 /* MDocument.h */,
 				55A9415B1761238E00A5A773 /* MDocument.m */,
-				55A9415C1761238E00A5A773 /* MongoHq.xcdatamodeld */,
 				55A9415E1761238E00A5A773 /* MPlan.h */,
 				55A9415F1761238E00A5A773 /* MPlan.m */,
 				55A941601761238E00A5A773 /* StatusItem.h */,
@@ -372,6 +372,15 @@
 			attributes = {
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = Kalapun;
+				TargetAttributes = {
+					557A00B517316827009460FA = {
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+						};
+					};
+				};
 			};
 			buildConfigurationList = 557A00B117316827009460FA /* Build configuration list for PBXProject "MongoHq" */;
 			compatibilityVersion = "Xcode 3.2";

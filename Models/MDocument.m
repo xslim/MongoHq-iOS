@@ -56,12 +56,12 @@
     if (!rootDocument) return;
     
     // Extract document _id
-    id idObj = [rootDocument objectForKey:@"_id"];
+    id idObj = rootDocument[@"_id"];
     if ([idObj isKindOfClass:[NSString class]]) {
         self.documentID = idObj;
     } else if ([idObj isKindOfClass:[NSDictionary class]]) {
         static NSString *oidKey = @"$oid";
-        self.documentID = [(NSDictionary *)idObj objectForKey:oidKey];
+        self.documentID = ((NSDictionary *)idObj)[oidKey];
     }
     
     // Remove _id from document

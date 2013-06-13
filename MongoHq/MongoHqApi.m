@@ -15,6 +15,10 @@
 #import "MCollection.h"
 #import "MDocument.h"
 
+#ifdef COCOAPODS_POD_AVAILABLE_RestKit_Search
+#import "RestKit/Search.h"
+#endif
+
 #ifdef COCOAPODS_POD_AVAILABLE_Nocilla
 #import "Nocilla.h"
 #endif
@@ -55,8 +59,10 @@
         [self setupStatusObjectManager];
         [self setupObjectManager];
         
+#if USE_COREDATA
         // Setup CoreData stack after Object Manager
         [self setupCoreData];
+#endif
         
         [self setupMappings];
     }
@@ -117,22 +123,31 @@
 
 - (void)setupCoreData
 {
-#ifndef USE_COREDATA
-    return;
-#endif
-    
     // Configure RestKit's Core Data stack
     NSURL *modelURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"MongoHq" ofType:@"momd"]];
-    
-    // NOTE: Due to an iOS 5 bug, the managed object model returned is immutable.
+
+    // Due to an iOS 5 bug, the managed object model returned is immutable.
     NSManagedObjectModel *managedObjectModel = [[[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL] mutableCopy];
     RKManagedObjectStore *managedObjectStore = [[RKManagedObjectStore alloc] initWithManagedObjectModel:managedObjectModel];
+
+#ifdef COCOAPODS_POD_AVAILABLE_RestKit_Search
+    // Configure indexing for the Collection entity
+    [managedObjectStore addSearchIndexingToEntityForName:@"Collection" onAttributes:@[@"name"]];
+#endif
     
     NSString *storePath = [RKApplicationDataDirectory() stringByAppendingPathComponent:@"MongoHq.sqlite"];
     NSError *error = nil;
     [managedObjectStore addSQLitePersistentStoreAtPath:storePath fromSeedDatabaseAtPath:nil withConfiguration:nil options:nil error:&error];
+    
+    // Create default contexts
+    // For main thread and background processing
     [managedObjectStore createManagedObjectContexts];
     
+#ifdef COCOAPODS_POD_AVAILABLE_RestKit_Search
+    // Start indexing
+    [managedObjectStore startIndexingPersistentStoreManagedObjectContext];
+#endif
+
 #ifdef COCOAPODS_POD_AVAILABLE_MagicalRecord
     // Configure MagicalRecord to use RestKit's Core Data stack
     [NSPersistentStoreCoordinator MR_setDefaultStoreCoordinator:managedObjectStore.persistentStoreCoordinator];
@@ -141,7 +156,7 @@
 #endif
     // Set the default store shared instance
     [RKManagedObjectStore setDefaultStore:managedObjectStore];
-    
+
     // Assign Managed object store to Object manager
     RKObjectManager *manager = [RKObjectManager sharedManager];
     manager.managedObjectStore = managedObjectStore;
@@ -234,8 +249,11 @@
     // RESPONSE
     
     // Define that a mapping will be for MDatabase class
-#ifdef USE_COREDATA
+#if USE_COREDATA
+    // Get default managed object store
     RKManagedObjectStore *managedObjectStore = [RKManagedObjectStore defaultStore];
+
+    // Create mapping for entity
     RKEntityMapping *mapping = [RKEntityMapping mappingForEntityForName:@"Database" inManagedObjectStore:managedObjectStore];
     
     // How to identify if the object we got is in database
@@ -298,9 +316,10 @@
     RKRequestDescriptor *requestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:requestMapping objectClass:itemClass rootKeyPath:nil];
     [manager addRequestDescriptor:requestDescriptor];
     
-#ifdef USE_COREDATA
+#if USE_COREDATA
+    NSString *entityName = @"Collection";
     RKManagedObjectStore *managedObjectStore = [RKManagedObjectStore defaultStore];
-    RKEntityMapping *mapping = [RKEntityMapping mappingForEntityForName:@"Collection" inManagedObjectStore:managedObjectStore];
+    RKEntityMapping *mapping = [RKEntityMapping mappingForEntityForName:entityName inManagedObjectStore:managedObjectStore];
     
     // How to identify if the object we got is in database
     // Here, we identify by name. 
@@ -311,7 +330,9 @@
     RKObjectMapping *mapping = [RKObjectMapping mappingForClass:itemClass];
 #endif
     [mapping addAttributeMappingsFromArray:@[@"name", @"count", @"indexCount", @"storageSize"]];
-    [mapping addAttributeMappingsFromDictionary:@{@"@metadata.routing.parameters.databaseID": @"databaseID"}];
+    
+    NSDictionary *dbIdMapping = @{@"@metadata.routing.parameters.databaseID": @"databaseID"};
+    [mapping addAttributeMappingsFromDictionary:dbIdMapping];
 
     NSIndexSet *statusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful);
     RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:mapping pathPattern:itemsPath keyPath:nil statusCodes:statusCodes];
@@ -335,16 +356,23 @@
     // Add defined routes to the Object Manager router
     [manager.router.routeSet addRoutes:@[itemsRoute, newItemRoute, itemRoute]];
 
-#ifdef USE_COREDATA
+#if USE_COREDATA
     // Deleating orphaned objects
+    // Define Fetch request to trigger on specific url
     [manager addFetchRequestBlock:^NSFetchRequest *(NSURL *URL) {
+        // Create a path matcher
         RKPathMatcher *pathMatcher = [RKPathMatcher pathMatcherWithPattern:itemsPath];
         
+        // Dictionary to store request arguments
+        // databaseID in our case is what we are looking for
         NSDictionary *argsDict = nil;
+        
+        // Match the URL with pathMatcher and retrieve arguments
         BOOL match = [pathMatcher matchesPath:[URL relativePath] tokenizeQueryStrings:NO parsedArguments:&argsDict];
-        NSString *databaseID = nil;
+        
+        // If url matched, create NSFetchRequest
         if (match) {
-            databaseID = [argsDict objectForKey:@"databaseID"];
+            NSString *databaseID = argsDict[@"databaseID"];
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"databaseID = %@", databaseID];
             NSFetchRequest *fetchRequest = [MCollection MR_requestAllSortedBy:@"name" ascending:YES withPredicate:predicate];
             return fetchRequest;

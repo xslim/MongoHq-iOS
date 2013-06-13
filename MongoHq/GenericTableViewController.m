@@ -11,8 +11,6 @@
 
 @interface GenericTableViewController () <NSFetchedResultsControllerDelegate>
 
-@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
-
 @end
 
 @implementation GenericTableViewController
@@ -24,6 +22,14 @@
         // Custom initialization
     }
     return self;
+}
+
+- (void)constructFetchedResultsController
+{
+    if (!self.sortBy) self.sortBy = @"name";
+    
+    // self.objectClass will be of NSManagedObject type
+    self.fetchedResultsController = [self.objectClass MR_fetchAllSortedBy:self.sortBy ascending:YES withPredicate:self.fetchPredicate groupBy:self.groupBy delegate:self];
 }
 
 - (void)viewDidLoad
@@ -42,10 +48,7 @@
     
     
     if (self.useCoreData) {
-        if (!self.sortBy) self.sortBy = @"name";
-        
-        // self.objectClass will be of NSManagedObject type
-        self.fetchedResultsController = [self.objectClass MR_fetchAllSortedBy:self.sortBy ascending:YES withPredicate:self.fetchPredicate groupBy:self.groupBy delegate:self];
+        [self constructFetchedResultsController];
         if (self.fetchedResultsController.fetchedObjects.count == 0) {
             [self refresh];
         }
@@ -190,7 +193,7 @@
         return [self.fetchedResultsController objectAtIndexPath:indexPath];
     }
     
-    return [self.items objectAtIndex:indexPath.row];
+    return (self.items)[indexPath.row];
 }
 
 - (void)editItemAtIndexPath:(NSIndexPath *)indexPath
@@ -224,7 +227,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (self.useCoreData) {
-        id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+        id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
         return [sectionInfo numberOfObjects];
     }
     

@@ -6,7 +6,8 @@ pod 'SSKeychain'
 pod 'CHCSVParser'
 
 # Net
-pod 'RestKit', :git => 'https://github.com/RestKit/RestKit.git'
+pod 'RestKit', :head
+pod 'RestKit/Search', :head
 
 # UI
 pod 'ViewDeck'
