@@ -15,14 +15,6 @@
 
 @implementation GenericTableViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)constructFetchedResultsController
 {
@@ -174,6 +166,9 @@
     } else {
         self.navigationItem.leftBarButtonItem = nil;
     }
+    
+    // iOS 7 Bug
+    self.tableView.editing = editing;
 }
 
 - (void)presentCreateOrEditFormForObject:(id)item
@@ -256,13 +251,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"CellIdentifier";
+    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.editingAccessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-    }
     
     // Configure the cell...
     [self configureCell:cell atIndexPath:indexPath];
@@ -324,23 +315,13 @@
 
 #pragma mark - Table view delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
-}
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
-    if (!self.tableView.editing) return;
-    
+    //NSLog(@"isEditing: %i", self.tableView.isEditing);
     [self editItemAtIndexPath:indexPath];
 }
+
 
 #pragma mark - NSFetchedResultsControllerDelegate
 

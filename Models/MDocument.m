@@ -14,6 +14,22 @@
     return self.documentID;
 }
 
+- (NSString *)subtitleText {
+    int i=0;
+    NSMutableArray *arr = [NSMutableArray array];
+    for (NSString *key in self.document) {
+        id val = [self.document objectForKey:key];
+        if ([val isKindOfClass:[NSString class]] || [val isKindOfClass:[NSNumber class]]) {
+            [arr addObject:[NSString stringWithFormat:@"%@: %@", key, val]];
+            i++;
+        }
+        if (i==3) {
+            break;
+        }
+    }
+    return [arr componentsJoinedByString:@", "];
+}
+
 - (NSString *)description {
     return (self.titleText) ? self.titleText : self.documentString;
 }

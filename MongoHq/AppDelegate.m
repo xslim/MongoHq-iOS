@@ -36,26 +36,9 @@
     [docImporter run];
 */
     
+    UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
+    tabBarController.selectedIndex = 1;
     
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
-    [self.window makeKeyAndVisible];
-    
-    [self styleUI];
-    
-    UIViewController *vc1 = [[NSClassFromString(@"DatabasesViewController") alloc] init];
-    UINavigationController *nc1 = [[UINavigationController alloc] initWithRootViewController:vc1];
-    
-    UIViewController *vc2 = [[NSClassFromString(@"StatusViewController") alloc] init];
-    UINavigationController *nc2 = [[UINavigationController alloc] initWithRootViewController:vc2];
-    
-    UITabBarController *tabBar = [[UITabBarController alloc] init];
-    tabBar.viewControllers = @[nc2, nc1];
-    
-    tabBar.selectedIndex = 1;
-    
-    self.window.rootViewController = tabBar;
     
     return YES;
 }
@@ -87,13 +70,5 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-- (void)styleUI
-{
-//    [UIBarButtonItem configureFlatButtonsWithColor:[UIColor peterRiverColor]
-//                                  highlightedColor:[UIColor belizeHoleColor]
-//                                      cornerRadius:3];
-//    
-    
-}
 
 @end

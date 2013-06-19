@@ -16,13 +16,12 @@
 
 @implementation StatusViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (id)initWithCoder:(NSCoder *)aDecoder
 {
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-        self.title = @"Status";
+    if (self = [super initWithCoder:aDecoder])
+    {
         self.tabBarItem.image = [UIImage fi_imageIcon:@"FontAwesome/bullhorn" size:(CGSize){30,30} color:[UIColor blackColor]];
+        self.title = NSLocalizedString(@"Status", nil);
     }
     return self;
 }

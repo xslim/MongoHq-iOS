@@ -20,10 +20,10 @@
 
 @implementation CollectionsViewController
 
-- (id)init
+- (id)initWithCoder:(NSCoder *)aDecoder
 {
-    self = [super init];
-    if (self) {
+    if (self = [super initWithCoder:aDecoder])
+    {
 #if USE_COREDATA
         self.useCoreData = YES;
         self.objectClass = [MCollection class];
@@ -71,17 +71,21 @@
     vc.database = self.database;
     vc.collection = item;
     UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:vc];
-    [self.navigationController presentModalViewController:nc animated:YES];
+    [self.navigationController presentViewController:nc animated:YES completion:nil];
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    MCollection *collection = [self itemAtIndexPath:indexPath];
-    DocumentsViewController *vc = [[DocumentsViewController alloc] init];
-    vc.title = collection.name;
-    vc.database = self.database;
-    vc.collection = collection;
-    [self.navigationController pushViewController:vc animated:YES];
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    if ([segue.identifier isEqualToString:@"DrillDown"]) {
+        
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        MCollection *collection = [self itemAtIndexPath:indexPath];
+        
+        DocumentsViewController *vc = [segue destinationViewController];
+        vc.title = collection.name;
+        vc.database = self.database;
+        vc.collection = collection;
+    }
 }
 
 #pragma mark - Search

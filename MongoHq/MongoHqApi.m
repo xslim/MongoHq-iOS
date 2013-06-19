@@ -52,6 +52,8 @@
     if (self) {
         //[self mockHTTP];
         
+        RKLogConfigureFromEnvironment();
+        
         //RKLogConfigureByName("RestKit/ObjectMapping", RKLogLevelTrace);
         //RKLogConfigureByName("RestKit/CoreData", RKLogLevelTrace);
         
@@ -177,21 +179,27 @@
 {
     // Define Error mapping
     
-    // You can map errors to any class, but `RKErrorMessage` is included for free
+    // You can map errors to any class
+    // RKErrorMessage is included within RestKit
     RKObjectMapping *errorMapping = [RKObjectMapping mappingForClass:[RKErrorMessage class]];
-    // The entire value at the source key path containing the errors maps to the message
+
+    // Map error information to the errorMessage property in our class
     [errorMapping addPropertyMapping:[RKAttributeMapping attributeMappingFromKeyPath:nil toKeyPath:@"errorMessage"]];
-    
+
+    // Anything in 4xx
     NSIndexSet *clientErrorStatusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassClientError);
-    NSIndexSet *serverStatusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassServerError); // Anything in 5xx
-    
-    NSMutableIndexSet *statusCodes = [[NSMutableIndexSet alloc] initWithIndexSet:clientErrorStatusCodes];
-    //    [statusCodes addIndexes:goodStatusCodes];
+
+    // Anything in 5xx
+    NSIndexSet *serverStatusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassServerError);
+
+    // Combine
+    NSMutableIndexSet *statusCodes = [[NSMutableIndexSet alloc] init];
+    [statusCodes addIndexes:clientErrorStatusCodes];
     [statusCodes addIndexes:serverStatusCodes];
-    
-    // Any response in the 4xx status code range with an "error" key path uses this mapping
+
+    // Any response within provided status code range with an "error" key path
     RKResponseDescriptor *errorDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:errorMapping pathPattern:nil keyPath:@"error" statusCodes:statusCodes];
-    
+
     // Add it to default response mappers
     RKObjectManager *manager = [RKObjectManager sharedManager];
     [manager addResponseDescriptor:errorDescriptor];

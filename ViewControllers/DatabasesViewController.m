@@ -19,23 +19,28 @@
 
 @implementation DatabasesViewController
 
-
-- (id)init
+- (id)initWithCoder:(NSCoder *)aDecoder
 {
-    self = [super init];
-    if (self) {
-        // Configure the controller
-#if USE_COREDATA
-        self.useCoreData = YES;
-        self.objectClass = [MDatabase class];
-#endif
-        self.path = @"/databases";
-        self.title = @"Databases";
+    if (self = [super initWithCoder:aDecoder])
+    {
         self.tabBarItem.image = [UIImage fi_imageIcon:@"Entypo/database" size:(CGSize){30,30} color:[UIColor blackColor]];
+        self.title = NSLocalizedString(@"Databases", nil);
     }
     return self;
 }
 
+- (void)viewDidLoad
+{
+    
+#if USE_COREDATA
+    self.useCoreData = YES;
+    self.objectClass = [MDatabase class];
+#endif
+    self.path = @"/databases";
+    
+    
+    [super viewDidLoad];
+}
 
 - (IBAction)createNewItem:(id)sender
 {
@@ -47,13 +52,17 @@
 
 #pragma mark - Table view delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    MDatabase *db = [self itemAtIndexPath:indexPath];
-    CollectionsViewController *vc = [[CollectionsViewController alloc] init];
-    vc.title = db.name;
-    vc.database = db;
-    [self.navigationController pushViewController:vc animated:YES];
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    if ([segue.identifier isEqualToString:@"DrillDown"]) {
+        
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        MDatabase *db = [self itemAtIndexPath:indexPath];
+        
+        CollectionsViewController *vc = [segue destinationViewController];
+        vc.title = db.name;
+        vc.database = db;
+    }
 }
 
 @end

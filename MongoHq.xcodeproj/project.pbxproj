@@ -19,6 +19,7 @@
 		5524F2C4175002CE00E1AA11 /* ApiKeyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5524F2C3175002CC00E1AA11 /* ApiKeyViewController.m */; };
 		55375758174BF7E2002791BE /* DetailStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55375757174BF7E2002791BE /* DetailStatusViewController.m */; };
 		5539AE03174C122500184973 /* fixtures in Resources */ = {isa = PBXBuildFile; fileRef = 5539AE02174C122500184973 /* fixtures */; };
+		55578DBF176B503800AC1A4B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55578DBE176B503800AC1A4B /* Main.storyboard */; };
 		556409431754D6F900EF5028 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 556409381754D6F100EF5028 /* Default-568h@2x.png */; };
 		556409441754D6F900EF5028 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 556409391754D6F200EF5028 /* Default.png */; };
 		556409451754D6F900EF5028 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5564093A1754D6F300EF5028 /* Default@2x.png */; };
@@ -51,6 +52,7 @@
 		55A9416B1761238E00A5A773 /* StatusItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A941611761238E00A5A773 /* StatusItem.m */; };
 		55A9416E17614FCB00A5A773 /* DocumentImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A9416D17614FCA00A5A773 /* DocumentImporter.m */; };
 		55A94170176151C200A5A773 /* imdb_top250.csv in Resources */ = {isa = PBXBuildFile; fileRef = 55A9416F176151C200A5A773 /* imdb_top250.csv */; };
+		55E6A39D1771F13700663249 /* FileSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E6A39C1771F13700663249 /* FileSelectorViewController.m */; };
 		D3DAFDC63DE84536BD339711 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B620F6ABEDC24F6F8CB923A5 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -79,6 +81,7 @@
 		55375756174BF7E2002791BE /* DetailStatusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DetailStatusViewController.h; path = ViewControllers/DetailStatusViewController.h; sourceTree = "<group>"; };
 		55375757174BF7E2002791BE /* DetailStatusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DetailStatusViewController.m; path = ViewControllers/DetailStatusViewController.m; sourceTree = "<group>"; };
 		5539AE02174C122500184973 /* fixtures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fixtures; sourceTree = "<group>"; };
+		55578DBE176B503800AC1A4B /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		556409381754D6F100EF5028 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		556409391754D6F200EF5028 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		5564093A1754D6F300EF5028 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
@@ -129,6 +132,8 @@
 		55A9416C17614FCA00A5A773 /* DocumentImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocumentImporter.h; sourceTree = "<group>"; };
 		55A9416D17614FCA00A5A773 /* DocumentImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocumentImporter.m; sourceTree = "<group>"; };
 		55A9416F176151C200A5A773 /* imdb_top250.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = imdb_top250.csv; sourceTree = "<group>"; };
+		55E6A39B1771F13700663249 /* FileSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSelectorViewController.h; sourceTree = "<group>"; };
+		55E6A39C1771F13700663249 /* FileSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileSelectorViewController.m; sourceTree = "<group>"; };
 		B620F6ABEDC24F6F8CB923A5 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C20140148062447B90425F7C /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -254,11 +259,14 @@
 				557A00C917316827009460FA /* AppDelegate.m */,
 				55A9416C17614FCA00A5A773 /* DocumentImporter.h */,
 				55A9416D17614FCA00A5A773 /* DocumentImporter.m */,
+				55E6A39B1771F13700663249 /* FileSelectorViewController.h */,
+				55E6A39C1771F13700663249 /* FileSelectorViewController.m */,
 				557A00C017316827009460FA /* Supporting Files */,
 				557150971732A21B007A752B /* MongoHqApi.h */,
 				557150981732A21B007A752B /* MongoHqApi.m */,
 				559C5ACC174D64EA000ED2F2 /* MongoHqHTTPClient.h */,
 				559C5ACD174D64EA000ED2F2 /* MongoHqHTTPClient.m */,
+				55578DBE176B503800AC1A4B /* Main.storyboard */,
 			);
 			path = MongoHq;
 			sourceTree = "<group>";
@@ -374,6 +382,7 @@
 				ORGANIZATIONNAME = Kalapun;
 				TargetAttributes = {
 					557A00B517316827009460FA = {
+						DevelopmentTeam = CN8YNNYN79;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 0;
@@ -410,6 +419,7 @@
 				556409441754D6F900EF5028 /* Default.png in Resources */,
 				556409451754D6F900EF5028 /* Default@2x.png in Resources */,
 				556409461754D6F900EF5028 /* Icon-72.png in Resources */,
+				55578DBF176B503800AC1A4B /* Main.storyboard in Resources */,
 				556409471754D6F900EF5028 /* Icon-72@2x.png in Resources */,
 				556409481754D6F900EF5028 /* Icon-Small-50.png in Resources */,
 				556409491754D6F900EF5028 /* Icon-Small.png in Resources */,
@@ -482,6 +492,7 @@
 				55A941641761238E00A5A773 /* _MCollection.m in Sources */,
 				55A941651761238E00A5A773 /* _MDatabase.m in Sources */,
 				55A941681761238E00A5A773 /* MDocument.m in Sources */,
+				55E6A39D1771F13700663249 /* FileSelectorViewController.m in Sources */,
 				55A941691761238E00A5A773 /* MongoHq.xcdatamodeld in Sources */,
 				55A9416A1761238E00A5A773 /* MPlan.m in Sources */,
 				55A9416B1761238E00A5A773 /* StatusItem.m in Sources */,
@@ -563,10 +574,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C20140148062447B90425F7C /* Pods.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MongoHq/MongoHq-Prefix.pch";
 				INFOPLIST_FILE = "MongoHq/MongoHq-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -576,10 +588,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C20140148062447B90425F7C /* Pods.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MongoHq/MongoHq-Prefix.pch";
 				INFOPLIST_FILE = "MongoHq/MongoHq-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
