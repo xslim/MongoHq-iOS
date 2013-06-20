@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>0786C333-6BEA-4322-A7A0-8C88E245D23B</string>
+	<key>IDESourceControlProjectName</key>
+	<string>MongoHq</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>EEF8557D-934F-472D-A11B-89534C67AE1C</key>
+		<string>https://github.com/xslim/MongoHq-iOS.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>MongoHq.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>EEF8557D-934F-472D-A11B-89534C67AE1C</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/xslim/MongoHq-iOS.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>EEF8557D-934F-472D-A11B-89534C67AE1C</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>EEF8557D-934F-472D-A11B-89534C67AE1C</string>
+			<key>IDESourceControlWCCName</key>
+			<string>MongoHq-iOS</string>
+		</dict>
+	</array>
+</dict>
+</plist>
