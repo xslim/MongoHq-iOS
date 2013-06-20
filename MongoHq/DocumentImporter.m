@@ -132,13 +132,19 @@
     
     RKObjectManager *manager = [RKObjectManager sharedManager];
     
+    // A route to be used for every single operation
     RKRoute *route = [manager.router.routeSet routeForClass:[MDocument class] method:RKRequestMethodPOST];
     
     __weak DocumentImporter *weakSelf = self;
     
     [manager enqueueBatchOfObjectRequestOperationsWithRoute:route objects:docs progress:^(NSUInteger numberOfFinishedOperations, NSUInteger totalNumberOfOperations) {
         NSLog(@"Finished %d operations", numberOfFinishedOperations);
-        [weakSelf importingProgress:((CGFloat)numberOfFinishedOperations / (CGFloat)totalNumberOfOperations)];
+        
+        // Show some progress HUD
+        CGFloat progress = ((CGFloat)numberOfFinishedOperations / (CGFloat)totalNumberOfOperations);
+        [SVProgressHUD showProgress:progress];
+        
+        //[weakSelf importingProgress:progress];
     } completion:^(NSArray *operations) {
         NSLog(@"All Documents Uploaded!");
         [weakSelf importingProgress:1.0f];
