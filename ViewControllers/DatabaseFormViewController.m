@@ -38,8 +38,14 @@
 - (void)displayNewDatabaseFormWithPlans:(NSArray *)plans {
     
     NSMutableDictionary *plansDict = [NSMutableDictionary dictionaryWithCapacity:[plans count]];
+    NSUInteger freePlanIndex = 0;
+    int count = 0;
     for (MPlan *plan in plans) {
         plansDict[plan.selectName] = plan.slug;
+        if ([plan.price intValue] == 0 || [plan.slug isEqualToString:@"sandbox"]) {
+            freePlanIndex = count;
+        }
+        count++;
     }
     
     QSection *section = [[QSection alloc] initWithTitle:self.title];
@@ -48,8 +54,9 @@
     [section addElement:nameEntry];
     
     
-    QRadioElement *planEntry = [[QRadioElement alloc] initWithDict:plansDict selected:0 title:@"Plan"];
+    QRadioElement *planEntry = [[QRadioElement alloc] initWithDict:plansDict selected:1 title:@"Plan"];
     planEntry.bind = @"selectedValue:plan";
+    [planEntry setSelected:freePlanIndex];
     [section addElement:planEntry];
     
     [self.root addSection:section];
@@ -73,7 +80,6 @@
     }
     return YES;
 }
-
 
 - (void)loadPlans
 {

@@ -74,6 +74,10 @@
     return NO;
 }
 
+- (BOOL)shouldStartLoading {
+    return YES;
+}
+
 - (void)refresh
 {    
     if (![self apiKeyExists]) {
@@ -82,6 +86,10 @@
     
     // If refreshed from editing mode, switch to normal
     [self setEditing:NO animated:NO];
+    
+    if (![self shouldStartLoading]) {
+        return;
+    }
     
     [self willStartLoading];
     

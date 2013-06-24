@@ -11,10 +11,11 @@
 #import "DocumentFormViewController.h"
 #import "DocumentImporter.h"
 
-@interface DocumentsViewController () <DocumentImporterDelegate>
+@interface DocumentsViewController () <DocumentImporterDelegate, UIAlertViewDelegate>
 
 // Or ARC will kick it
 @property (nonatomic, strong) DocumentImporter *importer;
+@property (nonatomic, assign) BOOL userAgreedOnLoading;
 
 @end
 
@@ -22,6 +23,7 @@
 
 - (void)viewDidLoad
 {
+    self.userAgreedOnLoading = NO;
     self.routeName = @"documents";
     self.routeObject = @{@"databaseID": self.database.databaseID,
                          @"collectionID": self.collection.collectionID};
@@ -30,6 +32,39 @@
     
     [super viewDidLoad];
 	self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+- (BOOL)shouldStartLoading {
+    
+    if (self.userAgreedOnLoading) {
+        return YES;
+    }
+    
+    AFHTTPClient *client = [RKObjectManager sharedManager].HTTPClient;
+    if (client.networkReachabilityStatus != AFNetworkReachabilityStatusReachableViaWiFi) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not a WiFi connection" message:@"Your internet seems to be on a cellular. Are you sure you want to load Documents?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Load", nil];
+        alert.tag = 1002; // extra check
+        [alert show];
+        return NO;
+    } else {
+        return YES;
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag != 1002) {
+        return;
+    }
+    
+    if (buttonIndex == 0) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    
+    if (buttonIndex == 1) {
+        self.userAgreedOnLoading = YES;
+        [self refresh];
+    }
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated

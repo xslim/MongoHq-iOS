@@ -15,6 +15,9 @@
 #import "MCollection.h"
 #import "MDocument.h"
 
+// For Reachability
+#import "AFHTTPClient.h"
+
 #ifdef COCOAPODS_POD_AVAILABLE_RestKit_Search
 #import "RestKit/Search.h"
 #endif
@@ -121,6 +124,18 @@
     
     // Show activity indicator in status bar
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
+    
+    // Reachability
+    [manager.HTTPClient setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        if (status == AFNetworkReachabilityStatusNotReachable) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No network connection"
+                                                            message:@"You must be connected to the internet to use this app."
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+    }];
 }
 
 - (void)setupCoreData
@@ -301,6 +316,30 @@
     
     // Add defined routes to the Object Manager router
     [manager.router.routeSet addRoutes:@[itemsRoute, newItemRoute, itemRoute]];
+    
+#if USE_COREDATA
+    // Deleating orphaned objects
+    // Define Fetch request to trigger on specific url
+    [manager addFetchRequestBlock:^NSFetchRequest *(NSURL *URL) {
+        // Create a path matcher
+        RKPathMatcher *pathMatcher = [RKPathMatcher pathMatcherWithPattern:itemsPath];
+        
+        // Dictionary to store request arguments
+        // databaseID in our case is what we are looking for
+        NSDictionary *argsDict = nil;
+        
+        // Match the URL with pathMatcher and retrieve arguments
+        BOOL match = [pathMatcher matchesPath:[URL relativePath] tokenizeQueryStrings:NO parsedArguments:&argsDict];
+        
+        // If url matched, create NSFetchRequest
+        if (match) {
+            NSFetchRequest *fetchRequest = [MDatabase MR_requestAllSortedBy:@"name" ascending:YES withPredicate:nil];
+            return fetchRequest;
+        }
+        
+        return nil;
+    }];
+#endif
 }
 
 - (void)setupCollectionMappings

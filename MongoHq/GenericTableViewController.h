@@ -49,6 +49,7 @@
 
 // Methods to re-use / override
 - (void)refresh;
+- (BOOL)shouldStartLoading;
 - (void)willStartLoading;
 - (void)finishedLoadingWithItems:(NSArray *)newItems;
 - (void)finishedLoadingWithError:(NSError *)error;
