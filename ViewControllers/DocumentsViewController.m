@@ -17,6 +17,10 @@
 @property (nonatomic, strong) DocumentImporter *importer;
 @property (nonatomic, assign) BOOL userAgreedOnLoading;
 
+#if USE_DOCUMENT_PAGINATION
+@property (nonatomic, strong) RKPaginator *documentsPaginator;
+#endif
+
 @end
 
 @implementation DocumentsViewController
@@ -27,12 +31,56 @@
     self.routeName = @"documents";
     self.routeObject = @{@"databaseID": self.database.databaseID,
                          @"collectionID": self.collection.collectionID};
+
+#if USE_DOCUMENT_PAGINATION
+    RKObjectManager *manager = [RKObjectManager sharedManager];
+    NSURL *url = [manager.router URLForRouteNamed:self.routeName method:RKRequestMethodGET object:self.routeObject];
+    NSString *itemsPath = url.path;
+    NSString *paginatorPath = [itemsPath stringByAppendingString:@"?skip=:offset&limit=:perPage"];
+    RKPaginator *paginator = [manager paginatorWithPathPattern:paginatorPath];
+    paginator.perPage = kMongoHqDocumentsPerPage;
+    
+    [paginator setCompletionBlockWithSuccess:^(RKPaginator *paginator, NSArray *objects, NSUInteger page) {
+        [self finishedLoadingWithItems:objects];
+    } failure:^(RKPaginator *paginator, NSError *error) {
+        [self finishedLoadingWithError:error];
+    }];
+    
+    self.documentsPaginator = paginator;
+#endif
     
     //self.path = RKPathFromPatternWithObject(@"/databases/:databaseID/collections/:collectionID/documents", pathParams);
     
     [super viewDidLoad];
 	self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
+
+#if USE_DOCUMENT_PAGINATION
+- (void)refresh
+{
+    // If refreshed from editing mode, switch to normal
+    
+    if (![self shouldStartLoading]) {
+        return;
+    }
+    
+    [self willStartLoading];
+    
+    [self.documentsPaginator loadPage:1];
+    
+    [self setEditing:NO animated:NO];
+}
+
+- (IBAction)loadPrevPage:(id)sender
+{
+    [self.documentsPaginator loadPreviousPage];
+}
+
+- (IBAction)loadNextPage:(id)sender
+{
+    [self.documentsPaginator loadNextPage];
+}
+#endif
 
 - (BOOL)shouldStartLoading {
     
@@ -80,7 +128,22 @@
         [self setToolbarItems:toolbarItems animated:NO];
         [self.navigationController setToolbarHidden:NO animated:YES];
     } else {
+#if USE_DOCUMENT_PAGINATION
+        NSString *pagesString = [NSString stringWithFormat:@"%i / %i",
+                                 self.documentsPaginator.currentPage,
+                                 self.documentsPaginator.pageCount];
+        NSArray *toolbarItems = @[
+                                  [[UIBarButtonItem alloc] initWithTitle:@"<" style:UIBarButtonItemStyleBordered target:self action:@selector(loadPrevPage:)],
+                                  [[UIBarButtonItem alloc] initWithTitle:pagesString style:UIBarButtonItemStylePlain target:nil action:nil],
+                                  [[UIBarButtonItem alloc] initWithTitle:@">" style:UIBarButtonItemStyleBordered target:self action:@selector(loadNextPage:)]
+                                  ];
+        
+        
+        [self setToolbarItems:toolbarItems animated:NO];
+        [self.navigationController setToolbarHidden:NO animated:YES];
+#else
         [self.navigationController setToolbarHidden:YES animated:NO];
+#endif
     }
     
 }

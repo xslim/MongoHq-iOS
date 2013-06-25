@@ -75,7 +75,8 @@
     id idObj = rootDocument[@"_id"];
     if ([idObj isKindOfClass:[NSString class]]) {
         self.documentID = idObj;
-    } else if ([idObj isKindOfClass:[NSDictionary class]]) {
+    }
+    else if ([idObj isKindOfClass:[NSDictionary class]]) {
         static NSString *oidKey = @"$oid";
         self.documentID = ((NSDictionary *)idObj)[oidKey];
     }

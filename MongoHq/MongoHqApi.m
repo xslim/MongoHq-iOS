@@ -103,7 +103,11 @@
     NSString *baseUrl = @"https://api.mongohq.com";
     
     // Initialize our custom HTTP Client to always add _apikey to url
-    MongoHqHTTPClient *httpClient = [[MongoHqHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:baseUrl]];
+    NSURL *baseURL = [NSURL URLWithString:baseUrl];
+    //MongoHqHTTPClient *httpClient = [[MongoHqHTTPClient alloc] initWithBaseURL:baseURL];
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:baseURL];
+    //[httpClient setAuthorizationHeaderWithToken:kMongoHqApiKey];
+    [httpClient setDefaultHeader:@"MongoHQ-API-Token" value:kMongoHqApiKey];
     
     // Init with custom HTTPClient
     RKObjectManager *manager = [[RKObjectManager alloc] initWithHTTPClient:httpClient];
@@ -463,6 +467,20 @@
     itemsRoute.shouldEscapePath = YES;
     
     [manager.router.routeSet addRoutes:@[itemsRoute, newItemRoute, itemRoute]];
+    
+#if USE_DOCUMENT_PAGINATION
+    // Paginator
+    RKObjectMapping *paginationMapping = [RKObjectMapping mappingForClass:[RKPaginator class]];
+    [paginationMapping addAttributeMappingsFromDictionary:@{
+        @"@metadata.routing.parameters.limit": @"perPage",
+        // pageCount = skip / limit
+        //@"@metadata.routing.parameters.pageCount": @"pageCount",
+        @"@metadata.routing.parameters.skip": @"offset",
+        //@"@metadata.routing.parameters.currentPage": @"currentPage",
+        @"@metadata.HTTP.response.headers.X-Mongohq-Count": @"objectCount"
+                                                            }];
+    manager.paginationMapping = paginationMapping;
+#endif
 }
 
 #pragma mark - Helpers

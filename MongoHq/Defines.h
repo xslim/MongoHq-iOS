@@ -7,10 +7,11 @@
 //
 
 #define USE_COREDATA 1
+#define USE_DOCUMENT_PAGINATION 0
 
 static NSString * const kTestFlightTeamToken = @"";
 static NSString * const kMongoHqApiKey = @"picpjs6mxl2sx1dmc6so";
-
+static NSUInteger const kMongoHqDocumentsPerPage = 20;
 
 /*
  NSUInteger DeviceSystemMajorVersion();
