@@ -7,6 +7,8 @@
 //
 
 #import "UIImage+FontIcon.h"
+#ifdef COCOAPODS_POD_AVAILABLE_FontasticIcons
+
 #import "FontasticIcons.h"
 
 #define UIColorFromRGBA(rgbValue, alphaValue) ([UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16)) / 255.0 \
@@ -51,5 +53,6 @@ alpha:alphaValue])
     }
     return [UIImage fi_imageIcon:name size:size color:color];
 }
+#endif
 
 @end
